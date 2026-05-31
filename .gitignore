@@ -1,0 +1,12 @@
+*.so
+*.dylib
+*.o
+build/
+dist/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+.venv/
+replay.html
+
+third_party/

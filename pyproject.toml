@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68", "wheel", "pybind11>=2.11"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orbit-wars-codex-agent"
+version = "0.1.0"
+description = "Native C++ Orbit Wars simulator, query engine, and agent wrapper"
+requires-python = ">=3.9"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
