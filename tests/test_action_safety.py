@@ -13,7 +13,8 @@ def _get(obj, name, default=None):
     return getattr(obj, name, default)
 
 
-def test_agent_actions_hit_planets_before_sun_or_bounds():
+def test_agent_actions_hit_planets_before_sun_or_bounds(monkeypatch):
+    monkeypatch.setenv("ORBIT_WARS_TIME_BUDGET_MS", "25")
     for seed in range(2):
         env = kaggle_environments.make("orbit_wars", configuration={"seed": seed}, debug=True)
         env.run(["main.py", "main.py"])

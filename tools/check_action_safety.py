@@ -1,5 +1,6 @@
 import argparse
 import math
+import os
 
 from kaggle_environments import make
 from kaggle_environments.envs.orbit_wars.orbit_wars import (
@@ -24,6 +25,10 @@ def _speed(ships, max_speed=6.0):
     return 1.0 + (max_speed - 1.0) * min(
         1.0, (math.log(ships) / math.log(1000.0)) ** 1.5
     )
+
+
+def _observed_orbit_step(observation_step):
+    return max(0, observation_step - 1)
 
 
 def first_collision(obs, move, synthetic_step):
@@ -58,7 +63,10 @@ def first_collision(obs, move, synthetic_step):
                 dy = initial[3] - CENTER
                 radius = math.hypot(dx, dy)
                 if radius + planet[4] < 50.0:
-                    theta = math.atan2(dy, dx) + angular_velocity * tick
+                    theta = (
+                        math.atan2(dy, dx)
+                        + angular_velocity * _observed_orbit_step(tick)
+                    )
                     return (
                         CENTER + radius * math.cos(theta),
                         CENTER + radius * math.sin(theta),
@@ -81,7 +89,10 @@ def main():
     parser.add_argument("--seeds", type=int, default=10)
     parser.add_argument("--agent-a", default="main.py")
     parser.add_argument("--agent-b", default="main.py")
+    parser.add_argument("--budget-ms", type=int, default=25)
     args = parser.parse_args()
+
+    os.environ["ORBIT_WARS_TIME_BUDGET_MS"] = str(args.budget_ms)
 
     checked = 0
     for seed in range(args.seeds):

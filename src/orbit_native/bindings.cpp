@@ -246,6 +246,14 @@ py::list fleets_to_py(const std::vector<orbit::Fleet>& fleets) {
   return out;
 }
 
+py::list forecast_table_to_py(const std::vector<std::vector<orbit::Planet>>& table) {
+  py::list out;
+  for (const std::vector<orbit::Planet>& row : table) {
+    out.append(planets_to_py(row));
+  }
+  return out;
+}
+
 py::dict state_to_dict(const orbit::SimState& state) {
   py::dict out;
   out["step"] = state.step;
@@ -320,9 +328,17 @@ PYBIND11_MODULE(orbit_native, m) {
       .def("act", [](orbit::Engine& engine, const py::object& obs) {
         return moves_to_py(engine.act(observation_from_py(obs)));
       })
+      .def("act_v2", [](orbit::Engine& engine, const py::object& obs) {
+        return moves_to_py(engine.act_v2(observation_from_py(obs)));
+      })
       .def("search",
            [](orbit::Engine& engine, const py::object& obs, int budget_ms) {
              return search_result_to_dict(engine.search(observation_from_py(obs), budget_ms));
+           },
+           py::arg("obs"), py::arg("budget_ms") = 950)
+      .def("search_v2",
+           [](orbit::Engine& engine, const py::object& obs, int budget_ms) {
+             return search_result_to_dict(engine.search_v2(observation_from_py(obs), budget_ms));
            },
            py::arg("obs"), py::arg("budget_ms") = 950)
       .def("last_search_stats",
@@ -340,6 +356,11 @@ PYBIND11_MODULE(orbit_native, m) {
              }
              return out;
            })
+      .def("forecast_planets",
+           [](orbit::Engine& engine, const py::object& obs, int horizon) {
+             return forecast_table_to_py(
+                 engine.forecast_planets(observation_from_py(obs), horizon));
+           })
       .def("simulate_step",
            [](orbit::Engine& engine, const py::object& obs, const py::object& actions) {
              orbit::Observation parsed = observation_from_py(obs);
@@ -353,9 +374,18 @@ PYBIND11_MODULE(orbit_native, m) {
   m.def("act", [](const py::object& obs) {
     return moves_to_py(global_engine->act(observation_from_py(obs)));
   });
+  m.def("act_v2", [](const py::object& obs) {
+    return moves_to_py(global_engine->act_v2(observation_from_py(obs)));
+  });
   m.def("search",
         [](const py::object& obs, int budget_ms) {
           return search_result_to_dict(global_engine->search(observation_from_py(obs), budget_ms));
+        },
+        py::arg("obs"), py::arg("budget_ms") = 950);
+  m.def("search_v2",
+        [](const py::object& obs, int budget_ms) {
+          return search_result_to_dict(
+              global_engine->search_v2(observation_from_py(obs), budget_ms));
         },
         py::arg("obs"), py::arg("budget_ms") = 950);
   m.def("last_search_stats",
@@ -371,6 +401,10 @@ PYBIND11_MODULE(orbit_native, m) {
           }
           return out;
         });
+  m.def("forecast_planets", [](const py::object& obs, int horizon) {
+    return forecast_table_to_py(
+        global_engine->forecast_planets(observation_from_py(obs), horizon));
+  });
   m.def("simulate_step", [](const py::object& obs, const py::object& actions) {
     orbit::Observation parsed = observation_from_py(obs);
     orbit::SimState state = state_from_observation(parsed);

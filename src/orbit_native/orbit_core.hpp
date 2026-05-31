@@ -127,11 +127,14 @@ class Engine {
 
   void initialize(const Observation& obs);
   std::vector<Move> act(const Observation& obs);
+  std::vector<Move> act_v2(const Observation& obs);
   SearchResult search(const Observation& obs, int budget_ms);
+  SearchResult search_v2(const Observation& obs, int budget_ms);
   SearchStats last_search_stats() const { return last_search_stats_; }
   RouteResult query_route(int src_id, int target_id, int ships, int step);
   std::vector<RouteResult> batch_query_routes(
       const std::vector<std::tuple<int, int, int, int>>& requests);
+  std::vector<std::vector<Planet>> forecast_planets(const Observation& obs, int horizon);
   SimState simulate_step(const SimState& state,
                          const std::vector<std::vector<Move>>& actions_by_player);
 
@@ -154,6 +157,14 @@ class Engine {
     std::size_t operator()(const RouteKey& key) const;
   };
 
+  struct TransferHint {
+    int source_id = -1;
+    int target_id = -1;
+    int ships = 0;
+    double score = 0.0;
+    int last_step = -1;
+  };
+
   Observation base_;
   bool initialized_ = false;
   std::unordered_map<int, std::size_t> base_planet_index_;
@@ -162,6 +173,9 @@ class Engine {
   std::vector<double> cached_planet_radii_;
   std::unordered_map<RouteKey, RouteResult, RouteKeyHash> route_cache_;
   std::vector<FleetArrival> predicted_fleet_arrivals_;
+  std::vector<TransferHint> transfer_hints_;
+  std::vector<Move> last_best_moves_;
+  int route_warm_until_step_ = 0;
   SearchStats last_search_stats_;
 
   void rebuild_base_indexes();
