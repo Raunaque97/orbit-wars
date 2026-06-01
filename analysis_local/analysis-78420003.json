@@ -1,0 +1,5061 @@
+{
+  "submission_id": "53258832",
+  "episode_id": 78420003,
+  "steps": 156,
+  "actions": 315,
+  "fleets_seen": 315,
+  "deaths_by_kind": {
+    "planet": 303
+  },
+  "orbit_alignment": {
+    "planet_id": 16,
+    "rows": [
+      {
+        "replay_index": 0,
+        "obs_step": 0,
+        "best_orbit_step": 0,
+        "error": 0.0
+      },
+      {
+        "replay_index": 1,
+        "obs_step": 1,
+        "best_orbit_step": 0,
+        "error": 0.0
+      },
+      {
+        "replay_index": 2,
+        "obs_step": 2,
+        "best_orbit_step": 1,
+        "error": 0.0
+      },
+      {
+        "replay_index": 3,
+        "obs_step": 3,
+        "best_orbit_step": 2,
+        "error": 0.0
+      },
+      {
+        "replay_index": 4,
+        "obs_step": 4,
+        "best_orbit_step": 3,
+        "error": 0.0
+      },
+      {
+        "replay_index": 5,
+        "obs_step": 5,
+        "best_orbit_step": 4,
+        "error": 0.0
+      },
+      {
+        "replay_index": 6,
+        "obs_step": 6,
+        "best_orbit_step": 5,
+        "error": 0.0
+      },
+      {
+        "replay_index": 7,
+        "obs_step": 7,
+        "best_orbit_step": 6,
+        "error": 0.0
+      }
+    ]
+  },
+  "suspicious": [
+    {
+      "fleet_id": 83,
+      "owner": 0,
+      "birth_step": 65,
+      "decision_step": 64,
+      "death_step": 75,
+      "source": 25,
+      "ships": 9,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 0.17259784936418732,
+        "arrival_tick": 96,
+        "travel_time": 32,
+        "blocked_by": "none",
+        "hit_x": 79.04091408619423,
+        "hit_y": 98.14561565189717
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -0.004917250381511806,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          25,
+          0.37874194668962957,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 131,
+      "owner": 0,
+      "birth_step": 83,
+      "decision_step": 82,
+      "death_step": 93,
+      "source": 24,
+      "ships": 9,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 114,
+        "travel_time": 32,
+        "blocked_by": "none",
+        "hit_x": 98.14561565189719,
+        "hit_y": 20.959085913805765
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.004917250381511806,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          24,
+          -1.192054380105267,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 139,
+      "owner": 0,
+      "birth_step": 86,
+      "decision_step": 85,
+      "death_step": 96,
+      "source": 24,
+      "ships": 9,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 117,
+        "travel_time": 32,
+        "blocked_by": "none",
+        "hit_x": 98.14561565189719,
+        "hit_y": 20.959085913805765
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.004917250381511806,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          24,
+          -1.192054380105267,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 193,
+      "owner": 0,
+      "birth_step": 107,
+      "decision_step": 106,
+      "death_step": 121,
+      "source": 23,
+      "ships": 11,
+      "target_id": 17,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.1556721790978997,
+        "arrival_tick": 119,
+        "travel_time": 13,
+        "blocked_by": "none",
+        "hit_x": 81.58809673601027,
+        "hit_y": 55.59295062082856
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.02969296128669363,
+      "angle_delta": 0.4683201709265296,
+      "birth_action": {
+        "action": [
+          23,
+          -0.6873520081713701,
+          11
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 62,
+      "owner": 0,
+      "birth_step": 56,
+      "decision_step": 55,
+      "death_step": 70,
+      "source": 31,
+      "ships": 34,
+      "target_id": 18,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.453632403464563,
+        "arrival_tick": 75,
+        "travel_time": 20,
+        "blocked_by": "none",
+        "hit_x": 40.99357293441124,
+        "hit_y": 81.24587067506931
+      },
+      "death_kind": "planet",
+      "death_planet": 34,
+      "nearest_planet": 34,
+      "nearest_clearance": -0.0367253383345445,
+      "angle_delta": 0.03315442096143428,
+      "birth_action": {
+        "action": [
+          31,
+          2.486786824425997,
+          34
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 44,
+      "owner": 0,
+      "birth_step": 50,
+      "decision_step": 49,
+      "death_step": 55,
+      "source": 24,
+      "ships": 5,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 87,
+        "travel_time": 38,
+        "blocked_by": "none",
+        "hit_x": 97.91631503772889,
+        "hit_y": 22.274392701544357
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -0.09218615299008359,
+      "angle_delta": 0.5026338528707006,
+      "birth_action": {
+        "action": [
+          24,
+          -0.8955646245600086,
+          5
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 122,
+      "owner": 0,
+      "birth_step": 81,
+      "decision_step": 80,
+      "death_step": 90,
+      "source": 23,
+      "ships": 8,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 1.7509812314940467,
+        "arrival_tick": 104,
+        "travel_time": 24,
+        "blocked_by": "none",
+        "hit_x": 78.73448633606489,
+        "hit_y": 97.16465272574382
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -0.09251791762087125,
+      "angle_delta": 0.6174007315502024,
+      "birth_action": {
+        "action": [
+          23,
+          1.1335804999438444,
+          8
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 92,
+      "owner": 0,
+      "birth_step": 69,
+      "decision_step": 68,
+      "death_step": 72,
+      "source": 24,
+      "ships": 18,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 94,
+        "travel_time": 26,
+        "blocked_by": "none",
+        "hit_x": 98.22855952351833,
+        "hit_y": 20.483305952464075
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -0.13153846788993517,
+      "angle_delta": 0.5026338528707006,
+      "birth_action": {
+        "action": [
+          24,
+          -0.8955646245600086,
+          18
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 235,
+      "owner": 0,
+      "birth_step": 123,
+      "decision_step": 122,
+      "death_step": 128,
+      "source": 16,
+      "ships": 33,
+      "target_id": 6,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.6530593992111011,
+        "arrival_tick": 127,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 59.230274790431956,
+        "hit_y": 5.043362611449018
+      },
+      "death_kind": "planet",
+      "death_planet": 10,
+      "nearest_planet": 10,
+      "nearest_clearance": -0.1479924966651034,
+      "angle_delta": 0.7221834219690246,
+      "birth_action": {
+        "action": [
+          16,
+          -0.9308759772420765,
+          33
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 115,
+      "owner": 0,
+      "birth_step": 77,
+      "decision_step": 76,
+      "death_step": 84,
+      "source": 12,
+      "ships": 14,
+      "target_id": 14,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.5763924131640674,
+        "arrival_tick": 115,
+        "travel_time": 39,
+        "blocked_by": "none",
+        "hit_x": 92.64110818137735,
+        "hit_y": 6.497464102322264
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -0.1481926166318721,
+      "angle_delta": 0.1380798946554078,
+      "birth_action": {
+        "action": [
+          12,
+          -1.4383125185086596,
+          14
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 254,
+      "owner": 0,
+      "birth_step": 130,
+      "decision_step": 129,
+      "death_step": 135,
+      "source": 14,
+      "ships": 38,
+      "target_id": 15,
+      "target_route": {
+        "reachable": true,
+        "angle": 3.1359965672206225,
+        "arrival_tick": 158,
+        "travel_time": 29,
+        "blocked_by": "none",
+        "hit_x": 7.135288238887755,
+        "hit_y": 7.3553224624064715
+      },
+      "death_kind": "planet",
+      "death_planet": 10,
+      "nearest_planet": 10,
+      "nearest_clearance": -0.16661971362768213,
+      "angle_delta": 0.13807989465540718,
+      "birth_action": {
+        "action": [
+          14,
+          -3.0091088453035564,
+          38
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 109,
+      "owner": 0,
+      "birth_step": 74,
+      "decision_step": 73,
+      "death_step": 82,
+      "source": 5,
+      "ships": 22,
+      "target_id": 27,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.9113885477218346,
+        "arrival_tick": 105,
+        "travel_time": 32,
+        "blocked_by": "none",
+        "hit_x": 13.331569796592238,
+        "hit_y": 18.976707243642323
+      },
+      "death_kind": "planet",
+      "death_planet": 34,
+      "nearest_planet": 34,
+      "nearest_clearance": -0.1819931675851092,
+      "angle_delta": 0.33709888716098013,
+      "birth_action": {
+        "action": [
+          5,
+          -1.5742896605608545,
+          22
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 150,
+      "owner": 0,
+      "birth_step": 92,
+      "decision_step": 91,
+      "death_step": 95,
+      "source": 8,
+      "ships": 14,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 118,
+        "travel_time": 27,
+        "blocked_by": "none",
+        "hit_x": 82.92005549569441,
+        "hit_y": 12.62959144713042
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.241495773992086,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          14
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 249,
+      "owner": 0,
+      "birth_step": 128,
+      "decision_step": 127,
+      "death_step": 139,
+      "source": 34,
+      "ships": 9,
+      "target_id": 6,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.9116787652386233,
+        "arrival_tick": 150,
+        "travel_time": 23,
+        "blocked_by": "none",
+        "hit_x": 57.55245768240684,
+        "hit_y": 5.131747804254363
+      },
+      "death_kind": "planet",
+      "death_planet": 30,
+      "nearest_planet": 30,
+      "nearest_clearance": -0.25024300003034283,
+      "angle_delta": 0.39384657715848537,
+      "birth_action": {
+        "action": [
+          34,
+          -1.3055253423971087,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 183,
+      "owner": 0,
+      "birth_step": 102,
+      "decision_step": 101,
+      "death_step": 109,
+      "source": 18,
+      "ships": 12,
+      "target_id": 11,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.018923359578383,
+        "arrival_tick": 118,
+        "travel_time": 17,
+        "blocked_by": "none",
+        "hit_x": 4.906459348079536,
+        "hit_y": 29.206382053458707
+      },
+      "death_kind": "planet",
+      "death_planet": 30,
+      "nearest_planet": 30,
+      "nearest_clearance": -0.25889520563650303,
+      "angle_delta": 0.0987052277119449,
+      "birth_action": {
+        "action": [
+          18,
+          -1.9202181318664382,
+          12
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 217,
+      "owner": 0,
+      "birth_step": 117,
+      "decision_step": 116,
+      "death_step": 123,
+      "source": 17,
+      "ships": 8,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 1.6355137389833558,
+        "arrival_tick": 139,
+        "travel_time": 23,
+        "blocked_by": "none",
+        "hit_x": 78.6342104133301,
+        "hit_y": 97.08405497285665
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.28795538439156365,
+      "angle_delta": 1.322115619253287,
+      "birth_action": {
+        "action": [
+          17,
+          0.3133981197300689,
+          8
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 111,
+      "owner": 0,
+      "birth_step": 75,
+      "decision_step": 74,
+      "death_step": 83,
+      "source": 24,
+      "ships": 18,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 100,
+        "travel_time": 26,
+        "blocked_by": "none",
+        "hit_x": 98.22855952351833,
+        "hit_y": 20.483305952464075
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.3180147472055772,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          24,
+          -1.192054380105267,
+          18
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 172,
+      "owner": 0,
+      "birth_step": 98,
+      "decision_step": 97,
+      "death_step": 106,
+      "source": 24,
+      "ships": 18,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 123,
+        "travel_time": 26,
+        "blocked_by": "none",
+        "hit_x": 98.22855952351833,
+        "hit_y": 20.483305952464075
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.3180147472055772,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          24,
+          -1.192054380105267,
+          18
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 162,
+      "owner": 0,
+      "birth_step": 94,
+      "decision_step": 93,
+      "death_step": 108,
+      "source": 25,
+      "ships": 39,
+      "target_id": 11,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 113,
+        "travel_time": 20,
+        "blocked_by": "none",
+        "hit_x": 4.217373798418,
+        "hit_y": 27.895160268297825
+      },
+      "death_kind": "planet",
+      "death_planet": 7,
+      "nearest_planet": 7,
+      "nearest_clearance": -0.31845897435564163,
+      "angle_delta": 0.07812750451299832,
+      "birth_action": {
+        "action": [
+          25,
+          -1.8619112933639725,
+          39
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 226,
+      "owner": 0,
+      "birth_step": 120,
+      "decision_step": 119,
+      "death_step": 126,
+      "source": 31,
+      "ships": 6,
+      "target_id": 32,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.7923418450710107,
+        "arrival_tick": 151,
+        "travel_time": 32,
+        "blocked_by": "none",
+        "hit_x": 71.02205593378562,
+        "hit_y": 42.93314436293708
+      },
+      "death_kind": "planet",
+      "death_planet": 35,
+      "nearest_planet": 35,
+      "nearest_clearance": -0.32974542690712316,
+      "angle_delta": 0.09337913808907816,
+      "birth_action": {
+        "action": [
+          31,
+          -0.8857209831600888,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 130,
+      "owner": 0,
+      "birth_step": 83,
+      "decision_step": 82,
+      "death_step": 93,
+      "source": 19,
+      "ships": 5,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.1360945018417747,
+        "arrival_tick": 112,
+        "travel_time": 30,
+        "blocked_by": "none",
+        "hit_x": 97.64935800331939,
+        "hit_y": 22.321514657617094
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.3653959392058135,
+      "angle_delta": 0.8008601311855342,
+      "birth_action": {
+        "action": [
+          19,
+          -0.3352343706562407,
+          5
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 64,
+      "owner": 0,
+      "birth_step": 57,
+      "decision_step": 56,
+      "death_step": 68,
+      "source": 32,
+      "ships": 10,
+      "target_id": 11,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.2489857238198634,
+        "arrival_tick": 76,
+        "travel_time": 20,
+        "blocked_by": "none",
+        "hit_x": 4.502010792366882,
+        "hit_y": 28.08603012628369
+      },
+      "death_kind": "planet",
+      "death_planet": 28,
+      "nearest_planet": 28,
+      "nearest_clearance": -0.36809925305330327,
+      "angle_delta": 0.031586496388197556,
+      "birth_action": {
+        "action": [
+          32,
+          -2.217399227431666,
+          10
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 49,
+      "owner": 0,
+      "birth_step": 52,
+      "decision_step": 51,
+      "death_step": 63,
+      "source": 32,
+      "ships": 10,
+      "target_id": 7,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.4863460345144137,
+        "arrival_tick": 68,
+        "travel_time": 17,
+        "blocked_by": "none",
+        "hit_x": 4.4016299514991495,
+        "hit_y": 41.87429386948557
+      },
+      "death_kind": "planet",
+      "death_planet": 28,
+      "nearest_planet": 28,
+      "nearest_clearance": -0.3680992530533296,
+      "angle_delta": 0.09588607189674248,
+      "birth_action": {
+        "action": [
+          32,
+          -2.3904599626176712,
+          10
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 279,
+      "owner": 0,
+      "birth_step": 140,
+      "decision_step": 139,
+      "death_step": 150,
+      "source": 32,
+      "ships": 11,
+      "target_id": 8,
+      "target_route": {
+        "reachable": true,
+        "angle": 0.90177582013864,
+        "arrival_tick": 161,
+        "travel_time": 22,
+        "blocked_by": "none",
+        "hit_x": 95.08537920891543,
+        "hit_y": 71.38427712564986
+      },
+      "death_kind": "planet",
+      "death_planet": 28,
+      "nearest_planet": 28,
+      "nearest_clearance": -0.37712003846346975,
+      "angle_delta": 0.26773767548892413,
+      "birth_action": {
+        "action": [
+          32,
+          0.6340381446497159,
+          11
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 38,
+      "owner": 0,
+      "birth_step": 47,
+      "decision_step": 46,
+      "death_step": 57,
+      "source": 32,
+      "ships": 12,
+      "target_id": 7,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.4688895695285433,
+        "arrival_tick": 64,
+        "travel_time": 18,
+        "blocked_by": "none",
+        "hit_x": 4.158557524829949,
+        "hit_y": 41.715432233526926
+      },
+      "death_kind": "planet",
+      "death_planet": 28,
+      "nearest_planet": 28,
+      "nearest_clearance": -0.402849412234047,
+      "angle_delta": 0.13441720605506013,
+      "birth_action": {
+        "action": [
+          32,
+          -2.6033067755836035,
+          12
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 138,
+      "owner": 0,
+      "birth_step": 86,
+      "decision_step": 85,
+      "death_step": 90,
+      "source": 23,
+      "ships": 5,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.2554968047596236,
+        "arrival_tick": 110,
+        "travel_time": 25,
+        "blocked_by": "none",
+        "hit_x": 98.17628361225933,
+        "hit_y": 21.08395369200362
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.40852465383008063,
+      "angle_delta": 1.238703868717496,
+      "birth_action": {
+        "action": [
+          23,
+          -0.01679293604212759,
+          5
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 89,
+      "owner": 0,
+      "birth_step": 68,
+      "decision_step": 67,
+      "death_step": 71,
+      "source": 4,
+      "ships": 15,
+      "target_id": 1,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.9389775130571585,
+        "arrival_tick": 109,
+        "travel_time": 42,
+        "blocked_by": "none",
+        "hit_x": 2.547343363633689,
+        "hit_y": 78.44520699017257
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -0.42790246993779046,
+      "angle_delta": 1.2925922987241,
+      "birth_action": {
+        "action": [
+          4,
+          1.6463852143330584,
+          15
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 86,
+      "owner": 0,
+      "birth_step": 67,
+      "decision_step": 66,
+      "death_step": 70,
+      "source": 9,
+      "ships": 15,
+      "target_id": 29,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.7317277999668071,
+        "arrival_tick": 100,
+        "travel_time": 34,
+        "blocked_by": "none",
+        "hit_x": 85.65225487895471,
+        "hit_y": 43.76343194643249
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -0.42790246993779313,
+      "angle_delta": 0.807316687504969,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          15
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 104,
+      "owner": 0,
+      "birth_step": 72,
+      "decision_step": 71,
+      "death_step": 86,
+      "source": 35,
+      "ships": 18,
+      "target_id": 16,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.605775707491196,
+        "arrival_tick": 92,
+        "travel_time": 21,
+        "blocked_by": "none",
+        "hit_x": 28.09636602350794,
+        "hit_y": 24.934326951482827
+      },
+      "death_kind": "planet",
+      "death_planet": 34,
+      "nearest_planet": 34,
+      "nearest_clearance": -0.4470261003499125,
+      "angle_delta": 1.0168524961350587,
+      "birth_action": {
+        "action": [
+          35,
+          2.6605571035533315,
+          18
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 168,
+      "owner": 0,
+      "birth_step": 97,
+      "decision_step": 96,
+      "death_step": 108,
+      "source": 35,
+      "ships": 14,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.9280447032374884,
+        "arrival_tick": 122,
+        "travel_time": 26,
+        "blocked_by": "none",
+        "hit_x": 98.58732801270357,
+        "hit_y": 20.729941473666898
+      },
+      "death_kind": "planet",
+      "death_planet": 17,
+      "nearest_planet": 17,
+      "nearest_clearance": -0.47125717602052686,
+      "angle_delta": 0.028406519539717512,
+      "birth_action": {
+        "action": [
+          35,
+          -0.8996381836977709,
+          14
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 63,
+      "owner": 0,
+      "birth_step": 56,
+      "decision_step": 55,
+      "death_step": 62,
+      "source": 25,
+      "ships": 16,
+      "target_id": 28,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.4383613310261918,
+        "arrival_tick": 82,
+        "travel_time": 27,
+        "blocked_by": "none",
+        "hit_x": 25.462625643169428,
+        "hit_y": 24.37181007578417
+      },
+      "death_kind": "planet",
+      "death_planet": 20,
+      "nearest_planet": 20,
+      "nearest_clearance": -0.4753818182795708,
+      "angle_delta": 0.034816074491354154,
+      "birth_action": {
+        "action": [
+          25,
+          -1.473177405517546,
+          16
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 73,
+      "owner": 0,
+      "birth_step": 61,
+      "decision_step": 60,
+      "death_step": 65,
+      "source": 4,
+      "ships": 10,
+      "target_id": 35,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.828943096758679,
+        "arrival_tick": 71,
+        "travel_time": 11,
+        "blocked_by": "none",
+        "hit_x": 73.71775350927899,
+        "hit_y": 51.60304255380363
+      },
+      "death_kind": "planet",
+      "death_planet": 31,
+      "nearest_planet": 31,
+      "nearest_clearance": -0.4838085864372522,
+      "angle_delta": 0.05193701194374878,
+      "birth_action": {
+        "action": [
+          4,
+          -2.880880108702428,
+          10
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 213,
+      "owner": 0,
+      "birth_step": 115,
+      "decision_step": 114,
+      "death_step": 119,
+      "source": 29,
+      "ships": 10,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.2326352504189824,
+        "arrival_tick": 135,
+        "travel_time": 21,
+        "blocked_by": "none",
+        "hit_x": 98.05182988134837,
+        "hit_y": 21.462876313649026
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.4982753145809773,
+      "angle_delta": 1.0551906568528657,
+      "birth_action": {
+        "action": [
+          29,
+          -0.17744459356611667,
+          10
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 202,
+      "owner": 0,
+      "birth_step": 110,
+      "decision_step": 109,
+      "death_step": 116,
+      "source": 34,
+      "ships": 32,
+      "target_id": 11,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.302721478424164,
+        "arrival_tick": 121,
+        "travel_time": 12,
+        "blocked_by": "none",
+        "hit_x": 4.8460622421011905,
+        "hit_y": 28.426381778436486
+      },
+      "death_kind": "planet",
+      "death_planet": 30,
+      "nearest_planet": 30,
+      "nearest_clearance": -0.5381630309967288,
+      "angle_delta": 0.1554382916404755,
+      "birth_action": {
+        "action": [
+          34,
+          -2.1472831867836883,
+          32
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 189,
+      "owner": 0,
+      "birth_step": 105,
+      "decision_step": 104,
+      "death_step": 111,
+      "source": 29,
+      "ships": 6,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 1.7187122984115262,
+        "arrival_tick": 133,
+        "travel_time": 29,
+        "blocked_by": "none",
+        "hit_x": 78.59858788128174,
+        "hit_y": 97.8766534751496
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.5407855201402256,
+      "angle_delta": 0.9840346965887116,
+      "birth_action": {
+        "action": [
+          29,
+          0.7346776018228147,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 251,
+      "owner": 0,
+      "birth_step": 129,
+      "decision_step": 128,
+      "death_step": 141,
+      "source": 35,
+      "ships": 135,
+      "target_id": 3,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.8420753904910407,
+        "arrival_tick": 145,
+        "travel_time": 17,
+        "blocked_by": "none",
+        "hit_x": 21.678951142624225,
+        "hit_y": 2.8340315639013958
+      },
+      "death_kind": "planet",
+      "death_planet": 30,
+      "nearest_planet": 30,
+      "nearest_clearance": -0.5612678910882956,
+      "angle_delta": 0.24154953792205913,
+      "birth_action": {
+        "action": [
+          35,
+          -1.6005258525689816,
+          135
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 214,
+      "owner": 0,
+      "birth_step": 116,
+      "decision_step": 115,
+      "death_step": 121,
+      "source": 7,
+      "ships": 21,
+      "target_id": 34,
+      "target_route": {
+        "reachable": true,
+        "angle": 0.07927638547980148,
+        "arrival_tick": 124,
+        "travel_time": 9,
+        "blocked_by": "none",
+        "hit_x": 27.96406708949457,
+        "hit_y": 42.894576276184324
+      },
+      "death_kind": "planet",
+      "death_planet": 18,
+      "nearest_planet": 18,
+      "nearest_clearance": -0.5634040124190358,
+      "angle_delta": 0.044351543786630136,
+      "birth_action": {
+        "action": [
+          7,
+          0.034924841693171345,
+          21
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 90,
+      "owner": 0,
+      "birth_step": 68,
+      "decision_step": 67,
+      "death_step": 81,
+      "source": 22,
+      "ships": 5,
+      "target_id": 13,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.9872479977894115,
+        "arrival_tick": 102,
+        "travel_time": 35,
+        "blocked_by": "none",
+        "hit_x": 8.20449033472771,
+        "hit_y": 92.99130212616643
+      },
+      "death_kind": "planet",
+      "death_planet": 36,
+      "nearest_planet": 36,
+      "nearest_clearance": -0.5661470605350454,
+      "angle_delta": 0.35190275787122743,
+      "birth_action": {
+        "action": [
+          22,
+          2.635345239918184,
+          5
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 148,
+      "owner": 0,
+      "birth_step": 91,
+      "decision_step": 90,
+      "death_step": 100,
+      "source": 4,
+      "ships": 44,
+      "target_id": 27,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.6787720817773026,
+        "arrival_tick": 120,
+        "travel_time": 30,
+        "blocked_by": "none",
+        "hit_x": 13.144529300046944,
+        "hit_y": 17.317111704180423
+      },
+      "death_kind": "planet",
+      "death_planet": 33,
+      "nearest_planet": 33,
+      "nearest_clearance": -0.571165038177359,
+      "angle_delta": 0.16712731964402974,
+      "birth_action": {
+        "action": [
+          4,
+          -2.511644762133273,
+          44
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 304,
+      "owner": 0,
+      "birth_step": 150,
+      "decision_step": 149,
+      "death_step": 155,
+      "source": 14,
+      "ships": 4,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 1.7239144351720397,
+        "arrival_tick": 212,
+        "travel_time": 63,
+        "blocked_by": "none",
+        "hit_x": 78.5473357512132,
+        "hit_y": 98.2152046557622
+      },
+      "death_kind": "planet",
+      "death_planet": 26,
+      "nearest_planet": 26,
+      "nearest_clearance": -0.589211384689859,
+      "angle_delta": 0.8810427260536737,
+      "birth_action": {
+        "action": [
+          14,
+          2.6049571612257134,
+          4
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 188,
+      "owner": 0,
+      "birth_step": 105,
+      "decision_step": 104,
+      "death_step": 108,
+      "source": 35,
+      "ships": 28,
+      "target_id": 1,
+      "target_route": {
+        "reachable": true,
+        "angle": 3.0005296657851512,
+        "arrival_tick": 125,
+        "travel_time": 21,
+        "blocked_by": "none",
+        "hit_x": 0.8187681835732263,
+        "hit_y": 78.72942912689189
+      },
+      "death_kind": "planet",
+      "death_planet": 19,
+      "nearest_planet": 19,
+      "nearest_clearance": -0.5902410340039328,
+      "angle_delta": 1.198618226681975,
+      "birth_action": {
+        "action": [
+          35,
+          1.8019114391031763,
+          28
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 37,
+      "owner": 0,
+      "birth_step": 46,
+      "decision_step": 45,
+      "death_step": 50,
+      "source": 24,
+      "ships": 17,
+      "target_id": 17,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.012768455543395,
+        "arrival_tick": 75,
+        "travel_time": 30,
+        "blocked_by": "none",
+        "hit_x": 56.718068736924735,
+        "hit_y": 18.20663871835847
+      },
+      "death_kind": "planet",
+      "death_planet": 22,
+      "nearest_planet": 22,
+      "nearest_clearance": -0.6260384136380481,
+      "angle_delta": 0.07624523175352405,
+      "birth_action": {
+        "action": [
+          24,
+          -2.089013687296919,
+          17
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 186,
+      "owner": 0,
+      "birth_step": 104,
+      "decision_step": 103,
+      "death_step": 111,
+      "source": 25,
+      "ships": 22,
+      "target_id": 15,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.6975991092181622,
+        "arrival_tick": 135,
+        "travel_time": 32,
+        "blocked_by": "none",
+        "hit_x": 6.692395193961172,
+        "hit_y": 5.910247124793983
+      },
+      "death_kind": "planet",
+      "death_planet": 22,
+      "nearest_planet": 22,
+      "nearest_clearance": -0.6279084176700014,
+      "angle_delta": 0.10354980711027606,
+      "birth_action": {
+        "action": [
+          25,
+          -1.594049302107886,
+          22
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 134,
+      "owner": 0,
+      "birth_step": 84,
+      "decision_step": 83,
+      "death_step": 88,
+      "source": 8,
+      "ships": 8,
+      "target_id": 21,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.886344601303196,
+        "arrival_tick": 107,
+        "travel_time": 24,
+        "blocked_by": "none",
+        "hit_x": 81.54944006969387,
+        "hit_y": 28.5806881384133
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.6478076867763076,
+      "angle_delta": 0.3911371620464612,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          8
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 80,
+      "owner": 0,
+      "birth_step": 64,
+      "decision_step": 63,
+      "death_step": 69,
+      "source": 9,
+      "ships": 6,
+      "target_id": 7,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.990610916192552,
+        "arrival_tick": 97,
+        "travel_time": 34,
+        "blocked_by": "none",
+        "hit_x": 3.7653942297994827,
+        "hit_y": 42.26788219892668
+      },
+      "death_kind": "planet",
+      "death_planet": 25,
+      "nearest_planet": 25,
+      "nearest_clearance": -0.6814285809459664,
+      "angle_delta": 0.47575003516235337,
+      "birth_action": {
+        "action": [
+          9,
+          -2.4663609513549054,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 302,
+      "owner": 0,
+      "birth_step": 149,
+      "decision_step": 148,
+      "death_step": 154,
+      "source": 24,
+      "ships": 6,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 184,
+        "travel_time": 36,
+        "blocked_by": "none",
+        "hit_x": 97.98687260548162,
+        "hit_y": 21.869662656977646
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -0.681428580945983,
+      "angle_delta": 0.5026338528707006,
+      "birth_action": {
+        "action": [
+          24,
+          -0.8955646245600086,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 69,
+      "owner": 0,
+      "birth_step": 59,
+      "decision_step": 58,
+      "death_step": 66,
+      "source": 4,
+      "ships": 10,
+      "target_id": 33,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.48103239687299,
+        "arrival_tick": 81,
+        "travel_time": 23,
+        "blocked_by": "none",
+        "hit_x": 59.056476022223904,
+        "hit_y": 29.722055733540767
+      },
+      "death_kind": "planet",
+      "death_planet": 19,
+      "nearest_planet": 19,
+      "nearest_clearance": -0.6823725274286272,
+      "angle_delta": 0.052990032288063205,
+      "birth_action": {
+        "action": [
+          4,
+          -2.534022429161053,
+          10
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 298,
+      "owner": 0,
+      "birth_step": 147,
+      "decision_step": 146,
+      "death_step": 149,
+      "source": 24,
+      "ships": 39,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.0959958034469963,
+        "arrival_tick": 151,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 78.89219038479355,
+        "hit_y": 97.50890490755279
+      },
+      "death_kind": "planet",
+      "death_planet": 12,
+      "nearest_planet": 12,
+      "nearest_clearance": -0.6856002924121719,
+      "angle_delta": 1.0618349690161792,
+      "birth_action": {
+        "action": [
+          24,
+          1.034160834430817,
+          39
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 225,
+      "owner": 0,
+      "birth_step": 120,
+      "decision_step": 119,
+      "death_step": 124,
+      "source": 18,
+      "ships": 6,
+      "target_id": 1,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.018528310459706,
+        "arrival_tick": 142,
+        "travel_time": 23,
+        "blocked_by": "none",
+        "hit_x": 2.160658349147096,
+        "hit_y": 78.10367725727777
+      },
+      "death_kind": "planet",
+      "death_planet": 22,
+      "nearest_planet": 22,
+      "nearest_clearance": -0.7064996151091051,
+      "angle_delta": 0.2679030727557352,
+      "birth_action": {
+        "action": [
+          18,
+          2.286431383215441,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 67,
+      "owner": 0,
+      "birth_step": 58,
+      "decision_step": 57,
+      "death_step": 70,
+      "source": 25,
+      "ships": 6,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 0.17259784936418732,
+        "arrival_tick": 93,
+        "travel_time": 36,
+        "blocked_by": "none",
+        "hit_x": 78.13033734302236,
+        "hit_y": 97.98687260548162
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -0.7250088859885124,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          25,
+          0.37874194668962957,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 194,
+      "owner": 0,
+      "birth_step": 108,
+      "decision_step": 107,
+      "death_step": 120,
+      "source": 24,
+      "ships": 6,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 143,
+        "travel_time": 36,
+        "blocked_by": "none",
+        "hit_x": 97.98687260548162,
+        "hit_y": 21.869662656977646
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.7250088859885124,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          24,
+          -1.192054380105267,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 230,
+      "owner": 0,
+      "birth_step": 122,
+      "decision_step": 121,
+      "death_step": 126,
+      "source": 31,
+      "ships": 23,
+      "target_id": 28,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.5558675186555682,
+        "arrival_tick": 147,
+        "travel_time": 26,
+        "blocked_by": "none",
+        "hit_x": 87.58676886787671,
+        "hit_y": 45.015516662663956
+      },
+      "death_kind": "planet",
+      "death_planet": 35,
+      "nearest_planet": 35,
+      "nearest_clearance": -0.7718105850430441,
+      "angle_delta": 0.15786849977816342,
+      "birth_action": {
+        "action": [
+          31,
+          -0.7137360184337316,
+          23
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 224,
+      "owner": 0,
+      "birth_step": 119,
+      "decision_step": 118,
+      "death_step": 133,
+      "source": 25,
+      "ships": 55,
+      "target_id": 15,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.6975991092181622,
+        "arrival_tick": 143,
+        "travel_time": 25,
+        "blocked_by": "none",
+        "hit_x": 6.649572008440339,
+        "hit_y": 5.574344228349094
+      },
+      "death_kind": "planet",
+      "death_planet": 22,
+      "nearest_planet": 22,
+      "nearest_clearance": -0.7732808708384948,
+      "angle_delta": 0.08341423449651209,
+      "birth_action": {
+        "action": [
+          25,
+          -1.61418487472165,
+          55
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 79,
+      "owner": 0,
+      "birth_step": 63,
+      "decision_step": 62,
+      "death_step": 71,
+      "source": 24,
+      "ships": 13,
+      "target_id": 29,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7188241576303096,
+        "arrival_tick": 87,
+        "travel_time": 25,
+        "blocked_by": "none",
+        "hit_x": 79.15993157815775,
+        "hit_y": 28.05134785666183
+      },
+      "death_kind": "planet",
+      "death_planet": 31,
+      "nearest_planet": 31,
+      "nearest_clearance": -0.7889732731466167,
+      "angle_delta": 0.04631060638660012,
+      "birth_action": {
+        "action": [
+          24,
+          -1.7651347640169097,
+          13
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 293,
+      "owner": 0,
+      "birth_step": 146,
+      "decision_step": 145,
+      "death_step": 149,
+      "source": 14,
+      "ships": 15,
+      "target_id": 28,
+      "target_route": {
+        "reachable": true,
+        "angle": 1.8890046461729404,
+        "arrival_tick": 179,
+        "travel_time": 34,
+        "blocked_by": "none",
+        "hit_x": 68.60638332682011,
+        "hit_y": 79.84794125952668
+      },
+      "death_kind": "planet",
+      "death_planet": 26,
+      "nearest_planet": 26,
+      "nearest_clearance": -0.8012869227766268,
+      "angle_delta": 0.715952515052773,
+      "birth_action": {
+        "action": [
+          14,
+          2.6049571612257134,
+          15
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 56,
+      "owner": 0,
+      "birth_step": 54,
+      "decision_step": 53,
+      "death_step": 62,
+      "source": 8,
+      "ships": 18,
+      "target_id": 19,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.098361151367525,
+        "arrival_tick": 65,
+        "travel_time": 12,
+        "blocked_by": "none",
+        "hit_x": 80.50708935436272,
+        "hit_y": 46.027125914449
+      },
+      "death_kind": "planet",
+      "death_planet": 31,
+      "nearest_planet": 31,
+      "nearest_clearance": -0.8134245455182799,
+      "angle_delta": 0.06275327438837497,
+      "birth_action": {
+        "action": [
+          8,
+          -2.03560787697915,
+          18
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 78,
+      "owner": 0,
+      "birth_step": 63,
+      "decision_step": 62,
+      "death_step": 76,
+      "source": 22,
+      "ships": 12,
+      "target_id": 13,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.9570594291811485,
+        "arrival_tick": 92,
+        "travel_time": 30,
+        "blocked_by": "none",
+        "hit_x": 6.6639277399522,
+        "hit_y": 93.25251586293224
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -0.8300057685177116,
+      "angle_delta": 0.31166917455121057,
+      "birth_action": {
+        "action": [
+          22,
+          2.645390254629938,
+          12
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 234,
+      "owner": 0,
+      "birth_step": 123,
+      "decision_step": 122,
+      "death_step": 126,
+      "source": 11,
+      "ships": 23,
+      "target_id": 6,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.4198145893976555,
+        "arrival_tick": 144,
+        "travel_time": 22,
+        "blocked_by": "none",
+        "hit_x": 56.98484050627482,
+        "hit_y": 4.098941583500725
+      },
+      "death_kind": "planet",
+      "death_planet": 27,
+      "nearest_planet": 27,
+      "nearest_clearance": -0.8345520652788683,
+      "angle_delta": 0.47575003516235315,
+      "birth_action": {
+        "action": [
+          11,
+          -0.8955646245600086,
+          23
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 263,
+      "owner": 0,
+      "birth_step": 134,
+      "decision_step": 133,
+      "death_step": 146,
+      "source": 29,
+      "ships": 19,
+      "target_id": 32,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.557772278704603,
+        "arrival_tick": 149,
+        "travel_time": 16,
+        "blocked_by": "none",
+        "hit_x": 70.48222692246016,
+        "hit_y": 40.43428604031332
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.872312262356818,
+      "angle_delta": 0.9008240863227878,
+      "birth_action": {
+        "action": [
+          29,
+          -0.6569481923818153,
+          19
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 123,
+      "owner": 0,
+      "birth_step": 81,
+      "decision_step": 80,
+      "death_step": 86,
+      "source": 4,
+      "ships": 5,
+      "target_id": 25,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.801000432662855,
+        "arrival_tick": 132,
+        "travel_time": 52,
+        "blocked_by": "none",
+        "hit_x": 17.706959977052474,
+        "hit_y": 87.11843287962456
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -0.8925756217405751,
+      "angle_delta": 1.1546152183297966,
+      "birth_action": {
+        "action": [
+          4,
+          1.6463852143330584,
+          5
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 153,
+      "owner": 0,
+      "birth_step": 93,
+      "decision_step": 92,
+      "death_step": 96,
+      "source": 19,
+      "ships": 10,
+      "target_id": 20,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.8859247220989566,
+        "arrival_tick": 124,
+        "travel_time": 32,
+        "blocked_by": "none",
+        "hit_x": 50.647030571464946,
+        "hit_y": 13.456592317409097
+      },
+      "death_kind": "planet",
+      "death_planet": 35,
+      "nearest_planet": 35,
+      "nearest_clearance": -0.9230899820741405,
+      "angle_delta": 0.445848019331531,
+      "birth_action": {
+        "action": [
+          19,
+          -2.3317727414304876,
+          10
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 171,
+      "owner": 0,
+      "birth_step": 98,
+      "decision_step": 97,
+      "death_step": 101,
+      "source": 8,
+      "ships": 18,
+      "target_id": 21,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.8796275287779656,
+        "arrival_tick": 112,
+        "travel_time": 15,
+        "blocked_by": "none",
+        "hit_x": 84.43324995859474,
+        "hit_y": 36.602754338917016
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.931927936640464,
+      "angle_delta": 0.38442008952123086,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          18
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 192,
+      "owner": 0,
+      "birth_step": 107,
+      "decision_step": 106,
+      "death_step": 110,
+      "source": 8,
+      "ships": 18,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 131,
+        "travel_time": 25,
+        "blocked_by": "none",
+        "hit_x": 82.92981907722465,
+        "hit_y": 12.674737277535177
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.931927936640464,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          18
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 242,
+      "owner": 0,
+      "birth_step": 125,
+      "decision_step": 124,
+      "death_step": 131,
+      "source": 7,
+      "ships": 49,
+      "target_id": 6,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.5939917616643675,
+        "arrival_tick": 144,
+        "travel_time": 20,
+        "blocked_by": "none",
+        "hit_x": 57.0305567582399,
+        "hit_y": 4.546826015728267
+      },
+      "death_kind": "planet",
+      "death_planet": 27,
+      "nearest_planet": 27,
+      "nearest_clearance": -0.9393100610521739,
+      "angle_delta": 0.5980626184408995,
+      "birth_action": {
+        "action": [
+          7,
+          -1.192054380105267,
+          49
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 261,
+      "owner": 0,
+      "birth_step": 133,
+      "decision_step": 132,
+      "death_step": 137,
+      "source": 28,
+      "ships": 38,
+      "target_id": 10,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.8364242469490708,
+        "arrival_tick": 140,
+        "travel_time": 8,
+        "blocked_by": "none",
+        "hit_x": 72.68377561695017,
+        "hit_y": 5.481279361445864
+      },
+      "death_kind": "planet",
+      "death_planet": 26,
+      "nearest_planet": 26,
+      "nearest_clearance": -0.9528726987852589,
+      "angle_delta": 0.4962962813638752,
+      "birth_action": {
+        "action": [
+          28,
+          -1.3401279655851956,
+          38
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 151,
+      "owner": 0,
+      "birth_step": 92,
+      "decision_step": 91,
+      "death_step": 103,
+      "source": 24,
+      "ships": 18,
+      "target_id": 1,
+      "target_route": {
+        "reachable": true,
+        "angle": -3.0906416945219553,
+        "arrival_tick": 126,
+        "travel_time": 35,
+        "blocked_by": "none",
+        "hit_x": 2.888280008724698,
+        "hit_y": 78.6192687098086
+      },
+      "death_kind": "planet",
+      "death_planet": 35,
+      "nearest_planet": 35,
+      "nearest_clearance": -0.9535990639518701,
+      "angle_delta": 0.37795163321770353,
+      "birth_action": {
+        "action": [
+          24,
+          -2.7126900613042517,
+          18
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 185,
+      "owner": 0,
+      "birth_step": 103,
+      "decision_step": 102,
+      "death_step": 111,
+      "source": 22,
+      "ships": 16,
+      "target_id": 6,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.0970821485630928,
+        "arrival_tick": 136,
+        "travel_time": 34,
+        "blocked_by": "none",
+        "hit_x": 58.200939975348525,
+        "hit_y": 4.871699130909677
+      },
+      "death_kind": "planet",
+      "death_planet": 34,
+      "nearest_planet": 34,
+      "nearest_clearance": -0.9618576783303493,
+      "angle_delta": 0.2113821161227332,
+      "birth_action": {
+        "action": [
+          22,
+          -1.308464264685826,
+          16
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 174,
+      "owner": 0,
+      "birth_step": 99,
+      "decision_step": 98,
+      "death_step": 108,
+      "source": 29,
+      "ships": 8,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 1.6830313424872037,
+        "arrival_tick": 128,
+        "travel_time": 30,
+        "blocked_by": "none",
+        "hit_x": 78.65596973664222,
+        "hit_y": 97.30731946896584
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -0.965761906198698,
+      "angle_delta": 0.7158032114733136,
+      "birth_action": {
+        "action": [
+          29,
+          0.96722813101389,
+          8
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 306,
+      "owner": 0,
+      "birth_step": 151,
+      "decision_step": 150,
+      "death_step": 155,
+      "source": 29,
+      "ships": 17,
+      "target_id": 1,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.9911590696272135,
+        "arrival_tick": 171,
+        "travel_time": 21,
+        "blocked_by": "none",
+        "hit_x": 0.9548994454809137,
+        "hit_y": 78.42195756089134
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -0.9937329237341654,
+      "angle_delta": 1.0259086097674912,
+      "birth_action": {
+        "action": [
+          29,
+          2.2661176277848822,
+          17
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 291,
+      "owner": 0,
+      "birth_step": 145,
+      "decision_step": 144,
+      "death_step": 149,
+      "source": 24,
+      "ships": 8,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.0959958034469963,
+        "arrival_tick": 152,
+        "travel_time": 8,
+        "blocked_by": "none",
+        "hit_x": 78.91690190457122,
+        "hit_y": 97.46626108546326
+      },
+      "death_kind": "planet",
+      "death_planet": 12,
+      "nearest_planet": 12,
+      "nearest_clearance": -0.9999999999999717,
+      "angle_delta": 1.0618349690161792,
+      "birth_action": {
+        "action": [
+          24,
+          1.034160834430817,
+          8
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 204,
+      "owner": 0,
+      "birth_step": 111,
+      "decision_step": 110,
+      "death_step": 125,
+      "source": 4,
+      "ships": 67,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.5381503127678828,
+        "arrival_tick": 121,
+        "travel_time": 11,
+        "blocked_by": "none",
+        "hit_x": 98.1342243876421,
+        "hit_y": 19.26812775002951
+      },
+      "death_kind": "planet",
+      "death_planet": 14,
+      "nearest_planet": 14,
+      "nearest_clearance": -0.999999999999973,
+      "angle_delta": 0.11276319285683756,
+      "birth_action": {
+        "action": [
+          4,
+          -1.6509135056247204,
+          67
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 61,
+      "owner": 0,
+      "birth_step": 55,
+      "decision_step": 54,
+      "death_step": 59,
+      "source": 9,
+      "ships": 9,
+      "target_id": 30,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.5637493282449424,
+        "arrival_tick": 64,
+        "travel_time": 10,
+        "blocked_by": "none",
+        "hit_x": 45.565788741624615,
+        "hit_y": 84.51917977471558
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.0035475579490776,
+      "angle_delta": 0.6393382157831042,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 66,
+      "owner": 0,
+      "birth_step": 58,
+      "decision_step": 57,
+      "death_step": 62,
+      "source": 9,
+      "ships": 9,
+      "target_id": 23,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.49186972788014904,
+        "arrival_tick": 90,
+        "travel_time": 33,
+        "blocked_by": "none",
+        "hit_x": 84.78987664464375,
+        "hit_y": 65.22793946068293
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.0035475579490776,
+      "angle_delta": 0.5674586154183109,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 147,
+      "owner": 0,
+      "birth_step": 90,
+      "decision_step": 89,
+      "death_step": 94,
+      "source": 8,
+      "ships": 9,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 119,
+        "travel_time": 30,
+        "blocked_by": "none",
+        "hit_x": 83.33642812959731,
+        "hit_y": 14.554857114975492
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.0035475579490776,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 178,
+      "owner": 0,
+      "birth_step": 101,
+      "decision_step": 100,
+      "death_step": 105,
+      "source": 8,
+      "ships": 9,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 130,
+        "travel_time": 30,
+        "blocked_by": "none",
+        "hit_x": 83.33642812959731,
+        "hit_y": 14.554857114975492
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.0035475579490776,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 203,
+      "owner": 0,
+      "birth_step": 110,
+      "decision_step": 109,
+      "death_step": 114,
+      "source": 8,
+      "ships": 9,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 139,
+        "travel_time": 30,
+        "blocked_by": "none",
+        "hit_x": 83.33642812959731,
+        "hit_y": 14.554857114975492
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.0035475579490776,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          9
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 236,
+      "owner": 0,
+      "birth_step": 124,
+      "decision_step": 123,
+      "death_step": 126,
+      "source": 19,
+      "ships": 26,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.7729191284129019,
+        "arrival_tick": 154,
+        "travel_time": 31,
+        "blocked_by": "none",
+        "hit_x": 97.42234168620149,
+        "hit_y": 22.054770392399686
+      },
+      "death_kind": "planet",
+      "death_planet": 35,
+      "nearest_planet": 35,
+      "nearest_clearance": -1.0380420486332613,
+      "angle_delta": 0.41570962720799287,
+      "birth_action": {
+        "action": [
+          19,
+          -1.1886287556208948,
+          26
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 308,
+      "owner": 0,
+      "birth_step": 152,
+      "decision_step": 151,
+      "death_step": 155,
+      "source": 16,
+      "ships": 11,
+      "target_id": 3,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.5395110587269287,
+        "arrival_tick": 186,
+        "travel_time": 35,
+        "blocked_by": "none",
+        "hit_x": 21.59911815208155,
+        "hit_y": 2.0530693267601663
+      },
+      "death_kind": "planet",
+      "death_planet": 32,
+      "nearest_planet": 32,
+      "nearest_clearance": -1.0500670020052307,
+      "angle_delta": 0.8832533031610483,
+      "birth_action": {
+        "action": [
+          16,
+          2.8604209452916094,
+          11
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 173,
+      "owner": 0,
+      "birth_step": 99,
+      "decision_step": 98,
+      "death_step": 105,
+      "source": 5,
+      "ships": 50,
+      "target_id": 7,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.164788088459264,
+        "arrival_tick": 118,
+        "travel_time": 20,
+        "blocked_by": "none",
+        "hit_x": 4.362295026407468,
+        "hit_y": 42.69620667115319
+      },
+      "death_kind": "planet",
+      "death_planet": 25,
+      "nearest_planet": 25,
+      "nearest_clearance": -1.0547092114747365,
+      "angle_delta": 0.5980626184408995,
+      "birth_action": {
+        "action": [
+          5,
+          -2.7628507069001635,
+          50
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 75,
+      "owner": 0,
+      "birth_step": 62,
+      "decision_step": 61,
+      "death_step": 66,
+      "source": 25,
+      "ships": 12,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 0.17259784936418732,
+        "arrival_tick": 90,
+        "travel_time": 29,
+        "blocked_by": "none",
+        "hit_x": 78.6285931996335,
+        "hit_y": 98.0737347542966
+      },
+      "death_kind": "planet",
+      "death_planet": 9,
+      "nearest_planet": 9,
+      "nearest_clearance": -1.1121857031495979,
+      "angle_delta": 0.5026338528707006,
+      "birth_action": {
+        "action": [
+          25,
+          0.6752317022348879,
+          12
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 87,
+      "owner": 0,
+      "birth_step": 67,
+      "decision_step": 66,
+      "death_step": 76,
+      "source": 18,
+      "ships": 5,
+      "target_id": 13,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.884795097097891,
+        "arrival_tick": 94,
+        "travel_time": 28,
+        "blocked_by": "none",
+        "hit_x": 7.597507524516516,
+        "hit_y": 93.05997553116636
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.1420376514691797,
+      "angle_delta": 0.7288441091139557,
+      "birth_action": {
+        "action": [
+          18,
+          2.1559509879839354,
+          5
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 167,
+      "owner": 0,
+      "birth_step": 96,
+      "decision_step": 95,
+      "death_step": 104,
+      "source": 23,
+      "ships": 10,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.2285403944024151,
+        "arrival_tick": 121,
+        "travel_time": 26,
+        "blocked_by": "none",
+        "hit_x": 97.95424039769895,
+        "hit_y": 21.736356263054425
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.2141513766733265,
+      "angle_delta": 0.6057674282148015,
+      "birth_action": {
+        "action": [
+          23,
+          -0.6227729661876136,
+          10
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 152,
+      "owner": 0,
+      "birth_step": 93,
+      "decision_step": 92,
+      "death_step": 98,
+      "source": 31,
+      "ships": 14,
+      "target_id": 6,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.6483459944549175,
+        "arrival_tick": 127,
+        "travel_time": 35,
+        "blocked_by": "none",
+        "hit_x": 59.23961141206967,
+        "hit_y": 5.278135591312088
+      },
+      "death_kind": "planet",
+      "death_planet": 35,
+      "nearest_planet": 35,
+      "nearest_clearance": -1.2351364631506072,
+      "angle_delta": 0.0998497670657541,
+      "birth_action": {
+        "action": [
+          31,
+          -1.7481957615206716,
+          14
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 119,
+      "owner": 0,
+      "birth_step": 79,
+      "decision_step": 78,
+      "death_step": 88,
+      "source": 25,
+      "ships": 24,
+      "target_id": 18,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.6837869658731581,
+        "arrival_tick": 85,
+        "travel_time": 7,
+        "blocked_by": "none",
+        "hit_x": 32.6712277139004,
+        "hit_y": 74.63187301124609
+      },
+      "death_kind": "planet",
+      "death_planet": 34,
+      "nearest_planet": 34,
+      "nearest_clearance": -1.2373744350416043,
+      "angle_delta": 0.07888672764457172,
+      "birth_action": {
+        "action": [
+          25,
+          -0.7626736935177298,
+          24
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 286,
+      "owner": 0,
+      "birth_step": 143,
+      "decision_step": 142,
+      "death_step": 147,
+      "source": 30,
+      "ships": 141,
+      "target_id": 10,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.33884632191314135,
+        "arrival_tick": 150,
+        "travel_time": 8,
+        "blocked_by": "none",
+        "hit_x": 71.58159364656736,
+        "hit_y": 4.4320190058093925
+      },
+      "death_kind": "planet",
+      "death_planet": 6,
+      "nearest_planet": 6,
+      "nearest_clearance": -1.2459625189716488,
+      "angle_delta": 0.2388062164065321,
+      "birth_action": {
+        "action": [
+          30,
+          -0.5776525383196734,
+          141
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 137,
+      "owner": 0,
+      "birth_step": 85,
+      "decision_step": 84,
+      "death_step": 87,
+      "source": 8,
+      "ships": 58,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 102,
+        "travel_time": 18,
+        "blocked_by": "none",
+        "hit_x": 82.98745215141086,
+        "hit_y": 12.941226883307301
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.2787034106492203,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          58
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 184,
+      "owner": 0,
+      "birth_step": 103,
+      "decision_step": 102,
+      "death_step": 109,
+      "source": 21,
+      "ships": 32,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 1.5564996717016355,
+        "arrival_tick": 128,
+        "travel_time": 26,
+        "blocked_by": "none",
+        "hit_x": 78.58006015139996,
+        "hit_y": 98.71655349275302
+      },
+      "death_kind": "planet",
+      "death_planet": 33,
+      "nearest_planet": 33,
+      "nearest_clearance": -1.2881635098483293,
+      "angle_delta": 0.3100692434625252,
+      "birth_action": {
+        "action": [
+          21,
+          1.8665689151641607,
+          32
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 262,
+      "owner": 0,
+      "birth_step": 133,
+      "decision_step": 132,
+      "death_step": 141,
+      "source": 24,
+      "ships": 21,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 157,
+        "travel_time": 25,
+        "blocked_by": "none",
+        "hit_x": 98.2953727555245,
+        "hit_y": 20.100054045846985
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.3052555242748203,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          24,
+          -1.192054380105267,
+          21
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 229,
+      "owner": 0,
+      "birth_step": 122,
+      "decision_step": 121,
+      "death_step": 128,
+      "source": 5,
+      "ships": 80,
+      "target_id": 34,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.6631133886448475,
+        "arrival_tick": 138,
+        "travel_time": 17,
+        "blocked_by": "none",
+        "hit_x": 35.148545830802206,
+        "hit_y": 34.44524663389311
+      },
+      "death_kind": "planet",
+      "death_planet": 35,
+      "nearest_planet": 35,
+      "nearest_clearance": -1.334764265556191,
+      "angle_delta": 0.08842312583745393,
+      "birth_action": {
+        "action": [
+          5,
+          -1.5746902628073935,
+          80
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 71,
+      "owner": 0,
+      "birth_step": 60,
+      "decision_step": 59,
+      "death_step": 65,
+      "source": 9,
+      "ships": 6,
+      "target_id": 23,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.4422678156125538,
+        "arrival_tick": 94,
+        "travel_time": 35,
+        "blocked_by": "none",
+        "hit_x": 82.18638668677109,
+        "hit_y": 70.01567993081245
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.4818180496964877,
+      "angle_delta": 0.5178567031507156,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 74,
+      "owner": 0,
+      "birth_step": 62,
+      "decision_step": 61,
+      "death_step": 67,
+      "source": 9,
+      "ships": 6,
+      "target_id": 23,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.4313578878989914,
+        "arrival_tick": 95,
+        "travel_time": 34,
+        "blocked_by": "none",
+        "hit_x": 80.95636429755251,
+        "hit_y": 71.30621005911703
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.4818180496964877,
+      "angle_delta": 0.5069467754371532,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 85,
+      "owner": 0,
+      "birth_step": 66,
+      "decision_step": 65,
+      "death_step": 71,
+      "source": 9,
+      "ships": 6,
+      "target_id": 23,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.43203185953642803,
+        "arrival_tick": 98,
+        "travel_time": 33,
+        "blocked_by": "none",
+        "hit_x": 79.43187974677285,
+        "hit_y": 71.96559076433662
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.4818180496964877,
+      "angle_delta": 0.5076207470745898,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 91,
+      "owner": 0,
+      "birth_step": 69,
+      "decision_step": 68,
+      "death_step": 74,
+      "source": 9,
+      "ships": 6,
+      "target_id": 29,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.5983682902464103,
+        "arrival_tick": 109,
+        "travel_time": 41,
+        "blocked_by": "none",
+        "hit_x": 85.74225275122497,
+        "hit_y": 56.24237017327798
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.4818180496964877,
+      "angle_delta": 0.6739571777845721,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 96,
+      "owner": 0,
+      "birth_step": 71,
+      "decision_step": 70,
+      "death_step": 76,
+      "source": 9,
+      "ships": 6,
+      "target_id": 29,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.5857979699811398,
+        "arrival_tick": 111,
+        "travel_time": 41,
+        "blocked_by": "none",
+        "hit_x": 86.23528912197139,
+        "hit_y": 56.97542596487083
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.4818180496964877,
+      "angle_delta": 0.6613868575193016,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 207,
+      "owner": 0,
+      "birth_step": 112,
+      "decision_step": 111,
+      "death_step": 117,
+      "source": 8,
+      "ships": 6,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 146,
+        "travel_time": 35,
+        "blocked_by": "none",
+        "hit_x": 83.08084640080476,
+        "hit_y": 13.37307260824553
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.4818180496964948,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 210,
+      "owner": 0,
+      "birth_step": 114,
+      "decision_step": 113,
+      "death_step": 119,
+      "source": 8,
+      "ships": 6,
+      "target_id": 28,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.913738185327636,
+        "arrival_tick": 137,
+        "travel_time": 24,
+        "blocked_by": "none",
+        "hit_x": 81.69060174986801,
+        "hit_y": 32.724484299747864
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.4818180496964948,
+      "angle_delta": 0.41853074607090135,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 215,
+      "owner": 0,
+      "birth_step": 116,
+      "decision_step": 115,
+      "death_step": 121,
+      "source": 8,
+      "ships": 6,
+      "target_id": 28,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.9108287406097813,
+        "arrival_tick": 138,
+        "travel_time": 23,
+        "blocked_by": "none",
+        "hit_x": 82.35969415771105,
+        "hit_y": 34.24895472419128
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.4818180496964948,
+      "angle_delta": 0.4156213013530466,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 218,
+      "owner": 0,
+      "birth_step": 118,
+      "decision_step": 117,
+      "death_step": 123,
+      "source": 8,
+      "ships": 6,
+      "target_id": 28,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.9079305537816715,
+        "arrival_tick": 139,
+        "travel_time": 22,
+        "blocked_by": "none",
+        "hit_x": 83.0193799979822,
+        "hit_y": 35.77711426342948
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.4818180496964948,
+      "angle_delta": 0.4127231145249368,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          6
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 245,
+      "owner": 0,
+      "birth_step": 126,
+      "decision_step": 125,
+      "death_step": 132,
+      "source": 24,
+      "ships": 54,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 144,
+        "travel_time": 19,
+        "blocked_by": "none",
+        "hit_x": 98.14306099712957,
+        "hit_y": 20.97373984209273
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.4970422028984045,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          24,
+          -1.192054380105267,
+          54
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 187,
+      "owner": 0,
+      "birth_step": 104,
+      "decision_step": 103,
+      "death_step": 107,
+      "source": 9,
+      "ships": 29,
+      "target_id": 7,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.990610916192552,
+        "arrival_tick": 124,
+        "travel_time": 21,
+        "blocked_by": "none",
+        "hit_x": 3.6519200122153297,
+        "hit_y": 42.01365530908718
+      },
+      "death_kind": "planet",
+      "death_planet": 25,
+      "nearest_planet": 25,
+      "nearest_clearance": -1.5251800366727744,
+      "angle_delta": 0.47575003516235337,
+      "birth_action": {
+        "action": [
+          9,
+          -2.4663609513549054,
+          29
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 294,
+      "owner": 0,
+      "birth_step": 146,
+      "decision_step": 145,
+      "death_step": 149,
+      "source": 10,
+      "ships": 29,
+      "target_id": 4,
+      "target_route": {
+        "reachable": true,
+        "angle": 1.150981737397241,
+        "arrival_tick": 166,
+        "travel_time": 21,
+        "blocked_by": "none",
+        "hit_x": 96.34807998778467,
+        "hit_y": 57.986344690912816
+      },
+      "death_kind": "planet",
+      "death_planet": 26,
+      "nearest_planet": 26,
+      "nearest_clearance": -1.5251800366727744,
+      "angle_delta": 0.47575003516235315,
+      "birth_action": {
+        "action": [
+          10,
+          0.6752317022348879,
+          29
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 145,
+      "owner": 0,
+      "birth_step": 89,
+      "decision_step": 88,
+      "death_step": 99,
+      "source": 5,
+      "ships": 47,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.1079757549824059,
+        "arrival_tick": 117,
+        "travel_time": 29,
+        "blocked_by": "none",
+        "hit_x": 82.0205312688251,
+        "hit_y": 14.471986862094145
+      },
+      "death_kind": "planet",
+      "death_planet": 35,
+      "nearest_planet": 35,
+      "nearest_clearance": -1.573264265630916,
+      "angle_delta": 0.18150283112157306,
+      "birth_action": {
+        "action": [
+          5,
+          -0.9264729238608328,
+          47
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 108,
+      "owner": 0,
+      "birth_step": 74,
+      "decision_step": 73,
+      "death_step": 84,
+      "source": 34,
+      "ships": 12,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 0.696192605614292,
+        "arrival_tick": 92,
+        "travel_time": 19,
+        "blocked_by": "none",
+        "hit_x": 79.07245818089639,
+        "hit_y": 98.48299526226306
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.6104029958867994,
+      "angle_delta": 1.1293784026530633,
+      "birth_action": {
+        "action": [
+          34,
+          1.8255710082673553,
+          12
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 140,
+      "owner": 0,
+      "birth_step": 87,
+      "decision_step": 86,
+      "death_step": 91,
+      "source": 8,
+      "ships": 11,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 115,
+        "travel_time": 29,
+        "blocked_by": "none",
+        "hit_x": 82.96721271212456,
+        "hit_y": 12.847641728036415
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.6317631457163824,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          11
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 118,
+      "owner": 0,
+      "birth_step": 79,
+      "decision_step": 78,
+      "death_step": 84,
+      "source": 31,
+      "ships": 26,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.201101542309332,
+        "arrival_tick": 98,
+        "travel_time": 20,
+        "blocked_by": "none",
+        "hit_x": 97.93728887468306,
+        "hit_y": 21.755348839026354
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -1.6805848109084178,
+      "angle_delta": 1.2413407249817148,
+      "birth_action": {
+        "action": [
+          31,
+          0.0402391826723828,
+          26
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 289,
+      "owner": 0,
+      "birth_step": 144,
+      "decision_step": 143,
+      "death_step": 150,
+      "source": 6,
+      "ships": 56,
+      "target_id": 4,
+      "target_route": {
+        "reachable": true,
+        "angle": 0.976804565130529,
+        "arrival_tick": 163,
+        "travel_time": 20,
+        "blocked_by": "none",
+        "hit_x": 96.6816561591094,
+        "hit_y": 58.84958053164422
+      },
+      "death_kind": "planet",
+      "death_planet": 26,
+      "nearest_planet": 26,
+      "nearest_clearance": -1.7075593388961299,
+      "angle_delta": 0.5980626184408995,
+      "birth_action": {
+        "action": [
+          6,
+          0.37874194668962957,
+          56
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 270,
+      "owner": 0,
+      "birth_step": 137,
+      "decision_step": 136,
+      "death_step": 139,
+      "source": 12,
+      "ships": 60,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.785038410823163,
+        "arrival_tick": 141,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 76.71631503831561,
+        "hit_y": 98.75436598567197
+      },
+      "death_kind": "planet",
+      "death_planet": 24,
+      "nearest_planet": 24,
+      "nearest_clearance": -1.736925330817299,
+      "angle_delta": 1.390715077197447,
+      "birth_action": {
+        "action": [
+          12,
+          -2.1074318191589763,
+          60
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 121,
+      "owner": 0,
+      "birth_step": 80,
+      "decision_step": 79,
+      "death_step": 84,
+      "source": 24,
+      "ships": 15,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 106,
+        "travel_time": 27,
+        "blocked_by": "none",
+        "hit_x": 98.04842455089485,
+        "hit_y": 21.516590372831487
+      },
+      "death_kind": "planet",
+      "death_planet": 8,
+      "nearest_planet": 8,
+      "nearest_clearance": -1.8548099530267432,
+      "angle_delta": 0.5026338528707006,
+      "birth_action": {
+        "action": [
+          24,
+          -0.8955646245600086,
+          15
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 191,
+      "owner": 0,
+      "birth_step": 106,
+      "decision_step": 105,
+      "death_step": 113,
+      "source": 5,
+      "ships": 35,
+      "target_id": 7,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.164788088459264,
+        "arrival_tick": 127,
+        "travel_time": 22,
+        "blocked_by": "none",
+        "hit_x": 4.362916759807291,
+        "hit_y": 42.697127276969184
+      },
+      "death_kind": "planet",
+      "death_planet": 25,
+      "nearest_planet": 25,
+      "nearest_clearance": -1.908191915207719,
+      "angle_delta": 0.5980626184408995,
+      "birth_action": {
+        "action": [
+          5,
+          -2.7628507069001635,
+          35
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 31,
+      "owner": 0,
+      "birth_step": 44,
+      "decision_step": 43,
+      "death_step": 48,
+      "source": 8,
+      "ships": 12,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 71,
+        "travel_time": 28,
+        "blocked_by": "none",
+        "hit_x": 83.0623472496932,
+        "hit_y": 13.287534372493775
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.9125751719001114,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          12
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 41,
+      "owner": 0,
+      "birth_step": 48,
+      "decision_step": 47,
+      "death_step": 52,
+      "source": 8,
+      "ships": 12,
+      "target_id": 26,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.7837837888509742,
+        "arrival_tick": 75,
+        "travel_time": 28,
+        "blocked_by": "none",
+        "hit_x": 83.0623472496932,
+        "hit_y": 13.287534372493775
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -1.9125751719001114,
+      "angle_delta": 0.2885763495942395,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          12
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 110,
+      "owner": 0,
+      "birth_step": 75,
+      "decision_step": 74,
+      "death_step": 79,
+      "source": 9,
+      "ships": 12,
+      "target_id": 29,
+      "target_route": {
+        "reachable": true,
+        "angle": -0.6238546211736647,
+        "arrival_tick": 108,
+        "travel_time": 34,
+        "blocked_by": "none",
+        "hit_x": 86.8223904752854,
+        "hit_y": 53.25830779565216
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -1.9125751719001185,
+      "angle_delta": 0.6994435087118266,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          12
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 126,
+      "owner": 0,
+      "birth_step": 82,
+      "decision_step": 81,
+      "death_step": 87,
+      "source": 18,
+      "ships": 44,
+      "target_id": 25,
+      "target_route": {
+        "reachable": true,
+        "angle": 2.6631724974347444,
+        "arrival_tick": 87,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 18.028772683982922,
+        "hit_y": 86.84760117743521
+      },
+      "death_kind": "planet",
+      "death_planet": 9,
+      "nearest_planet": 9,
+      "nearest_clearance": -2.016084987187505,
+      "angle_delta": 0.6967032548928525,
+      "birth_action": {
+        "action": [
+          18,
+          1.966469242541892,
+          44
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 259,
+      "owner": 0,
+      "birth_step": 132,
+      "decision_step": 131,
+      "death_step": 135,
+      "source": 21,
+      "ships": 20,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.25648579264833,
+        "arrival_tick": 147,
+        "travel_time": 16,
+        "blocked_by": "none",
+        "hit_x": 97.8675274415555,
+        "hit_y": 22.03255665812066
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -2.064823592599595,
+      "angle_delta": 1.1729502630779804,
+      "birth_action": {
+        "action": [
+          21,
+          -0.08353552957034938,
+          20
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 176,
+      "owner": 0,
+      "birth_step": 100,
+      "decision_step": 99,
+      "death_step": 112,
+      "source": 4,
+      "ships": 87,
+      "target_id": 10,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.990610916192552,
+        "arrival_tick": 115,
+        "travel_time": 16,
+        "blocked_by": "none",
+        "hit_x": 72.25824270452918,
+        "hit_y": 4.015631874851458
+      },
+      "death_kind": "planet",
+      "death_planet": 26,
+      "nearest_planet": 26,
+      "nearest_clearance": -2.098612288668048,
+      "angle_delta": 0.1286996228285795,
+      "birth_action": {
+        "action": [
+          4,
+          -1.8619112933639725,
+          87
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 278,
+      "owner": 0,
+      "birth_step": 140,
+      "decision_step": 139,
+      "death_step": 143,
+      "source": 26,
+      "ships": 36,
+      "target_id": 3,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.968994804225606,
+        "arrival_tick": 160,
+        "travel_time": 21,
+        "blocked_by": "none",
+        "hit_x": 21.422308138252042,
+        "hit_y": 1.935138999072545
+      },
+      "death_kind": "planet",
+      "death_planet": 10,
+      "nearest_planet": 10,
+      "nearest_clearance": -2.0986122886681082,
+      "angle_delta": 0.5026338528707006,
+      "birth_action": {
+        "action": [
+          26,
+          -2.4663609513549054,
+          36
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 95,
+      "owner": 0,
+      "birth_step": 71,
+      "decision_step": 70,
+      "death_step": 79,
+      "source": 25,
+      "ships": 24,
+      "target_id": 0,
+      "target_route": {
+        "reachable": true,
+        "angle": 0.17259784936418732,
+        "arrival_tick": 94,
+        "travel_time": 24,
+        "blocked_by": "none",
+        "hit_x": 79.77398535908736,
+        "hit_y": 98.27341374027512
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -2.180931668734484,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          25,
+          0.37874194668962957,
+          24
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 190,
+      "owner": 0,
+      "birth_step": 106,
+      "decision_step": 105,
+      "death_step": 114,
+      "source": 24,
+      "ships": 24,
+      "target_id": 2,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.3981984774307092,
+        "arrival_tick": 129,
+        "travel_time": 24,
+        "blocked_by": "none",
+        "hit_x": 98.27341374027513,
+        "hit_y": 20.226014640912634
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -2.180931668734484,
+      "angle_delta": 0.20614409732544225,
+      "birth_action": {
+        "action": [
+          24,
+          -1.192054380105267,
+          24
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 163,
+      "owner": 0,
+      "birth_step": 94,
+      "decision_step": 93,
+      "death_step": 106,
+      "source": 34,
+      "ships": 36,
+      "target_id": 11,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.2406137630003995,
+        "arrival_tick": 109,
+        "travel_time": 16,
+        "blocked_by": "none",
+        "hit_x": 4.342720451013086,
+        "hit_y": 27.892044915872987
+      },
+      "death_kind": "planet",
+      "death_planet": 7,
+      "nearest_planet": 7,
+      "nearest_clearance": -2.4416129318712,
+      "angle_delta": 0.23173073459879046,
+      "birth_action": {
+        "action": [
+          34,
+          -2.47234449759919,
+          36
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 305,
+      "owner": 0,
+      "birth_step": 151,
+      "decision_step": 150,
+      "death_step": 153,
+      "source": 9,
+      "ships": 141,
+      "target_id": 3,
+      "target_route": {
+        "reachable": true,
+        "angle": -1.6371974614041516,
+        "arrival_tick": 173,
+        "travel_time": 23,
+        "blocked_by": "none",
+        "hit_x": 21.3742202539538,
+        "hit_y": 1.1084508153381067
+      },
+      "death_kind": "planet",
+      "death_planet": 5,
+      "nearest_planet": 5,
+      "nearest_clearance": -2.6094379124340783,
+      "angle_delta": 1.7127863489423134,
+      "birth_action": {
+        "action": [
+          9,
+          0.07558888753816181,
+          141
+        ],
+        "angle_delta": 0.0
+      }
+    },
+    {
+      "fleet_id": 252,
+      "owner": 0,
+      "birth_step": 129,
+      "decision_step": 128,
+      "death_step": 132,
+      "source": 8,
+      "ships": 33,
+      "target_id": 16,
+      "target_route": {
+        "reachable": true,
+        "angle": -2.0189639578202687,
+        "arrival_tick": 143,
+        "travel_time": 15,
+        "blocked_by": "none",
+        "hit_x": 76.67485221030697,
+        "hit_y": 32.48512794301577
+      },
+      "death_kind": "planet",
+      "death_planet": 4,
+      "nearest_planet": 4,
+      "nearest_clearance": -2.6094379124340943,
+      "angle_delta": 0.523756518563534,
+      "birth_action": {
+        "action": [
+          8,
+          -1.4952074392567347,
+          33
+        ],
+        "angle_delta": 0.0
+      }
+    }
+  ],
+  "near_misses": [
+    {
+      "step": 124,
+      "fleet_id": 231,
+      "owner": 1,
+      "source": 32,
+      "ships": 38,
+      "angle": -0.66371556025903,
+      "target_id": 16,
+      "clearance": 0.015018037379096683,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -0.66371556025903,
+        "arrival_tick": 125,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 65.17211447407499,
+        "hit_y": 20.04532158504944
+      }
+    },
+    {
+      "step": 111,
+      "fleet_id": 195,
+      "owner": 0,
+      "source": 14,
+      "ships": 11,
+      "angle": 2.6049571612257134,
+      "target_id": 26,
+      "clearance": 0.01746209807211585,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 2.6049571612257134,
+        "arrival_tick": 112,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 83.00635999198076,
+        "hit_y": 12.609448616860726
+      }
+    },
+    {
+      "step": 74,
+      "fleet_id": 59,
+      "owner": 1,
+      "source": 33,
+      "ships": 16,
+      "angle": 1.5045474153458724,
+      "target_id": 18,
+      "clearance": 0.03768489841178302,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.5045474153458724,
+        "arrival_tick": 75,
+        "travel_time": 22,
+        "blocked_by": "none",
+        "hit_x": 41.390863094274216,
+        "hit_y": 83.04709633960974
+      }
+    },
+    {
+      "step": 90,
+      "fleet_id": 133,
+      "owner": 0,
+      "source": 32,
+      "ships": 56,
+      "angle": 3.110388275719523,
+      "target_id": 7,
+      "clearance": 0.06167313748621339,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 3.110388275719523,
+        "arrival_tick": 91,
+        "travel_time": 8,
+        "blocked_by": "none",
+        "hit_x": 2.6129867762387953,
+        "hit_y": 40.94178501278804
+      }
+    },
+    {
+      "step": 126,
+      "fleet_id": 237,
+      "owner": 0,
+      "source": 18,
+      "ships": 33,
+      "angle": 2.3202917160817966,
+      "target_id": 22,
+      "clearance": 0.06325371778229005,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0774663615320663,
+      "route": {
+        "reachable": true,
+        "angle": 2.397758077613863,
+        "arrival_tick": 127,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 11.422493770733709,
+        "hit_y": 46.8302446043556
+      }
+    },
+    {
+      "step": 150,
+      "fleet_id": 276,
+      "owner": 0,
+      "source": 16,
+      "ships": 30,
+      "angle": 0.9174830401102143,
+      "target_id": 4,
+      "clearance": 0.08569420509898595,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.9174830401102143,
+        "arrival_tick": 151,
+        "travel_time": 13,
+        "blocked_by": "none",
+        "hit_x": 96.85387151088163,
+        "hit_y": 59.101154882275814
+      }
+    },
+    {
+      "step": 152,
+      "fleet_id": 284,
+      "owner": 0,
+      "source": 12,
+      "ships": 5,
+      "angle": -1.4383125185086596,
+      "target_id": 8,
+      "clearance": 0.1119578477313361,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -1.4383125185086596,
+        "arrival_tick": 153,
+        "travel_time": 12,
+        "blocked_by": "none",
+        "hit_x": 95.74500874775593,
+        "hit_y": 72.96943770723715
+      }
+    },
+    {
+      "step": 107,
+      "fleet_id": 169,
+      "owner": 0,
+      "source": 14,
+      "ships": 5,
+      "angle": -3.0091088453035564,
+      "target_id": 10,
+      "clearance": 0.11195784773134321,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -3.0091088453035564,
+        "arrival_tick": 108,
+        "travel_time": 12,
+        "blocked_by": "none",
+        "hit_x": 72.96943770723715,
+        "hit_y": 4.254991252244073
+      }
+    },
+    {
+      "step": 58,
+      "fleet_id": 32,
+      "owner": 0,
+      "source": 32,
+      "ships": 8,
+      "angle": 1.405705029488451,
+      "target_id": 5,
+      "clearance": 0.12046367646434941,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.405705029488451,
+        "arrival_tick": 59,
+        "travel_time": 15,
+        "blocked_by": "none",
+        "hit_x": 40.775950420226174,
+        "hit_y": 95.9424209635595
+      }
+    },
+    {
+      "step": 76,
+      "fleet_id": 102,
+      "owner": 1,
+      "source": 6,
+      "ships": 30,
+      "angle": 0.9674617714458364,
+      "target_id": 29,
+      "clearance": 0.13000823007842732,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.9674617714458364,
+        "arrival_tick": 77,
+        "travel_time": 7,
+        "blocked_by": "none",
+        "hit_x": 71.44561347596725,
+        "hit_y": 21.118424058812977
+      }
+    },
+    {
+      "step": 96,
+      "fleet_id": 156,
+      "owner": 1,
+      "source": 33,
+      "ships": 13,
+      "angle": -0.14344494839732408,
+      "target_id": 17,
+      "clearance": 0.13228853750236325,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 6.106226635438361e-16,
+      "route": {
+        "reachable": true,
+        "angle": -0.14344494839732347,
+        "arrival_tick": 97,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 77.83622400768579,
+        "hit_y": 32.400129321055545
+      }
+    },
+    {
+      "step": 124,
+      "fleet_id": 233,
+      "owner": 1,
+      "source": 6,
+      "ships": 32,
+      "angle": 0.07558888753816181,
+      "target_id": 10,
+      "clearance": 0.15064916486875868,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.07558888753816181,
+        "arrival_tick": 125,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 72.85296920081886,
+        "hit_y": 4.2092023545507224
+      }
+    },
+    {
+      "step": 124,
+      "fleet_id": 232,
+      "owner": 1,
+      "source": 15,
+      "ships": 27,
+      "angle": 1.034160834430817,
+      "target_id": 27,
+      "clearance": 0.16440240569471865,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.034160834430817,
+        "arrival_tick": 125,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 12.853969427692704,
+        "hit_y": 17.404692353753926
+      }
+    },
+    {
+      "step": 50,
+      "fleet_id": 39,
+      "owner": 0,
+      "source": 9,
+      "ships": 12,
+      "angle": 0.07558888753816181,
+      "target_id": 5,
+      "clearance": 0.1661969299639443,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.07558888753816181,
+        "arrival_tick": 51,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 40.229656713513904,
+        "hit_y": 96.78158652040335
+      }
+    },
+    {
+      "step": 42,
+      "fleet_id": 19,
+      "owner": 0,
+      "source": 8,
+      "ships": 6,
+      "angle": -1.4952074392567347,
+      "target_id": 4,
+      "clearance": 0.17869918148961883,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -1.4952074392567347,
+        "arrival_tick": 43,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 96.7490570665464,
+        "hit_y": 60.1998703903584
+      }
+    },
+    {
+      "step": 44,
+      "fleet_id": 24,
+      "owner": 0,
+      "source": 8,
+      "ships": 6,
+      "angle": -1.4952074392567347,
+      "target_id": 4,
+      "clearance": 0.17869918148961883,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -1.4952074392567347,
+        "arrival_tick": 45,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 96.7490570665464,
+        "hit_y": 60.1998703903584
+      }
+    },
+    {
+      "step": 41,
+      "fleet_id": 18,
+      "owner": 0,
+      "source": 9,
+      "ships": 6,
+      "angle": 0.07558888753816181,
+      "target_id": 5,
+      "clearance": 0.17869918148962594,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.07558888753816181,
+        "arrival_tick": 42,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 39.800129609641594,
+        "hit_y": 96.7490570665464
+      }
+    },
+    {
+      "step": 43,
+      "fleet_id": 21,
+      "owner": 0,
+      "source": 9,
+      "ships": 6,
+      "angle": 0.07558888753816181,
+      "target_id": 5,
+      "clearance": 0.17869918148962594,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.07558888753816181,
+        "arrival_tick": 44,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 39.800129609641594,
+        "hit_y": 96.7490570665464
+      }
+    },
+    {
+      "step": 45,
+      "fleet_id": 25,
+      "owner": 0,
+      "source": 9,
+      "ships": 6,
+      "angle": 0.07558888753816181,
+      "target_id": 5,
+      "clearance": 0.17869918148962594,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.07558888753816181,
+        "arrival_tick": 46,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 39.800129609641594,
+        "hit_y": 96.7490570665464
+      }
+    },
+    {
+      "step": 47,
+      "fleet_id": 27,
+      "owner": 0,
+      "source": 9,
+      "ships": 6,
+      "angle": 0.07558888753816181,
+      "target_id": 5,
+      "clearance": 0.17869918148962594,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.07558888753816181,
+        "arrival_tick": 48,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 39.800129609641594,
+        "hit_y": 96.7490570665464
+      }
+    },
+    {
+      "step": 53,
+      "fleet_id": 42,
+      "owner": 0,
+      "source": 9,
+      "ships": 6,
+      "angle": 0.07558888753816181,
+      "target_id": 5,
+      "clearance": 0.17869918148962594,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 0.07558888753816181,
+        "arrival_tick": 54,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 39.800129609641594,
+        "hit_y": 96.7490570665464
+      }
+    },
+    {
+      "step": 74,
+      "fleet_id": 98,
+      "owner": 1,
+      "source": 33,
+      "ships": 14,
+      "angle": -0.7746687780320217,
+      "target_id": 17,
+      "clearance": 0.22264446169379304,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 2.1094237467877974e-15,
+      "route": {
+        "reachable": true,
+        "angle": -0.7746687780320196,
+        "arrival_tick": 75,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 59.38771545365726,
+        "hit_y": 18.96329363815535
+      }
+    },
+    {
+      "step": 33,
+      "fleet_id": 10,
+      "owner": 1,
+      "source": 35,
+      "ships": 14,
+      "angle": -0.622970479762367,
+      "target_id": 19,
+      "clearance": 0.22264446169380858,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -0.622970479762367,
+        "arrival_tick": 34,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 63.97008406641738,
+        "hit_y": 20.73836822035662
+      }
+    },
+    {
+      "step": 116,
+      "fleet_id": 211,
+      "owner": 0,
+      "source": 25,
+      "ships": 26,
+      "angle": 2.6049571612257134,
+      "target_id": 13,
+      "clearance": 0.2490701885376745,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 2.6049571612257134,
+        "arrival_tick": 117,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 6.178880741730509,
+        "hit_y": 93.8238772896467
+      }
+    },
+    {
+      "step": 73,
+      "fleet_id": 97,
+      "owner": 1,
+      "source": 27,
+      "ships": 26,
+      "angle": -2.1074318191589763,
+      "target_id": 15,
+      "clearance": 0.24907018853768625,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -2.1074318191589763,
+        "arrival_tick": 74,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 6.176122710353298,
+        "hit_y": 6.178880741730509
+      }
+    },
+    {
+      "step": 61,
+      "fleet_id": 68,
+      "owner": 0,
+      "source": 24,
+      "ships": 26,
+      "angle": 1.034160834430817,
+      "target_id": 12,
+      "clearance": 0.24907018853770535,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.034160834430817,
+        "arrival_tick": 62,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 93.8238772896467,
+        "hit_y": 93.82111925826949
+      }
+    },
+    {
+      "step": 79,
+      "fleet_id": 77,
+      "owner": 1,
+      "source": 27,
+      "ships": 93,
+      "angle": 1.5080240615360068,
+      "target_id": 25,
+      "clearance": 0.27388764946356314,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.5080240615360068,
+        "arrival_tick": 80,
+        "travel_time": 19,
+        "blocked_by": "none",
+        "hit_x": 17.154580843657147,
+        "hit_y": 88.6253123549944
+      }
+    },
+    {
+      "step": 79,
+      "fleet_id": 106,
+      "owner": 0,
+      "source": 28,
+      "ships": 6,
+      "angle": 2.7348310599194052,
+      "target_id": 7,
+      "clearance": 0.3239986211809356,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 2.7348310599194052,
+        "arrival_tick": 80,
+        "travel_time": 8,
+        "blocked_by": "none",
+        "hit_x": 4.334846380293252,
+        "hit_y": 40.42091530563586
+      }
+    },
+    {
+      "step": 142,
+      "fleet_id": 274,
+      "owner": 0,
+      "source": 22,
+      "ships": 65,
+      "angle": -0.5496086634153922,
+      "target_id": 18,
+      "clearance": 0.33043718593994775,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0012791365101876284,
+      "route": {
+        "reachable": true,
+        "angle": -0.5483295269052045,
+        "arrival_tick": 143,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 35.39848555118987,
+        "hit_y": 21.822104704733253
+      }
+    },
+    {
+      "step": 123,
+      "fleet_id": 227,
+      "owner": 0,
+      "source": 26,
+      "ships": 25,
+      "angle": -0.5366354923640796,
+      "target_id": 14,
+      "clearance": 0.336540958575114,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -0.5366354923640796,
+        "arrival_tick": 124,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 93.72088549545576,
+        "hit_y": 6.235748305998898
+      }
+    },
+    {
+      "step": 151,
+      "fleet_id": 285,
+      "owner": 0,
+      "source": 21,
+      "ships": 4,
+      "angle": -0.010659056147032489,
+      "target_id": 8,
+      "clearance": 0.3378770904303554,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 8.673617379884035e-16,
+      "route": {
+        "reachable": true,
+        "angle": -0.010659056147033356,
+        "arrival_tick": 152,
+        "travel_time": 10,
+        "blocked_by": "none",
+        "hit_x": 94.84372707948694,
+        "hit_y": 72.33737850726928
+      }
+    },
+    {
+      "step": 25,
+      "fleet_id": 5,
+      "owner": 1,
+      "source": 11,
+      "ships": 15,
+      "angle": -0.8955646245600086,
+      "target_id": 27,
+      "clearance": 0.37248699881273595,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -0.8955646245600086,
+        "arrival_tick": 26,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 12.504836666122511,
+        "hit_y": 17.264269579528637
+      }
+    },
+    {
+      "step": 44,
+      "fleet_id": 12,
+      "owner": 0,
+      "source": 9,
+      "ships": 8,
+      "angle": -1.2949437059426454,
+      "target_id": 32,
+      "clearance": 0.40537124738830776,
+      "target_radius": 1.6931471805599454,
+      "inferred_angle_delta": 0.03934899864861152,
+      "route": {
+        "reachable": true,
+        "angle": -1.334292704591257,
+        "arrival_tick": 45,
+        "travel_time": 15,
+        "blocked_by": "none",
+        "hit_x": 34.605264215200776,
+        "hit_y": 67.06832880575895
+      }
+    },
+    {
+      "step": 101,
+      "fleet_id": 164,
+      "owner": 0,
+      "source": 32,
+      "ships": 26,
+      "angle": -1.0697041768296063,
+      "target_id": 28,
+      "clearance": 0.435221165502119,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.011480948085124787,
+      "route": {
+        "reachable": true,
+        "angle": -1.0582232287444815,
+        "arrival_tick": 102,
+        "travel_time": 8,
+        "blocked_by": "none",
+        "hit_x": 46.44796228202317,
+        "hit_y": 13.602196007399293
+      }
+    },
+    {
+      "step": 148,
+      "fleet_id": 281,
+      "owner": 0,
+      "source": 16,
+      "ships": 44,
+      "angle": -1.7011781719094194,
+      "target_id": 10,
+      "clearance": 0.47377126292704164,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -1.7011781719094194,
+        "arrival_tick": 149,
+        "travel_time": 9,
+        "blocked_by": "none",
+        "hit_x": 72.26771000477098,
+        "hit_y": 3.7182757188589677
+      }
+    },
+    {
+      "step": 54,
+      "fleet_id": 46,
+      "owner": 0,
+      "source": 25,
+      "ships": 17,
+      "angle": -0.9528058529272203,
+      "target_id": 20,
+      "clearance": 0.5127223117723265,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.12905870769560776,
+      "route": {
+        "reachable": true,
+        "angle": -1.081864560622828,
+        "arrival_tick": 55,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 23.539346000883807,
+        "hit_y": 75.19018247672447
+      }
+    },
+    {
+      "step": 126,
+      "fleet_id": 238,
+      "owner": 1,
+      "source": 15,
+      "ships": 23,
+      "angle": 1.034160834430817,
+      "target_id": 27,
+      "clearance": 0.52073073099417,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.034160834430817,
+        "arrival_tick": 127,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 12.61107355936673,
+        "hit_y": 16.996371621850006
+      }
+    },
+    {
+      "step": 95,
+      "fleet_id": 155,
+      "owner": 1,
+      "source": 11,
+      "ships": 27,
+      "angle": 1.6463852143330584,
+      "target_id": 7,
+      "clearance": 0.5377868585335488,
+      "target_radius": 2.6094379124341005,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.6463852143330584,
+        "arrival_tick": 96,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 3.2035010920562743,
+        "hit_y": 40.426563635474935
+      }
+    },
+    {
+      "step": 98,
+      "fleet_id": 132,
+      "owner": 1,
+      "source": 7,
+      "ships": 71,
+      "angle": 1.150981737397241,
+      "target_id": 9,
+      "clearance": 0.5391683988515386,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.150981737397241,
+        "arrival_tick": 99,
+        "travel_time": 17,
+        "blocked_by": "none",
+        "hit_x": 27.993497527823006,
+        "hit_y": 96.54836528398248
+      }
+    },
+    {
+      "step": 111,
+      "fleet_id": 197,
+      "owner": 1,
+      "source": 6,
+      "ships": 13,
+      "angle": 1.5553112328772214,
+      "target_id": 28,
+      "clearance": 0.5764785871389437,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.5553112328772214,
+        "arrival_tick": 112,
+        "travel_time": 5,
+        "blocked_by": "none",
+        "hit_x": 59.28243596315545,
+        "hit_y": 16.530189035979312
+      }
+    },
+    {
+      "step": 60,
+      "fleet_id": 43,
+      "owner": 0,
+      "source": 24,
+      "ships": 14,
+      "angle": -3.0755478074719234,
+      "target_id": 18,
+      "clearance": 0.5793472603085603,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.019929791905755945,
+      "route": {
+        "reachable": true,
+        "angle": -3.0954775993776793,
+        "arrival_tick": 61,
+        "travel_time": 13,
+        "blocked_by": "none",
+        "hit_x": 56.82759244435234,
+        "hit_y": 81.51782595505719
+      }
+    },
+    {
+      "step": 33,
+      "fleet_id": 8,
+      "owner": 0,
+      "source": 9,
+      "ships": 4,
+      "angle": -2.4663609513549054,
+      "target_id": 25,
+      "clearance": 0.5845625368995213,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -2.4663609513549054,
+        "arrival_tick": 34,
+        "travel_time": 7,
+        "blocked_by": "none",
+        "hit_x": 18.03691196314053,
+        "hit_y": 88.11389934351476
+      }
+    },
+    {
+      "step": 39,
+      "fleet_id": 14,
+      "owner": 0,
+      "source": 28,
+      "ships": 8,
+      "angle": -0.6930306285131904,
+      "target_id": 32,
+      "clearance": 0.5944092649512149,
+      "target_radius": 1.6931471805599454,
+      "inferred_angle_delta": 0.03696199077281792,
+      "route": {
+        "reachable": true,
+        "angle": -0.7299926192860083,
+        "arrival_tick": 40,
+        "travel_time": 7,
+        "blocked_by": "none",
+        "hit_x": 38.3329878275835,
+        "hit_y": 69.06320337079157
+      }
+    },
+    {
+      "step": 34,
+      "fleet_id": 9,
+      "owner": 0,
+      "source": 28,
+      "ships": 11,
+      "angle": 2.854131756607596,
+      "target_id": 25,
+      "clearance": 0.6076471656155888,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 2.854131756607596,
+        "arrival_tick": 35,
+        "travel_time": 8,
+        "blocked_by": "none",
+        "hit_x": 17.729564159882074,
+        "hit_y": 87.14894064431519
+      }
+    },
+    {
+      "step": 65,
+      "fleet_id": 65,
+      "owner": 0,
+      "source": 4,
+      "ships": 27,
+      "angle": -2.0682136837775853,
+      "target_id": 23,
+      "clearance": 0.6121142901225063,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.003159693261154839,
+      "route": {
+        "reachable": true,
+        "angle": -2.07137337703874,
+        "arrival_tick": 66,
+        "travel_time": 10,
+        "blocked_by": "none",
+        "hit_x": 82.82607230973248,
+        "hit_y": 33.468874943817276
+      }
+    },
+    {
+      "step": 110,
+      "fleet_id": 196,
+      "owner": 1,
+      "source": 26,
+      "ships": 22,
+      "angle": -0.5366354923640796,
+      "target_id": 14,
+      "clearance": 0.6179323377447714,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": -0.5366354923640796,
+        "arrival_tick": 111,
+        "travel_time": 4,
+        "blocked_by": "none",
+        "hit_x": 93.39843587319389,
+        "hit_y": 6.4275624238505245
+      }
+    },
+    {
+      "step": 91,
+      "fleet_id": 141,
+      "owner": 0,
+      "source": 22,
+      "ships": 19,
+      "angle": 2.418263272076592,
+      "target_id": 9,
+      "clearance": 0.6312395749127138,
+      "target_radius": 2.09861228866811,
+      "inferred_angle_delta": 4.440892098500626e-16,
+      "route": {
+        "reachable": true,
+        "angle": 2.4182632720765915,
+        "arrival_tick": 92,
+        "travel_time": 6,
+        "blocked_by": "none",
+        "hit_x": 27.926807638804902,
+        "hit_y": 95.60666062277187
+      }
+    },
+    {
+      "step": 133,
+      "fleet_id": 258,
+      "owner": 0,
+      "source": 28,
+      "ships": 22,
+      "angle": -2.9073988753174524,
+      "target_id": 16,
+      "clearance": 0.6504711604130431,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0634269198801638,
+      "route": {
+        "reachable": true,
+        "angle": -2.9708257951976162,
+        "arrival_tick": 134,
+        "travel_time": 3,
+        "blocked_by": "none",
+        "hit_x": 69.87653029904725,
+        "hit_y": 26.557657494533206
+      }
+    },
+    {
+      "step": 62,
+      "fleet_id": 52,
+      "owner": 1,
+      "source": 11,
+      "ships": 22,
+      "angle": 1.0733112545636807,
+      "target_id": 16,
+      "clearance": 0.6538275874055233,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 2.220446049250313e-16,
+      "route": {
+        "reachable": true,
+        "angle": 1.073311254563681,
+        "arrival_tick": 63,
+        "travel_time": 12,
+        "blocked_by": "none",
+        "hit_x": 19.515933732426614,
+        "hit_y": 55.93355327694731
+      }
+    },
+    {
+      "step": 139,
+      "fleet_id": 256,
+      "owner": 0,
+      "source": 14,
+      "ships": 42,
+      "angle": 2.186620536134914,
+      "target_id": 16,
+      "clearance": 0.6616781929799458,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.02618690627848519,
+      "route": {
+        "reachable": true,
+        "angle": 2.1604336298564286,
+        "arrival_tick": 140,
+        "travel_time": 10,
+        "blocked_by": "none",
+        "hit_x": 75.40505509635321,
+        "hit_y": 32.64271296505688
+      }
+    },
+    {
+      "step": 20,
+      "fleet_id": 3,
+      "owner": 1,
+      "source": 31,
+      "ships": 8,
+      "angle": 1.7539692405969647,
+      "target_id": 35,
+      "clearance": 0.6833074126546905,
+      "target_radius": 1.6931471805599454,
+      "inferred_angle_delta": 0.0,
+      "route": {
+        "reachable": true,
+        "angle": 1.7539692405969647,
+        "arrival_tick": 21,
+        "travel_time": 7,
+        "blocked_by": "none",
+        "hit_x": 47.581511864973464,
+        "hit_y": 27.781183403965695
+      }
+    },
+    {
+      "step": 152,
+      "fleet_id": 292,
+      "owner": 0,
+      "source": 32,
+      "ships": 18,
+      "angle": 0.7146484456519806,
+      "target_id": 28,
+      "clearance": 0.6998528302801639,
+      "target_radius": 1.0,
+      "inferred_angle_delta": 0.0685910714784701,
+      "route": {
+        "reachable": true,
+        "angle": 0.7832395171304507,
+        "arrival_tick": 153,
+        "travel_time": 9,
+        "blocked_by": "none",
+        "hit_x": 84.98031342948352,
+        "hit_y": 54.32451793711103
+      }
+    },
+    {
+      "step": 45,
+      "fleet_id": 13,
+      "owner": 0,
+      "source": 8,
+      "ships": 8,
+      "angle": -2.8937738177063697,
+      "target_id": 34,
+      "clearance": 0.739810487821349,
+      "target_radius": 1.6931471805599454,
+      "inferred_angle_delta": 0.0529500768126856,
+      "route": {
+        "reachable": true,
+        "angle": -2.9467238945190553,
+        "arrival_tick": 46,
+        "travel_time": 15,
+        "blocked_by": "none",
+        "hit_x": 66.80471978628073,
+        "hit_y": 66.59791221748368
+      }
+    }
+  ],
+  "logs": {},
+  "rewards": [
+    1,
+    -1
+  ],
+  "statuses": [
+    "DONE",
+    "DONE"
+  ]
+}

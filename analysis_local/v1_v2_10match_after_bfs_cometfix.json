@@ -1,0 +1,229 @@
+{
+  "score": {
+    "v1": 0,
+    "v2": 10,
+    "draw": 0
+  },
+  "results": [
+    {
+      "seed": 0,
+      "winner": "v2",
+      "v2_player": 1,
+      "rewards": [
+        -1,
+        1
+      ],
+      "steps": 177,
+      "avg_prod_diff_0_50": 3.176470588235294,
+      "min_prod_diff_0_50": 0,
+      "max_prod_diff_0_50": 11,
+      "t50": {
+        "t": 50,
+        "prod_diff": 11,
+        "ship_diff": 70,
+        "v2_prod": 16,
+        "v1_prod": 5,
+        "v2_ships": 152,
+        "v1_ships": 82
+      }
+    },
+    {
+      "seed": 1,
+      "winner": "v2",
+      "v2_player": 0,
+      "rewards": [
+        1,
+        -1
+      ],
+      "steps": 176,
+      "avg_prod_diff_0_50": 2.196078431372549,
+      "min_prod_diff_0_50": 0,
+      "max_prod_diff_0_50": 8,
+      "t50": {
+        "t": 50,
+        "prod_diff": 1,
+        "ship_diff": 58,
+        "v2_prod": 22,
+        "v1_prod": 21,
+        "v2_ships": 381,
+        "v1_ships": 323
+      }
+    },
+    {
+      "seed": 2,
+      "winner": "v2",
+      "v2_player": 1,
+      "rewards": [
+        -1,
+        1
+      ],
+      "steps": 122,
+      "avg_prod_diff_0_50": 9.686274509803921,
+      "min_prod_diff_0_50": 0,
+      "max_prod_diff_0_50": 30,
+      "t50": {
+        "t": 50,
+        "prod_diff": 20,
+        "ship_diff": 390,
+        "v2_prod": 44,
+        "v1_prod": 24,
+        "v2_ships": 968,
+        "v1_ships": 578
+      }
+    },
+    {
+      "seed": 3,
+      "winner": "v2",
+      "v2_player": 0,
+      "rewards": [
+        1,
+        -1
+      ],
+      "steps": 131,
+      "avg_prod_diff_0_50": 9.313725490196079,
+      "min_prod_diff_0_50": -5,
+      "max_prod_diff_0_50": 25,
+      "t50": {
+        "t": 50,
+        "prod_diff": 25,
+        "ship_diff": 302,
+        "v2_prod": 44,
+        "v1_prod": 19,
+        "v2_ships": 655,
+        "v1_ships": 353
+      }
+    },
+    {
+      "seed": 4,
+      "winner": "v2",
+      "v2_player": 1,
+      "rewards": [
+        -1,
+        1
+      ],
+      "steps": 130,
+      "avg_prod_diff_0_50": 4.0588235294117645,
+      "min_prod_diff_0_50": 0,
+      "max_prod_diff_0_50": 11,
+      "t50": {
+        "t": 50,
+        "prod_diff": 4,
+        "ship_diff": 81,
+        "v2_prod": 31,
+        "v1_prod": 27,
+        "v2_ships": 456,
+        "v1_ships": 375
+      }
+    },
+    {
+      "seed": 5,
+      "winner": "v2",
+      "v2_player": 0,
+      "rewards": [
+        1,
+        -1
+      ],
+      "steps": 364,
+      "avg_prod_diff_0_50": 3.411764705882353,
+      "min_prod_diff_0_50": 0,
+      "max_prod_diff_0_50": 8,
+      "t50": {
+        "t": 50,
+        "prod_diff": 7,
+        "ship_diff": 69,
+        "v2_prod": 23,
+        "v1_prod": 16,
+        "v2_ships": 363,
+        "v1_ships": 294
+      }
+    },
+    {
+      "seed": 6,
+      "winner": "v2",
+      "v2_player": 1,
+      "rewards": [
+        -1,
+        1
+      ],
+      "steps": 184,
+      "avg_prod_diff_0_50": 3.9019607843137254,
+      "min_prod_diff_0_50": 0,
+      "max_prod_diff_0_50": 14,
+      "t50": {
+        "t": 50,
+        "prod_diff": 13,
+        "ship_diff": 117,
+        "v2_prod": 25,
+        "v1_prod": 12,
+        "v2_ships": 289,
+        "v1_ships": 172
+      }
+    },
+    {
+      "seed": 7,
+      "winner": "v2",
+      "v2_player": 0,
+      "rewards": [
+        1,
+        -1
+      ],
+      "steps": 148,
+      "avg_prod_diff_0_50": 5.019607843137255,
+      "min_prod_diff_0_50": 0,
+      "max_prod_diff_0_50": 11,
+      "t50": {
+        "t": 50,
+        "prod_diff": 4,
+        "ship_diff": 226,
+        "v2_prod": 30,
+        "v1_prod": 26,
+        "v2_ships": 715,
+        "v1_ships": 489
+      }
+    },
+    {
+      "seed": 8,
+      "winner": "v2",
+      "v2_player": 1,
+      "rewards": [
+        -1,
+        1
+      ],
+      "steps": 122,
+      "avg_prod_diff_0_50": 9.333333333333334,
+      "min_prod_diff_0_50": -2,
+      "max_prod_diff_0_50": 28,
+      "t50": {
+        "t": 50,
+        "prod_diff": 27,
+        "ship_diff": 310,
+        "v2_prod": 46,
+        "v1_prod": 19,
+        "v2_ships": 695,
+        "v1_ships": 385
+      }
+    },
+    {
+      "seed": 9,
+      "winner": "v2",
+      "v2_player": 0,
+      "rewards": [
+        1,
+        -1
+      ],
+      "steps": 303,
+      "avg_prod_diff_0_50": 2.4901960784313726,
+      "min_prod_diff_0_50": -3,
+      "max_prod_diff_0_50": 10,
+      "t50": {
+        "t": 50,
+        "prod_diff": 2,
+        "ship_diff": 61,
+        "v2_prod": 24,
+        "v1_prod": 22,
+        "v2_ships": 319,
+        "v1_ships": 258
+      }
+    }
+  ]
+}

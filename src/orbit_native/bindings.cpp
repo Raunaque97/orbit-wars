@@ -325,6 +325,8 @@ PYBIND11_MODULE(orbit_native, m) {
       .def("initialize", [](orbit::Engine& engine, const py::object& obs) {
         engine.initialize(observation_from_py(obs));
       })
+      .def("set_v2_risk_start_tick", &orbit::Engine::set_v2_risk_start_tick)
+      .def("set_v2_risk_ramp", &orbit::Engine::set_v2_risk_ramp)
       .def("act", [](orbit::Engine& engine, const py::object& obs) {
         return moves_to_py(engine.act(observation_from_py(obs)));
       })

@@ -126,6 +126,12 @@ class Engine {
   Engine() = default;
 
   void initialize(const Observation& obs);
+  void set_v2_risk_start_tick(int tick) { v2_risk_start_tick_ = tick; }
+  void set_v2_risk_ramp(int start_tick, int end_tick, double end_value) {
+    v2_risk_start_tick_ = start_tick;
+    v2_risk_end_tick_ = end_tick;
+    v2_risk_end_value_ = end_value;
+  }
   std::vector<Move> act(const Observation& obs);
   std::vector<Move> act_v2(const Observation& obs);
   SearchResult search(const Observation& obs, int budget_ms);
@@ -165,6 +171,16 @@ class Engine {
     int last_step = -1;
   };
 
+  struct PlannedTransfer {
+    int launch_tick = -1;
+    int source_id = -1;
+    int target_id = -1;
+    int ships = 0;
+    double angle = 0.0;
+    int arrival_tick = -1;
+    bool reinforcement = false;
+  };
+
   Observation base_;
   bool initialized_ = false;
   std::unordered_map<int, std::size_t> base_planet_index_;
@@ -175,6 +191,10 @@ class Engine {
   std::vector<FleetArrival> predicted_fleet_arrivals_;
   std::vector<TransferHint> transfer_hints_;
   std::vector<Move> last_best_moves_;
+  std::vector<PlannedTransfer> v2_best_line_;
+  int v2_risk_start_tick_ = 500;
+  int v2_risk_end_tick_ = 530;
+  double v2_risk_end_value_ = 1.0;
   int route_warm_until_step_ = 0;
   SearchStats last_search_stats_;
 

@@ -9,6 +9,7 @@ import sys
 import sysconfig
 
 _LAST_STEP_BY_PLAYER = {}
+_MAP_SIGNATURE_BY_PLAYER = {}
 _ORBIT_NATIVE = None
 
 
@@ -84,14 +85,55 @@ def _get(obs, name, default=None):
     return getattr(obs, name, default)
 
 
+def _map_signature(planets, initial_planets, angular_velocity):
+    geometry = initial_planets or planets
+    return (
+        round(float(angular_velocity), 12),
+        tuple(
+            sorted(
+                (
+                    int(p[0]),
+                    round(float(p[2]), 6),
+                    round(float(p[3]), 6),
+                    round(float(p[4]), 6),
+                    int(p[6]),
+                )
+                for p in geometry
+            )
+        ),
+    )
+
+
+def _looks_like_opening(planets, fleets):
+    if fleets:
+        return False
+    owned = [p for p in planets if int(p[1]) >= 0]
+    if not 2 <= len(owned) <= 4:
+        return False
+    return all(int(p[5]) <= 20 for p in owned)
+
+
 def native_obs(obs):
     player = int(_get(obs, "player", 0))
+    planets = _get(obs, "planets", [])
+    initial_planets = _get(obs, "initial_planets", [])
+    fleets = _get(obs, "fleets", [])
+    angular_velocity = _get(obs, "angular_velocity", 0.0)
     raw_step = _get(obs, "step", None)
+    signature = _map_signature(planets, initial_planets, angular_velocity)
+    last_step = _LAST_STEP_BY_PLAYER.get(player, -1)
+    last_signature = _MAP_SIGNATURE_BY_PLAYER.get(player)
     if raw_step is None:
-        step = _LAST_STEP_BY_PLAYER.get(player, -1) + 1
+        if last_signature is not None and signature != last_signature:
+            step = 0
+        elif last_step >= 10 and _looks_like_opening(planets, fleets):
+            step = 0
+        else:
+            step = last_step + 1
     else:
         step = int(raw_step)
     _LAST_STEP_BY_PLAYER[player] = step
+    _MAP_SIGNATURE_BY_PLAYER[player] = signature
 
     remaining = _get(obs, "remainingOverageTime", None)
     budget_ms = 950
@@ -105,10 +147,10 @@ def native_obs(obs):
         "player": player,
         "step": step,
         "time_budget_ms": budget_ms,
-        "angular_velocity": _get(obs, "angular_velocity", 0.0),
-        "planets": _get(obs, "planets", []),
-        "initial_planets": _get(obs, "initial_planets", []),
-        "fleets": _get(obs, "fleets", []),
+        "angular_velocity": angular_velocity,
+        "planets": planets,
+        "initial_planets": initial_planets,
+        "fleets": fleets,
         "comets": _get(obs, "comets", []),
         "comet_planet_ids": _get(obs, "comet_planet_ids", []),
     }

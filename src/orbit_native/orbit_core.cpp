@@ -198,6 +198,7 @@ void Engine::initialize(const Observation& obs) {
   route_cache_.clear();
   transfer_hints_.clear();
   last_best_moves_.clear();
+  v2_best_line_.clear();
   route_warm_until_step_ = base_.step;
   rebuild_base_indexes();
   build_position_cache();
@@ -259,6 +260,7 @@ void Engine::refresh_dynamic_observation(const Observation& obs) {
     route_cache_.clear();
     transfer_hints_.clear();
     last_best_moves_.clear();
+    v2_best_line_.clear();
     route_warm_until_step_ = base_.step;
     rebuild_base_indexes();
     build_position_cache();
@@ -938,22 +940,101 @@ SearchResult Engine::search_v2(const Observation& obs, int budget_ms) {
   SearchStats stats;
   bool timed_out = false;
   constexpr int kForecastHorizon = 50;
-
-  std::vector<const Planet*> mine;
-  for (const Planet& planet : base_.planets) {
-    if (planet.owner == obs.player) {
-      mine.push_back(&planet);
-    }
-  }
+  constexpr int kMaxCommitmentDepth = 16;
+  constexpr std::size_t kBranchLimit = 24;
+  const int end_tick = obs.step + kForecastHorizon;
 
   std::unordered_map<int, std::size_t> planet_index;
   for (std::size_t i = 0; i < base_.planets.size(); ++i) {
     planet_index[base_.planets[i].id] = i;
   }
 
-  const auto production_diff = [&](const Planet& planet) {
+  struct SearchState {
+    int tick = 0;
+    std::vector<Planet> planets;
+    std::map<int, std::vector<Fleet>> planned_arrivals;
+    std::vector<PlannedTransfer> line;
+    int total_ships_sent = 0;
+  };
+
+  struct Candidate {
+    PlannedTransfer transfer;
+    double roi_time = 1e100;
+    double production_delta = 0.0;
+  };
+
+  const auto planet_index_in = [](const std::vector<Planet>& planets, int id) {
+    for (std::size_t i = 0; i < planets.size(); ++i) {
+      if (planets[i].id == id) {
+        return static_cast<int>(i);
+      }
+    }
+    return -1;
+  };
+
+  const auto risk_weight = [&](int tick) {
+    if (v2_risk_start_tick_ >= kMaxSteps || v2_risk_end_value_ <= 0.0 ||
+        tick <= v2_risk_start_tick_) {
+      return 0.0;
+    }
+    if (tick >= v2_risk_end_tick_) {
+      return v2_risk_end_value_;
+    }
+    const int ramp_ticks = std::max(1, v2_risk_end_tick_ - v2_risk_start_tick_);
+    const double fraction =
+        static_cast<double>(tick - v2_risk_start_tick_) /
+        static_cast<double>(ramp_ticks);
+    return v2_risk_end_value_ * std::clamp(fraction, 0.0, 1.0);
+  };
+
+  std::map<std::tuple<int, int, int, int>, double> mdb_cache;
+  const auto compute_mdb = [&](const std::vector<Planet>& planets, const Planet& mine,
+                               int tick) {
+    if (risk_weight(tick) <= 0.0) {
+      return 0.0;
+    }
+    double best = 0.0;
+    for (const Planet& enemy : planets) {
+      if (enemy.owner == kNeutralOwner || enemy.owner == obs.player || enemy.ships <= 0 ||
+          enemy.id == mine.id || is_comet_id(enemy.id)) {
+        continue;
+      }
+      const int ships = std::max(1, enemy.ships);
+      const auto key =
+          std::make_tuple(tick, enemy.id, mine.id, ship_bucket(ships));
+      auto cached = mdb_cache.find(key);
+      double threat = 0.0;
+      if (cached != mdb_cache.end()) {
+        threat = cached->second;
+      } else {
+        ++stats.route_queries;
+        RouteResult route = query_route(enemy.id, mine.id, ships, tick);
+        if (route.reachable && route.arrival_tick <= end_tick) {
+          threat = static_cast<double>(ships) -
+                   static_cast<double>(mine.production * route.travel_time);
+        }
+        threat = std::max(0.0, threat);
+        mdb_cache[key] = threat;
+      }
+      best = std::max(best, threat);
+    }
+    return best;
+  };
+
+  const auto planet_value = [&](const std::vector<Planet>& planets, const Planet& planet,
+                                int tick) {
     if (planet.owner == obs.player) {
-      return static_cast<double>(planet.production);
+      const double risk = risk_weight(tick);
+      if (risk <= 0.0) {
+        return static_cast<double>(planet.production);
+      }
+      const double mdb = compute_mdb(planets, planet, tick);
+      if (mdb <= 0.0) {
+        return static_cast<double>(planet.production);
+      }
+      const double multiplier =
+          1.0 - risk * std::exp(-static_cast<double>(std::max(0, planet.ships)) / mdb);
+      return static_cast<double>(planet.production) * std::clamp(multiplier, 0.0, 1.0);
     }
     if (planet.owner == kNeutralOwner) {
       return 0.0;
@@ -961,207 +1042,10 @@ SearchResult Engine::search_v2(const Observation& obs, int budget_ms) {
     return -static_cast<double>(planet.production);
   };
 
-  std::vector<std::vector<Planet>> base_forecast(
-      base_.planets.size(), std::vector<Planet>(kForecastHorizon + 1));
-  double baseline_production_diff = 0.0;
-  for (std::size_t i = 0; i < base_.planets.size(); ++i) {
-    for (int dt = 0; dt <= kForecastHorizon; ++dt) {
-      base_forecast[i][dt] = forecast_planet_at(base_.planets[i], obs.step + dt);
-      if (dt > 0) {
-        baseline_production_diff += production_diff(base_forecast[i][dt]);
-      }
-    }
-  }
-
-  struct TargetInfo {
-    const Planet* planet = nullptr;
-    bool owned_now = false;
-    bool forecast_lost = false;
-    int first_loss_tick = -1;
-  };
-
-  std::vector<TargetInfo> targets;
-  for (std::size_t i = 0; i < base_.planets.size(); ++i) {
-    const Planet& planet = base_.planets[i];
-    TargetInfo target;
-    target.planet = &planet;
-    target.owned_now = planet.owner == obs.player;
-    if (target.owned_now) {
-      for (int dt = 1; dt <= kForecastHorizon; ++dt) {
-        if (base_forecast[i][dt].owner != obs.player) {
-          target.forecast_lost = true;
-          target.first_loss_tick = obs.step + dt;
-          break;
-        }
-      }
-    }
-    if (!target.owned_now || target.forecast_lost) {
-      targets.push_back(target);
-    }
-  }
-
-  struct Candidate {
-    double ordering_score = -1e100;
-    Move move;
-    int source_id = -1;
-    int target_id = -1;
-    int arrival_tick = -1;
-    int travel_time = -1;
-    int need_at_arrival = 0;
-    bool exact = false;
-  };
-
-  std::vector<Candidate> candidates;
-  std::set<std::tuple<int, int, int>> candidate_keys;
-  const auto add_candidate = [&](const Planet& src, const Planet& target, int ships,
-                                 bool exact) {
-    if (ships <= 0 || ships > src.ships || src.id == target.id) {
-      return;
-    }
-    const auto key = std::make_tuple(src.id, target.id, ships);
-    if (candidate_keys.find(key) != candidate_keys.end()) {
-      return;
-    }
-    ++stats.states_considered;
-    ++stats.route_queries;
-    RouteResult route = query_route(src.id, target.id, ships, obs.step);
-    if (!route.reachable || route.arrival_tick > obs.step + kForecastHorizon) {
-      return;
-    }
-    candidate_keys.insert(key);
-    const Planet forecast = forecast_planet_at(target, route.arrival_tick);
-    const int need = forecast.owner == obs.player ? 0 : forecast.ships + 1;
-    const int remaining = std::max(0, kMaxSteps - route.arrival_tick);
-    double production_delta = 0.0;
-    if (forecast.owner == obs.player) {
-      production_delta = static_cast<double>(target.production);
-    } else if (forecast.owner == kNeutralOwner) {
-      production_delta = static_cast<double>(target.production);
-    } else {
-      production_delta = static_cast<double>(target.production) * 2.0;
-    }
-    const double payback =
-        static_cast<double>(route.travel_time) +
-        static_cast<double>(ships) / std::max(1.0, production_delta);
-    const double ordering_score =
-        static_cast<double>(remaining) - payback + (exact ? 5.0 : 0.0);
-    candidates.push_back(Candidate{ordering_score,
-                                   Move{src.id, route.angle, ships},
-                                   src.id,
-                                   target.id,
-                                   route.arrival_tick,
-                                   route.travel_time,
-                                   need,
-                                   exact});
-    ++stats.candidates_generated;
-  };
-
-  for (const Planet* src : mine) {
-    if (src->ships <= 0) {
-      continue;
-    }
-    for (const TargetInfo& target_info : targets) {
-      if (std::chrono::steady_clock::now() >= deadline) {
-        timed_out = true;
-        break;
-      }
-      const Planet& target = *target_info.planet;
-      if (target.id == src->id) {
-        continue;
-      }
-
-      int exact_ships = std::max(1, target.ships + 1);
-      if (target_info.forecast_lost && target_info.first_loss_tick >= obs.step) {
-        const int loss_dt =
-            std::clamp(target_info.first_loss_tick - obs.step, 0, kForecastHorizon);
-        auto it = planet_index.find(target.id);
-        if (it != planet_index.end()) {
-          exact_ships = std::max(exact_ships, base_forecast[it->second][loss_dt].ships + 1);
-        }
-      }
-      for (int iter = 0; iter < 4; ++iter) {
-        if (exact_ships > src->ships) {
-          break;
-        }
-        ++stats.states_considered;
-        ++stats.route_queries;
-        RouteResult route = query_route(src->id, target.id, exact_ships, obs.step);
-        if (!route.reachable || route.arrival_tick > obs.step + kForecastHorizon) {
-          break;
-        }
-        const Planet forecast = forecast_planet_at(target, route.arrival_tick);
-        const int need = forecast.owner == obs.player ? exact_ships : forecast.ships + 1;
-        if (need == exact_ships) {
-          add_candidate(*src, target, exact_ships, true);
-          break;
-        }
-        exact_ships = need;
-      }
-
-      add_candidate(*src, target, src->ships, false);
-    }
-    if (timed_out) {
-      break;
-    }
-  }
-
-  std::sort(candidates.begin(), candidates.end(), [](const Candidate& a, const Candidate& b) {
-    if (a.ordering_score != b.ordering_score) {
-      return a.ordering_score > b.ordering_score;
-    }
-    if (a.exact != b.exact) {
-      return a.exact > b.exact;
-    }
-    return a.travel_time < b.travel_time;
-  });
-  if (candidates.size() > 768) {
-    candidates.resize(768);
-  }
-
-  struct Plan {
-    double score = 0.0;
-    int total_ships = 0;
-    std::vector<int> picks;
-    std::unordered_map<int, int> spent_by_source;
-  };
-
-  const auto can_add = [&](const Plan& plan, const Candidate& candidate) {
-    if (plan.picks.size() >= 8) {
-      return false;
-    }
-    const Planet* src = find_planet(base_.planets, candidate.source_id);
-    if (src == nullptr) {
-      return false;
-    }
-    const int already_spent =
-        plan.spent_by_source.count(candidate.source_id) > 0
-            ? plan.spent_by_source.at(candidate.source_id)
-            : 0;
-    return already_spent + candidate.move.ships <= src->ships;
-  };
-
-  const auto evaluate_plan = [&](const std::vector<int>& picks) {
-    if (picks.empty()) {
-      return 0.0;
-    }
-
-    std::map<int, std::vector<const Candidate*>> selected_by_target_tick;
-    std::vector<Planet> simulated = base_.planets;
-    int total_ships_sent = 0;
-    for (int index : picks) {
-      const Candidate& candidate = candidates[index];
-      selected_by_target_tick[candidate.arrival_tick].push_back(&candidate);
-      total_ships_sent += candidate.move.ships;
-      auto src_it = planet_index.find(candidate.source_id);
-      if (src_it != planet_index.end()) {
-        simulated[src_it->second].ships -= candidate.move.ships;
-      }
-    }
-
-    double value = 0.0;
-    for (int dt = 1; dt <= kForecastHorizon; ++dt) {
-      const int tick = obs.step + dt;
-      for (Planet& planet : simulated) {
+  const auto advance_to = [&](SearchState& state, int target_tick) {
+    const int clamped_target = std::clamp(target_tick, state.tick, end_tick);
+    for (int tick = state.tick + 1; tick <= clamped_target; ++tick) {
+      for (Planet& planet : state.planets) {
         if (planet.owner != kNeutralOwner) {
           planet.ships += planet.production;
         }
@@ -1174,102 +1058,560 @@ SearchResult Engine::search_v2(const Observation& obs, int budget_ms) {
               Fleet{-1, arrival.owner, 0.0, 0.0, 0.0, -1, arrival.ships});
         }
       }
-      auto selected_it = selected_by_target_tick.find(tick);
-      if (selected_it != selected_by_target_tick.end()) {
-        for (const Candidate* candidate : selected_it->second) {
-          arrivals_by_planet[candidate->target_id].push_back(
-              Fleet{-1, obs.player, 0.0, 0.0, candidate->move.angle,
-                    candidate->source_id, candidate->move.ships});
+      auto planned_it = state.planned_arrivals.find(tick);
+      if (planned_it != state.planned_arrivals.end()) {
+        for (const Fleet& fleet : planned_it->second) {
+          arrivals_by_planet[fleet.from_planet_id].push_back(fleet);
         }
       }
       for (auto& item : arrivals_by_planet) {
-        auto idx_it = planet_index.find(item.first);
-        if (idx_it != planet_index.end()) {
-          resolve_combat(simulated[idx_it->second], item.second);
+        const int idx = planet_index_in(state.planets, item.first);
+        if (idx >= 0) {
+          resolve_combat(state.planets[static_cast<std::size_t>(idx)], item.second);
         }
       }
+      state.tick = tick;
+    }
+  };
 
-      for (const Planet& planet : simulated) {
-        value += production_diff(planet);
+  const auto apply_transfer = [&](SearchState& state, PlannedTransfer transfer,
+                                  bool recompute_route) {
+    if (transfer.launch_tick < state.tick || transfer.launch_tick > end_tick) {
+      return false;
+    }
+    advance_to(state, transfer.launch_tick);
+    const int src_idx = planet_index_in(state.planets, transfer.source_id);
+    const int target_idx = planet_index_in(state.planets, transfer.target_id);
+    if (src_idx < 0 || target_idx < 0) {
+      return false;
+    }
+    Planet& src = state.planets[static_cast<std::size_t>(src_idx)];
+    const Planet& target = state.planets[static_cast<std::size_t>(target_idx)];
+    if (src.owner != obs.player || transfer.ships <= 0 || src.ships < transfer.ships) {
+      return false;
+    }
+    if (!transfer.reinforcement && target.owner == obs.player) {
+      return false;
+    }
+    if (recompute_route) {
+      ++stats.route_queries;
+      RouteResult route = query_route(src.id, target.id, transfer.ships,
+                                      transfer.launch_tick);
+      if (!route.reachable || route.arrival_tick > end_tick) {
+        return false;
+      }
+      transfer.angle = route.angle;
+      transfer.arrival_tick = route.arrival_tick;
+    }
+    src.ships -= transfer.ships;
+    Fleet fleet;
+    fleet.id = -1;
+    fleet.owner = obs.player;
+    fleet.angle = transfer.angle;
+    fleet.from_planet_id = transfer.target_id;
+    fleet.ships = transfer.ships;
+    state.planned_arrivals[transfer.arrival_tick].push_back(fleet);
+    state.line.push_back(transfer);
+    state.total_ships_sent += transfer.ships;
+    return true;
+  };
+
+  const auto apply_launches_at = [&](SearchState& state,
+                                     const std::vector<PlannedTransfer>& line,
+                                     std::size_t& next_index, int tick,
+                                     bool recompute_route) {
+    while (next_index < line.size() && line[next_index].launch_tick == tick) {
+      if (!apply_transfer(state, line[next_index], recompute_route)) {
+        return false;
+      }
+      ++next_index;
+    }
+    return true;
+  };
+
+  const auto transfer_delivers_control = [&](const SearchState& after_launch,
+                                             const PlannedTransfer& transfer) {
+    SearchState landed = after_launch;
+    advance_to(landed, transfer.arrival_tick);
+    const int target_idx = planet_index_in(landed.planets, transfer.target_id);
+    if (target_idx < 0) {
+      return false;
+    }
+    const Planet& landed_target =
+        landed.planets[static_cast<std::size_t>(target_idx)];
+    return landed_target.owner == obs.player;
+  };
+
+  const auto score_line = [&](std::vector<PlannedTransfer> line) {
+    std::sort(line.begin(), line.end(), [](const PlannedTransfer& a,
+                                           const PlannedTransfer& b) {
+      if (a.launch_tick != b.launch_tick) {
+        return a.launch_tick < b.launch_tick;
+      }
+      if (a.arrival_tick != b.arrival_tick) {
+        return a.arrival_tick < b.arrival_tick;
+      }
+      return a.source_id < b.source_id;
+    });
+
+    SearchState state;
+    state.tick = obs.step;
+    state.planets = base_.planets;
+    std::size_t next_transfer = 0;
+    if (!apply_launches_at(state, line, next_transfer, obs.step, false)) {
+      return -1e100;
+    }
+
+    double value = 0.0;
+    for (int tick = obs.step + 1; tick <= end_tick; ++tick) {
+      advance_to(state, tick);
+      for (const Planet& planet : state.planets) {
+        value += planet_value(state.planets, planet, tick);
+      }
+      if (!apply_launches_at(state, line, next_transfer, tick, false)) {
+        return -1e100;
       }
     }
-
-    return value - baseline_production_diff - static_cast<double>(total_ships_sent);
+    return value - static_cast<double>(state.total_ships_sent);
   };
 
-  const auto add_to_plan = [&](const Plan& plan, int candidate_index) {
-    Plan next = plan;
-    const Candidate& candidate = candidates[candidate_index];
-    next.picks.push_back(candidate_index);
-    next.total_ships += candidate.move.ships;
-    next.spent_by_source[candidate.source_id] += candidate.move.ships;
-    next.score = evaluate_plan(next.picks);
-    return next;
+  const double baseline_score = score_line({});
+
+  const auto sanitize_cached_line = [&]() {
+    std::vector<PlannedTransfer> sorted = v2_best_line_;
+    std::sort(sorted.begin(), sorted.end(), [](const PlannedTransfer& a,
+                                               const PlannedTransfer& b) {
+      if (a.launch_tick != b.launch_tick) {
+        return a.launch_tick < b.launch_tick;
+      }
+      return a.arrival_tick < b.arrival_tick;
+    });
+
+    SearchState state;
+    state.tick = obs.step;
+    state.planets = base_.planets;
+    std::vector<PlannedTransfer> kept;
+    for (PlannedTransfer transfer : sorted) {
+      if (transfer.launch_tick < obs.step || transfer.launch_tick > end_tick) {
+        continue;
+      }
+      SearchState trial = state;
+      if (!apply_transfer(trial, transfer, true)) {
+        continue;
+      }
+      if (!transfer_delivers_control(trial, trial.line.back())) {
+        continue;
+      }
+      state = std::move(trial);
+      kept.push_back(state.line.back());
+    }
+    return kept;
   };
 
-  Plan best_plan;
-  const auto remember_best = [&](const Plan& plan) {
-    if (plan.score > best_plan.score ||
-        (std::abs(plan.score - best_plan.score) <= 1e-9 &&
-         (plan.picks.size() > best_plan.picks.size() ||
-          (plan.picks.size() == best_plan.picks.size() &&
-           (best_plan.total_ships == 0 || plan.total_ships < best_plan.total_ships))))) {
-      best_plan = plan;
+  std::vector<PlannedTransfer> best_line = sanitize_cached_line();
+  double best_score = score_line(best_line);
+  if (best_score <= -1e90) {
+    best_line.clear();
+    best_score = 0.0;
+  } else {
+    best_score -= baseline_score;
+  }
+  int best_ship_count = 0;
+  for (const PlannedTransfer& transfer : best_line) {
+    best_ship_count += transfer.ships;
+  }
+
+  const auto remember_best = [&](const std::vector<PlannedTransfer>& line,
+                                 double score) {
+    int ships = 0;
+    for (const PlannedTransfer& transfer : line) {
+      ships += transfer.ships;
+    }
+    if (score > best_score + 1e-9 ||
+        (std::abs(score - best_score) <= 1e-9 &&
+         (line.size() > best_line.size() ||
+          (line.size() == best_line.size() &&
+           (best_ship_count == 0 || ships < best_ship_count))))) {
+      best_line = line;
+      best_score = score;
+      best_ship_count = ships;
     }
   };
 
-  Plan greedy;
-  for (std::size_t i = 0; i < candidates.size(); ++i) {
-    if (std::chrono::steady_clock::now() >= deadline) {
-      timed_out = true;
-      break;
+  const auto reserved_for_capture = [](const SearchState& state, int target_id) {
+    for (const PlannedTransfer& transfer : state.line) {
+      if (!transfer.reinforcement && transfer.target_id == target_id &&
+          transfer.arrival_tick > state.tick) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const auto earliest_launch_tick = [&](const Planet& src, int ships, int tick) {
+    if (ships <= src.ships) {
+      return tick;
+    }
+    if (src.owner != obs.player || src.production <= 0) {
+      return end_tick + 1;
+    }
+    const int deficit = ships - src.ships;
+    return tick + (deficit + src.production - 1) / src.production;
+  };
+
+  const auto add_candidate = [&](std::vector<Candidate>& candidates,
+                                 const SearchState& state, const Planet& src,
+                                 const Planet& target, int ships,
+                                 bool reinforcement, double production_delta) {
+    if (ships <= 0 || src.id == target.id) {
+      return;
+    }
+    const int launch_tick = earliest_launch_tick(src, ships, state.tick);
+    if (launch_tick > end_tick) {
+      return;
     }
     ++stats.states_considered;
-    if (can_add(greedy, candidates[i])) {
-      Plan next = add_to_plan(greedy, static_cast<int>(i));
-      if (next.score >= greedy.score || greedy.picks.empty()) {
-        greedy = std::move(next);
-        remember_best(greedy);
+    ++stats.route_queries;
+    RouteResult route = query_route(src.id, target.id, ships, launch_tick);
+    if (!route.reachable || route.arrival_tick > end_tick) {
+      return;
+    }
+    const double wait_time = static_cast<double>(launch_tick - state.tick);
+    const double roi_time = wait_time + static_cast<double>(route.travel_time) +
+                            static_cast<double>(ships) /
+                                std::max(0.25, production_delta);
+    candidates.push_back(Candidate{
+        PlannedTransfer{launch_tick, src.id, target.id, ships, route.angle,
+                        route.arrival_tick, reinforcement},
+        roi_time,
+        production_delta});
+    ++stats.candidates_generated;
+  };
+
+  struct LossForecast {
+    bool lost = false;
+    int tick = -1;
+    int owner = kNeutralOwner;
+    int ships = 0;
+  };
+
+  const auto first_visible_loss = [&](const SearchState& state, int target_id) {
+    SearchState forecast = state;
+    for (int tick = state.tick + 1; tick <= end_tick; ++tick) {
+      advance_to(forecast, tick);
+      const int target_idx = planet_index_in(forecast.planets, target_id);
+      if (target_idx < 0) {
+        break;
       }
+      const Planet& future_target =
+          forecast.planets[static_cast<std::size_t>(target_idx)];
+      if (future_target.owner != obs.player) {
+        return LossForecast{true, tick, future_target.owner, future_target.ships};
+      }
+    }
+    return LossForecast{};
+  };
+
+  const auto generate_candidates = [&](const SearchState& state) {
+    std::vector<Candidate> candidates;
+    std::set<std::tuple<int, int, int, bool>> seen;
+
+    for (const Planet& src : state.planets) {
+      if (std::chrono::steady_clock::now() >= deadline) {
+        timed_out = true;
+        return candidates;
+      }
+      if (src.owner != obs.player || src.production < 0 || is_comet_id(src.id)) {
+        continue;
+      }
+      for (const Planet& target : state.planets) {
+        if (std::chrono::steady_clock::now() >= deadline) {
+          timed_out = true;
+          return candidates;
+        }
+        if (src.id == target.id || is_comet_id(target.id)) {
+          continue;
+        }
+
+        if (target.owner != obs.player) {
+          if (reserved_for_capture(state, target.id)) {
+            continue;
+          }
+          int exact_ships = std::max(1, target.ships + 1);
+          int capture_ships = -1;
+          for (int iter = 0; iter < 5; ++iter) {
+            if (std::chrono::steady_clock::now() >= deadline) {
+              timed_out = true;
+              return candidates;
+            }
+            const int launch_tick = earliest_launch_tick(src, exact_ships, state.tick);
+            if (launch_tick > end_tick) {
+              break;
+            }
+            ++stats.states_considered;
+            ++stats.route_queries;
+            RouteResult route = query_route(src.id, target.id, exact_ships, launch_tick);
+            if (!route.reachable || route.arrival_tick > end_tick) {
+              break;
+            }
+            SearchState forecast = state;
+            advance_to(forecast, route.arrival_tick);
+            const int target_idx = planet_index_in(forecast.planets, target.id);
+            if (target_idx < 0) {
+              break;
+            }
+            const Planet& future_target =
+                forecast.planets[static_cast<std::size_t>(target_idx)];
+            if (future_target.owner == obs.player) {
+              break;
+            }
+            const int needed = future_target.ships + 1;
+            if (needed == exact_ships) {
+              const double production_delta =
+                  future_target.owner == kNeutralOwner
+                      ? static_cast<double>(target.production)
+                      : static_cast<double>(target.production) * 2.0;
+              const auto key =
+                  std::make_tuple(src.id, target.id, exact_ships, false);
+              if (seen.insert(key).second) {
+                add_candidate(candidates, state, src, target, exact_ships, false,
+                              production_delta);
+              }
+              capture_ships = exact_ships;
+              break;
+            }
+            exact_ships = needed;
+          }
+
+          if (capture_ships > 0 && src.ships > capture_ships) {
+            const double production_delta =
+                target.owner == kNeutralOwner
+                    ? static_cast<double>(target.production)
+                    : static_cast<double>(target.production) * 2.0;
+            const auto key = std::make_tuple(src.id, target.id, src.ships, false);
+            if (seen.insert(key).second) {
+              add_candidate(candidates, state, src, target, src.ships, false,
+                            production_delta);
+            }
+          }
+          continue;
+        }
+
+        const LossForecast visible_loss = first_visible_loss(state, target.id);
+        if (state.tick >= 50 && visible_loss.lost && visible_loss.tick - state.tick <= 20) {
+          int defense_ships = std::max(1, visible_loss.ships + 1);
+          for (int iter = 0; iter < 5; ++iter) {
+            if (std::chrono::steady_clock::now() >= deadline) {
+              timed_out = true;
+              return candidates;
+            }
+            const int launch_tick = earliest_launch_tick(src, defense_ships, state.tick);
+            if (launch_tick > end_tick) {
+              break;
+            }
+            ++stats.states_considered;
+            ++stats.route_queries;
+            RouteResult route = query_route(src.id, target.id, defense_ships, launch_tick);
+            if (!route.reachable || route.arrival_tick > end_tick) {
+              break;
+            }
+            SearchState forecast = state;
+            advance_to(forecast, route.arrival_tick);
+            const int target_idx = planet_index_in(forecast.planets, target.id);
+            if (target_idx < 0) {
+              break;
+            }
+            const Planet& future_target =
+                forecast.planets[static_cast<std::size_t>(target_idx)];
+            int needed = defense_ships;
+            if (future_target.owner != obs.player) {
+              needed = future_target.ships + 1;
+            }
+            if (needed == defense_ships) {
+              const double production_delta =
+                  std::max(1.0, static_cast<double>(target.production) * 2.0);
+              const auto key = std::make_tuple(src.id, target.id, defense_ships, true);
+              if (seen.insert(key).second) {
+                add_candidate(candidates, state, src, target, defense_ships, true,
+                              production_delta);
+              }
+              break;
+            }
+            defense_ships = needed;
+          }
+
+        }
+
+        if (risk_weight(state.tick) <= 0.0 || src.ships <= 0) {
+          continue;
+        }
+        const double mdb = compute_mdb(state.planets, target, state.tick);
+        if (mdb <= 0.0 || static_cast<double>(target.ships) >= mdb) {
+          continue;
+        }
+        const int wanted = std::max(1, static_cast<int>(std::ceil(mdb - target.ships)));
+        const int ships = std::min(src.ships, wanted);
+        Planet reinforced = target;
+        reinforced.ships += ships;
+        const double gain =
+            planet_value(state.planets, reinforced, state.tick) -
+            planet_value(state.planets, target, state.tick);
+        if (gain <= 1e-6) {
+          continue;
+        }
+        const auto key = std::make_tuple(src.id, target.id, ships, true);
+        if (seen.insert(key).second) {
+          add_candidate(candidates, state, src, target, ships, true, gain);
+        }
+      }
+    }
+
+    std::sort(candidates.begin(), candidates.end(),
+              [](const Candidate& a, const Candidate& b) {
+                if (a.roi_time != b.roi_time) {
+                  return a.roi_time < b.roi_time;
+                }
+                if (a.transfer.launch_tick != b.transfer.launch_tick) {
+                  return a.transfer.launch_tick < b.transfer.launch_tick;
+                }
+                return a.transfer.ships < b.transfer.ships;
+              });
+    if (candidates.size() > kBranchLimit) {
+      candidates.resize(kBranchLimit);
+    }
+    return candidates;
+  };
+
+  const auto maybe_remember_state = [&](const SearchState& state) {
+    const double score = score_line(state.line) - baseline_score;
+    remember_best(state.line, score);
+  };
+
+  const auto next_arrival_tick = [&](const SearchState& state) {
+    int next_arrival = end_tick + 1;
+    for (const auto& item : state.planned_arrivals) {
+      if (item.first > state.tick) {
+        next_arrival = std::min(next_arrival, item.first);
+      }
+    }
+    return next_arrival;
+  };
+
+  const auto state_score = [&](const SearchState& state) {
+    return score_line(state.line) - baseline_score;
+  };
+
+  struct BeamItem {
+    SearchState state;
+    double score = 0.0;
+  };
+
+  constexpr std::size_t kBeamWidth = 160;
+  std::vector<BeamItem> frontier;
+  SearchState root;
+  root.tick = obs.step;
+  root.planets = base_.planets;
+  frontier.push_back(BeamItem{root, 0.0});
+
+  if (!best_line.empty()) {
+    SearchState cached;
+    cached.tick = obs.step;
+    cached.planets = base_.planets;
+    bool ok = true;
+    for (const PlannedTransfer& transfer : best_line) {
+      if (!apply_transfer(cached, transfer, true)) {
+        ok = false;
+        break;
+      }
+    }
+    if (ok) {
+      frontier.push_back(BeamItem{cached, state_score(cached)});
     }
   }
 
-  std::vector<Plan> beam(1);
-  const std::size_t candidate_limit = std::min<std::size_t>(candidates.size(), 256);
-  const std::size_t beam_width = 128;
-  for (std::size_t i = 0; i < candidate_limit; ++i) {
-    if ((i & 7u) == 0u && std::chrono::steady_clock::now() >= deadline) {
-      timed_out = true;
+  for (int depth = 0; depth < kMaxCommitmentDepth && !frontier.empty(); ++depth) {
+    std::vector<BeamItem> next_frontier;
+    for (const BeamItem& item : frontier) {
+      if (std::chrono::steady_clock::now() >= deadline) {
+        timed_out = true;
+        break;
+      }
+      ++stats.states_considered;
+      maybe_remember_state(item.state);
+      if (item.state.tick >= end_tick) {
+        continue;
+      }
+
+      std::vector<Candidate> candidates = generate_candidates(item.state);
+      for (const Candidate& candidate : candidates) {
+        if (std::chrono::steady_clock::now() >= deadline) {
+          timed_out = true;
+          break;
+        }
+        SearchState next = item.state;
+        if (!apply_transfer(next, candidate.transfer, false)) {
+          continue;
+        }
+        const double next_score = state_score(next);
+        maybe_remember_state(next);
+        next_frontier.push_back(BeamItem{next, next_score});
+
+        const int arrival_tick = next_arrival_tick(next);
+        if (arrival_tick <= end_tick && arrival_tick > next.tick) {
+          SearchState waited = next;
+          advance_to(waited, arrival_tick);
+          const double waited_score = state_score(waited);
+          maybe_remember_state(waited);
+          next_frontier.push_back(BeamItem{std::move(waited), waited_score});
+        }
+      }
+      if (timed_out) {
+        break;
+      }
+    }
+
+    std::sort(next_frontier.begin(), next_frontier.end(),
+              [](const BeamItem& a, const BeamItem& b) {
+                if (a.score != b.score) {
+                  return a.score > b.score;
+                }
+                if (a.state.line.size() != b.state.line.size()) {
+                  return a.state.line.size() > b.state.line.size();
+                }
+                return a.state.total_ships_sent < b.state.total_ships_sent;
+              });
+    if (next_frontier.size() > kBeamWidth) {
+      next_frontier.resize(kBeamWidth);
+    }
+    frontier = std::move(next_frontier);
+    if (timed_out) {
       break;
     }
-    std::vector<Plan> next = beam;
-    next.reserve(beam.size() * 2);
-    for (const Plan& plan : beam) {
-      ++stats.states_considered;
-      if (can_add(plan, candidates[i])) {
-        Plan expanded = add_to_plan(plan, static_cast<int>(i));
-        remember_best(expanded);
-        next.push_back(std::move(expanded));
-      }
+  }
+
+  std::sort(best_line.begin(), best_line.end(), [](const PlannedTransfer& a,
+                                                   const PlannedTransfer& b) {
+    if (a.launch_tick != b.launch_tick) {
+      return a.launch_tick < b.launch_tick;
     }
-    std::sort(next.begin(), next.end(), [](const Plan& a, const Plan& b) {
-      if (a.score != b.score) {
-        return a.score > b.score;
-      }
-      if (a.picks.size() != b.picks.size()) {
-        return a.picks.size() > b.picks.size();
-      }
-      return a.total_ships < b.total_ships;
-    });
-    if (next.size() > beam_width) {
-      next.resize(beam_width);
+    return a.arrival_tick < b.arrival_tick;
+  });
+  v2_best_line_.clear();
+  for (const PlannedTransfer& transfer : best_line) {
+    if (transfer.launch_tick >= obs.step && transfer.launch_tick <= end_tick) {
+      v2_best_line_.push_back(transfer);
     }
-    beam = std::move(next);
   }
 
   std::vector<Move> moves;
-  for (int index : best_plan.picks) {
-    moves.push_back(candidates[index].move);
+  for (const PlannedTransfer& transfer : v2_best_line_) {
+    if (transfer.launch_tick == obs.step) {
+      RouteResult route =
+          query_route(transfer.source_id, transfer.target_id, transfer.ships, obs.step);
+      if (route.reachable && route.arrival_tick <= end_tick) {
+        moves.push_back(Move{transfer.source_id, route.angle, transfer.ships});
+      }
+    }
   }
 
   const auto finished = std::chrono::steady_clock::now();
