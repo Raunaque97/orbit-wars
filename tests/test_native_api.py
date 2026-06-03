@@ -196,6 +196,46 @@ def test_search_v2_invalidates_cached_capture_when_enemy_fleet_changes_need():
     assert engine.search_v2(obs, 50)["moves"] == []
 
 
+def test_search_v3_uses_v2_before_visible_attack():
+    planets = [
+        [0, 0, 10.0, 10.0, 2.0, 12, 1],
+        [1, 0, 10.0, 30.0, 2.0, 12, 1],
+        [2, -1, 25.0, 20.0, 2.0, 20, 5],
+    ]
+    obs = {
+        "player": 0,
+        "step": 0,
+        "angular_velocity": 0.0,
+        "planets": planets,
+        "initial_planets": planets,
+        "fleets": [],
+    }
+
+    v2_moves = orbit_native.Engine().search_v2(obs, 50)["moves"]
+    v3_moves = orbit_native.Engine().search_v3(obs, 50)["moves"]
+
+    assert v3_moves == v2_moves
+
+
+def test_search_v3_avoids_enemy_capture_that_visible_defense_can_cover():
+    planets = [
+        [0, 0, 10.0, 10.0, 2.0, 25, 1],
+        [1, 0, 10.0, 30.0, 2.0, 25, 1],
+        [2, 1, 25.0, 20.0, 2.0, 20, 5],
+        [3, 1, 32.0, 20.0, 2.0, 30, 2],
+    ]
+    obs = {
+        "player": 0,
+        "step": 0,
+        "angular_velocity": 0.0,
+        "planets": planets,
+        "initial_planets": planets,
+        "fleets": [],
+    }
+
+    assert orbit_native.Engine().search_v3(obs, 100)["moves"] == []
+
+
 def test_agent_does_not_resend_to_planet_already_captured_by_fleet():
     obs = {
         "player": 0,

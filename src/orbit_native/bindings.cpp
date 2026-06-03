@@ -269,6 +269,12 @@ py::dict stats_to_dict(const orbit::SearchStats& stats) {
   out["states_considered"] = stats.states_considered;
   out["route_queries"] = stats.route_queries;
   out["candidates_generated"] = stats.candidates_generated;
+  out["action_sets_evaluated"] = stats.action_sets_evaluated;
+  out["rollout_ticks"] = stats.rollout_ticks;
+  out["own_response_moves"] = stats.own_response_moves;
+  out["enemy_response_moves"] = stats.enemy_response_moves;
+  out["phase"] = stats.phase;
+  out["min_event_gap"] = stats.min_event_gap;
   out["elapsed_ms"] = stats.elapsed_ms;
   out["states_per_second"] = stats.states_per_second;
   out["timed_out"] = stats.timed_out;
@@ -333,6 +339,9 @@ PYBIND11_MODULE(orbit_native, m) {
       .def("act_v2", [](orbit::Engine& engine, const py::object& obs) {
         return moves_to_py(engine.act_v2(observation_from_py(obs)));
       })
+      .def("act_v3", [](orbit::Engine& engine, const py::object& obs) {
+        return moves_to_py(engine.act_v3(observation_from_py(obs)));
+      })
       .def("search",
            [](orbit::Engine& engine, const py::object& obs, int budget_ms) {
              return search_result_to_dict(engine.search(observation_from_py(obs), budget_ms));
@@ -341,6 +350,11 @@ PYBIND11_MODULE(orbit_native, m) {
       .def("search_v2",
            [](orbit::Engine& engine, const py::object& obs, int budget_ms) {
              return search_result_to_dict(engine.search_v2(observation_from_py(obs), budget_ms));
+           },
+           py::arg("obs"), py::arg("budget_ms") = 950)
+      .def("search_v3",
+           [](orbit::Engine& engine, const py::object& obs, int budget_ms) {
+             return search_result_to_dict(engine.search_v3(observation_from_py(obs), budget_ms));
            },
            py::arg("obs"), py::arg("budget_ms") = 950)
       .def("last_search_stats",
@@ -379,6 +393,9 @@ PYBIND11_MODULE(orbit_native, m) {
   m.def("act_v2", [](const py::object& obs) {
     return moves_to_py(global_engine->act_v2(observation_from_py(obs)));
   });
+  m.def("act_v3", [](const py::object& obs) {
+    return moves_to_py(global_engine->act_v3(observation_from_py(obs)));
+  });
   m.def("search",
         [](const py::object& obs, int budget_ms) {
           return search_result_to_dict(global_engine->search(observation_from_py(obs), budget_ms));
@@ -388,6 +405,12 @@ PYBIND11_MODULE(orbit_native, m) {
         [](const py::object& obs, int budget_ms) {
           return search_result_to_dict(
               global_engine->search_v2(observation_from_py(obs), budget_ms));
+        },
+        py::arg("obs"), py::arg("budget_ms") = 950);
+  m.def("search_v3",
+        [](const py::object& obs, int budget_ms) {
+          return search_result_to_dict(
+              global_engine->search_v3(observation_from_py(obs), budget_ms));
         },
         py::arg("obs"), py::arg("budget_ms") = 950);
   m.def("last_search_stats",

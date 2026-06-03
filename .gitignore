@@ -8,5 +8,7 @@ __pycache__/
 .pytest_cache/
 .venv/
 replay.html
+replays/
+analysis_local/
 
 third_party/

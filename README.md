@@ -23,7 +23,7 @@ Each planet is represented as `[id, owner, x, y, radius, ships, production]`.
 
 ### Planet Types
 
-- **Orbiting planets**: Planets whose `orbital_radius + planet_radius < 50` rotate around the sun at a constant angular velocity (0.025-0.05 radians/turn, randomized per game). Use `initial_planets` and `angular_velocity` from the observation to predict their positions.
+- **Orbiting planets**: Planets whose `orbital_radius + planet_radius < 50` rotate around the sun at a constant angular velocity (0.025-0.05 radians/turn, randomized per game, so all Orbiting planets have same angular velocity). Use `initial_planets` and `angular_velocity` from the observation to predict their positions.
 - **Static planets**: Planets further from the center do not rotate.
 
 The map contains 20-40 planets (5-10 symmetric groups of 4). At least 3 groups are guaranteed to be static, and at least one group is guaranteed to be orbiting.

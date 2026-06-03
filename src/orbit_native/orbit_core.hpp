@@ -93,6 +93,12 @@ struct SearchStats {
   std::int64_t states_considered = 0;
   std::int64_t route_queries = 0;
   std::int64_t candidates_generated = 0;
+  std::int64_t action_sets_evaluated = 0;
+  std::int64_t rollout_ticks = 0;
+  std::int64_t own_response_moves = 0;
+  std::int64_t enemy_response_moves = 0;
+  int phase = 0;
+  int min_event_gap = 0;
   double elapsed_ms = 0.0;
   double states_per_second = 0.0;
   bool timed_out = false;
@@ -134,8 +140,10 @@ class Engine {
   }
   std::vector<Move> act(const Observation& obs);
   std::vector<Move> act_v2(const Observation& obs);
+  std::vector<Move> act_v3(const Observation& obs);
   SearchResult search(const Observation& obs, int budget_ms);
   SearchResult search_v2(const Observation& obs, int budget_ms);
+  SearchResult search_v3(const Observation& obs, int budget_ms);
   SearchStats last_search_stats() const { return last_search_stats_; }
   RouteResult query_route(int src_id, int target_id, int ships, int step);
   std::vector<RouteResult> batch_query_routes(
@@ -192,6 +200,9 @@ class Engine {
   std::vector<TransferHint> transfer_hints_;
   std::vector<Move> last_best_moves_;
   std::vector<PlannedTransfer> v2_best_line_;
+  std::vector<PlannedTransfer> v3_best_line_;
+  bool v3_phase2_active_ = false;
+  int v2_last_min_event_gap_ = kMaxSteps;
   int v2_risk_start_tick_ = 500;
   int v2_risk_end_tick_ = 530;
   double v2_risk_end_value_ = 1.0;

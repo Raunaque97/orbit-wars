@@ -1,4 +1,5 @@
 import argparse
+import os
 from pathlib import Path
 
 from kaggle_environments import make
@@ -14,8 +15,12 @@ def main():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--width", type=int, default=1000)
     parser.add_argument("--height", type=int, default=800)
+    parser.add_argument("--budget-ms", type=int, default=None)
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
+
+    if args.budget_ms is not None:
+        os.environ["ORBIT_WARS_TIME_BUDGET_MS"] = str(args.budget_ms)
 
     env = make("orbit_wars", configuration={"seed": args.seed}, debug=args.debug)
     env.run([args.agent_a, args.agent_b])
