@@ -168,6 +168,15 @@ py::dict stats_to_dict(const orbit_rl::FeatureStats& stats) {
   return out;
 }
 
+py::dict route_to_dict(const orbit_rl::ExactRoute& route) {
+  py::dict out;
+  out["reachable"] = route.reachable;
+  out["delay"] = route.delay;
+  out["angle"] = route.angle;
+  out["blocked_by"] = route.blocked_by;
+  return out;
+}
+
 py::dict batch_to_dict(const orbit_rl::FeatureBatch& batch) {
   const py::ssize_t planets = static_cast<py::ssize_t>(batch.planet_ids.size());
   const py::ssize_t horizon = static_cast<py::ssize_t>(batch.stats.horizon);
@@ -217,6 +226,14 @@ PYBIND11_MODULE(orbit_rl_native, m) {
            },
            py::arg("obs"), py::arg("horizon") = 50,
            py::arg("max_route_delay") = orbit_rl::kMaxRouteDelay)
+      .def("query_route",
+           [](orbit_rl::FeatureEngine& engine, const py::object& obs, int src_id,
+              int target_id, int ships, int max_route_delay) {
+             return route_to_dict(engine.query_route(
+                 observation_from_py(obs), src_id, target_id, ships, max_route_delay));
+           },
+           py::arg("obs"), py::arg("src_id"), py::arg("target_id"), py::arg("ships"),
+           py::arg("max_route_delay") = orbit_rl::kMaxRouteDelay)
       .def("initialized", &orbit_rl::FeatureEngine::initialized);
 
   m.def("initialize", [](const py::object& obs) {
@@ -228,6 +245,13 @@ PYBIND11_MODULE(orbit_rl_native, m) {
               global_engine->compute(observation_from_py(obs), horizon, max_route_delay));
         },
         py::arg("obs"), py::arg("horizon") = 50,
+        py::arg("max_route_delay") = orbit_rl::kMaxRouteDelay);
+  m.def("query_route",
+        [](const py::object& obs, int src_id, int target_id, int ships, int max_route_delay) {
+          return route_to_dict(global_engine->query_route(
+              observation_from_py(obs), src_id, target_id, ships, max_route_delay));
+        },
+        py::arg("obs"), py::arg("src_id"), py::arg("target_id"), py::arg("ships"),
         py::arg("max_route_delay") = orbit_rl::kMaxRouteDelay);
   m.def("fleet_speed", &orbit_rl::fleet_speed);
 }

@@ -17,6 +17,14 @@ BLOCKED_DELAY = 200
 ROUTE_TIMEOUT = 141
 EDGE_DELAY_BUCKETS = (5, 10, 20, 40, 80, 160)
 ALLY_DELAY_BUCKET = 20
+AMOUNT_BIN_NAMES = (
+    "minimum_to_capture",
+    "surplus_20pct",
+    "surplus_50pct",
+    "surplus_80pct",
+    "all_surplus",
+    "all_ships",
+)
 
 
 @dataclass(frozen=True)
@@ -316,7 +324,7 @@ class OrbitWarsGraphPolicy(nn.Module):
         hidden_dim: int = 128,
         num_layers: int = 3,
         num_heads: int = 4,
-        amount_bins: int = 5,
+        amount_bins: int = len(AMOUNT_BIN_NAMES),
         dropout: float = 0.0,
     ) -> None:
         super().__init__()
@@ -400,6 +408,83 @@ class OrbitWarsGraphPolicy(nn.Module):
         if squeeze:
             out = {key: value.squeeze(0) for key, value in out.items()}
         return out
+
+
+def forecast_surplus_for_planet(
+    feature_batch: dict[str, Any], planet_id: int, owner: int, horizon: int = 50
+) -> int:
+    planet_ids = [int(pid) for pid in feature_batch["planet_ids"]]
+    if planet_id not in planet_ids:
+        return 0
+    row = planet_ids.index(planet_id)
+    garrisons = np.asarray(feature_batch["garrisons"], dtype=np.int32)
+    limited = min(horizon, garrisons.shape[1])
+    min_ships: int | None = None
+    for dt in range(limited):
+        ships = int(garrisons[row, dt, 0])
+        future_owner = int(garrisons[row, dt, 1])
+        if future_owner != owner:
+            return 0
+        min_ships = ships if min_ships is None else min(min_ships, ships)
+    return max(0, int(min_ships or 0))
+
+
+def minimum_to_capture_at_arrival(
+    feature_batch: dict[str, Any],
+    target_id: int,
+    player: int,
+    delay: int,
+) -> int:
+    planet_ids = [int(pid) for pid in feature_batch["planet_ids"]]
+    if target_id not in planet_ids:
+        return 0
+    row = planet_ids.index(target_id)
+    garrisons = np.asarray(feature_batch["garrisons"], dtype=np.int32)
+    dt = max(0, min(int(delay), garrisons.shape[1] - 1))
+    ships = int(garrisons[row, dt, 0])
+    owner = int(garrisons[row, dt, 1])
+    if owner == player:
+        return 0
+    return max(1, ships + 1)
+
+
+def amount_bin_ship_counts(
+    *,
+    source_ships: int,
+    surplus: int,
+    minimum_to_capture: int,
+) -> list[int]:
+    surplus = max(0, int(surplus))
+    source_ships = max(0, int(source_ships))
+    minimum_to_capture = max(0, int(minimum_to_capture))
+    raw = [
+        minimum_to_capture,
+        round(0.20 * surplus),
+        round(0.50 * surplus),
+        round(0.80 * surplus),
+        surplus,
+        source_ships,
+    ]
+    return [max(0, min(source_ships, int(value))) for value in raw]
+
+
+def amount_bin_for_move(
+    ships_sent: int,
+    *,
+    source_ships: int,
+    surplus: int,
+    minimum_to_capture: int,
+) -> int:
+    candidates = amount_bin_ship_counts(
+        source_ships=source_ships,
+        surplus=surplus,
+        minimum_to_capture=minimum_to_capture,
+    )
+    ships_sent = int(ships_sent)
+    return min(
+        range(len(candidates)),
+        key=lambda idx: (abs(candidates[idx] - ships_sent), idx),
+    )
 
 
 def make_model(spec: FeatureSpec | None = None, **kwargs: Any) -> OrbitWarsGraphPolicy:

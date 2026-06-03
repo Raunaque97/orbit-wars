@@ -87,6 +87,13 @@ struct FeatureBatch {
   FeatureStats stats;
 };
 
+struct ExactRoute {
+  bool reachable = false;
+  int delay = kBlockedDelay;
+  double angle = 0.0;
+  std::string blocked_by = "unreachable";
+};
+
 double dist2(Vec2 a, Vec2 b);
 double dist(Vec2 a, Vec2 b);
 double normalize_angle(double angle);
@@ -105,6 +112,8 @@ class FeatureEngine {
   void initialize(const Observation& obs);
   FeatureBatch compute(const Observation& obs, int horizon = 50,
                        int max_route_delay = kMaxRouteDelay);
+  ExactRoute query_route(const Observation& obs, int src_id, int target_id, int ships,
+                         int max_route_delay = kMaxRouteDelay);
   bool initialized() const { return initialized_; }
 
  private:
@@ -138,6 +147,8 @@ class FeatureEngine {
   std::vector<Arrival> predict_arrivals(int horizon, FeatureStats& stats) const;
   RouteEval estimate_route_without_proxy(const Planet& src, const Planet& target, int ships,
                                          int max_route_delay) const;
+  ExactRoute validate_exact_route(const Planet& src, const Planet& target, int ships,
+                                  double angle, int max_route_delay) const;
   void build_delay_matrix_batched(FeatureBatch& batch, int max_route_delay) const;
 };
 

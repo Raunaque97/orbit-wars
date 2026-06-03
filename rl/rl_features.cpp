@@ -401,6 +401,97 @@ FeatureEngine::RouteEval FeatureEngine::estimate_route_without_proxy(
                    false};
 }
 
+ExactRoute FeatureEngine::validate_exact_route(const Planet& src, const Planet& target,
+                                               int ships, double angle,
+                                               int max_route_delay) const {
+  ExactRoute result;
+  if (ships <= 0 || !planet_present_at(src, current_.step) ||
+      !planet_present_at(target, current_.step)) {
+    return result;
+  }
+
+  const Vec2 src_pos = planet_position_at(src, current_.step);
+  if (!std::isfinite(src_pos.x)) {
+    return result;
+  }
+
+  const double c = std::cos(angle);
+  const double s = std::sin(angle);
+  const Vec2 launch{src_pos.x + c * (src.radius + 0.1),
+                    src_pos.y + s * (src.radius + 0.1)};
+  const double speed = fleet_speed(ships);
+  Vec2 prev = launch;
+
+  for (int dt = 1; dt <= max_route_delay; ++dt) {
+    const int tick = current_.step + dt;
+    const Vec2 next{launch.x + c * speed * dt, launch.y + s * speed * dt};
+
+    for (const Planet& planet : current_.planets) {
+      if (!planet_present_at(planet, tick - 1) && !planet_present_at(planet, tick)) {
+        continue;
+      }
+      const Vec2 old_pos = planet_position_at(planet, tick - 1);
+      const Vec2 new_pos = planet_position_at(planet, tick);
+      if (!std::isfinite(old_pos.x) || !std::isfinite(new_pos.x)) {
+        continue;
+      }
+      if (!swept_pair_hit(prev, next, old_pos, new_pos, planet.radius)) {
+        continue;
+      }
+
+      if (planet.id == target.id) {
+        result.reachable = true;
+        result.delay = dt;
+        result.angle = normalize_angle(angle);
+        result.blocked_by = "none";
+      } else {
+        result.blocked_by = "planet:" + std::to_string(planet.id);
+      }
+      return result;
+    }
+
+    if (!in_bounds(next)) {
+      result.blocked_by = "bounds";
+      return result;
+    }
+
+    if (segment_circle_intersects(prev, next, Vec2{kCenterX, kCenterY}, kSunRadius)) {
+      result.blocked_by = "sun";
+      return result;
+    }
+
+    prev = next;
+  }
+
+  result.blocked_by = "timeout";
+  return result;
+}
+
+ExactRoute FeatureEngine::query_route(const Observation& obs, int src_id, int target_id,
+                                      int ships, int max_route_delay) {
+  if (!initialized_ || !cache_matches(obs)) {
+    initialize(obs);
+  } else {
+    refresh_current(obs);
+  }
+
+  max_route_delay = std::clamp(max_route_delay, 1, kMaxSteps);
+  auto src_it = current_index_.find(src_id);
+  auto target_it = current_index_.find(target_id);
+  if (src_it == current_index_.end() || target_it == current_index_.end() ||
+      src_id == target_id || ships <= 0) {
+    return ExactRoute{};
+  }
+
+  const Planet& src = current_.planets[src_it->second];
+  const Planet& target = current_.planets[target_it->second];
+  RouteEval estimate = estimate_route_without_proxy(src, target, ships, max_route_delay);
+  if (estimate.blocked) {
+    return ExactRoute{};
+  }
+  return validate_exact_route(src, target, ships, estimate.angle, max_route_delay);
+}
+
 void FeatureEngine::build_delay_matrix_batched(FeatureBatch& batch,
                                                int max_route_delay) const {
   struct VirtualFleet {

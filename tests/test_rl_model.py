@@ -5,6 +5,7 @@ torch = pytest.importorskip("torch")
 
 import orbit_rl_native
 from rl.model import FeatureSpec, build_graph_inputs, make_model, pad_graph_batch
+from rl.model import amount_bin_for_move, amount_bin_ship_counts, forecast_surplus_for_planet
 
 
 def _obs(extra_planet=False):
@@ -50,7 +51,7 @@ def test_graph_policy_forward_single_and_padded_batch():
         batch = orbit_rl_native.FeatureEngine().compute(obs, horizon=spec.horizon)
         graphs.append(build_graph_inputs(obs, batch, spec=spec))
 
-    model = make_model(spec, hidden_dim=64, num_layers=2, num_heads=4, amount_bins=5)
+    model = make_model(spec, hidden_dim=64, num_layers=2, num_heads=4)
     single = model(
         graphs[0]["planet_features"],
         graphs[0]["edge_features"],
@@ -58,15 +59,32 @@ def test_graph_policy_forward_single_and_padded_batch():
     )
     assert single["planet_embeddings"].shape == (2, 64)
     assert single["edge_logits"].shape == (2, 2)
-    assert single["amount_logits"].shape == (2, 2, 5)
+    assert single["amount_logits"].shape == (2, 2, 6)
     assert single["stop_logits"].shape == (2,)
 
     padded = pad_graph_batch(graphs)
     out = model(padded["planet_features"], padded["edge_features"], padded["planet_mask"])
     assert out["planet_embeddings"].shape == (2, 3, 64)
     assert out["edge_logits"].shape == (2, 3, 3)
-    assert out["amount_logits"].shape == (2, 3, 3, 5)
+    assert out["amount_logits"].shape == (2, 3, 3, 6)
     assert out["stop_logits"].shape == (2, 3)
     assert torch.isfinite(out["edge_logits"][0, :2, :2]).all()
     assert out["edge_logits"][0, 2, 0].item() < -1e20
     assert out["stop_logits"][0, 2].item() < -1e20
+
+
+def test_amount_bin_mapping_uses_forecast_surplus():
+    obs = _obs()
+    batch = orbit_rl_native.FeatureEngine().compute(obs, horizon=50)
+
+    surplus = forecast_surplus_for_planet(batch, planet_id=0, owner=0)
+    assert surplus == 30
+    assert amount_bin_ship_counts(source_ships=30, surplus=30, minimum_to_capture=6) == [
+        6,
+        6,
+        15,
+        24,
+        30,
+        30,
+    ]
+    assert amount_bin_for_move(23, source_ships=30, surplus=30, minimum_to_capture=6) == 3

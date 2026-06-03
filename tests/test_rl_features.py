@@ -48,6 +48,20 @@ def test_rl_garrison_forecast_applies_visible_fleet_capture():
     assert batch["garrisons"][1, 2].tolist() == [2, 0]
 
 
+def test_rl_exact_route_query_uses_requested_ship_count():
+    engine = orbit_rl_native.FeatureEngine()
+    obs = _obs()
+
+    slow = engine.query_route(obs, 0, 1, 5)
+    fast = engine.query_route(obs, 0, 1, 160)
+
+    assert slow["reachable"]
+    assert fast["reachable"]
+    assert slow["delay"] >= fast["delay"]
+    assert math.isclose(slow["angle"], 0.0)
+    assert math.isclose(fast["angle"], 0.0)
+
+
 def test_rl_comet_expiration_marks_future_garrison_missing_and_tracks_spawns():
     obs = _obs()
     obs["step"] = 49
