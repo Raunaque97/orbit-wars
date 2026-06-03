@@ -161,6 +161,10 @@ py::dict stats_to_dict(const orbit_rl::FeatureStats& stats) {
   out["route_sim_ticks"] = stats.route_sim_ticks;
   out["predicted_arrivals"] = stats.predicted_arrivals;
   out["blocked_routes"] = stats.blocked_routes;
+  out["active_comets"] = stats.active_comets;
+  out["expiring_comets_within_horizon"] = stats.expiring_comets_within_horizon;
+  out["next_comet_spawn_step"] = stats.next_comet_spawn_step;
+  out["turns_until_next_comet_spawn"] = stats.turns_until_next_comet_spawn;
   return out;
 }
 
@@ -184,6 +188,7 @@ py::dict batch_to_dict(const orbit_rl::FeatureBatch& batch) {
   py::dict out;
   out["planet_ids"] = batch.planet_ids;
   out["ship_buckets"] = batch.ship_buckets;
+  out["comet_spawn_steps"] = batch.comet_spawn_steps;
   out["garrisons"] = garrisons;
   out["delays"] = delays;
   out["angles"] = angles;

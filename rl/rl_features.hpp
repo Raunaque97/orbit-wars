@@ -15,7 +15,9 @@ constexpr double kMaxFleetSpeed = 6.0;
 constexpr int kMaxSteps = 500;
 constexpr int kMaxRouteDelay = 141;
 constexpr int kNeutralOwner = -1;
+constexpr int kMissingOwner = -2;
 constexpr int kBlockedDelay = 200;
+constexpr int kCometSpawnSteps[] = {50, 150, 250, 350, 450};
 
 struct Vec2 {
   double x = 0.0;
@@ -69,11 +71,16 @@ struct FeatureStats {
   int route_sim_ticks = 0;
   int predicted_arrivals = 0;
   int blocked_routes = 0;
+  int active_comets = 0;
+  int expiring_comets_within_horizon = 0;
+  int next_comet_spawn_step = -1;
+  int turns_until_next_comet_spawn = -1;
 };
 
 struct FeatureBatch {
   std::vector<int> planet_ids;
   std::vector<int> ship_buckets;
+  std::vector<int> comet_spawn_steps;
   std::vector<int> garrison_flat;
   std::vector<int> delay_flat;
   std::vector<double> angle_flat;
@@ -125,7 +132,9 @@ class FeatureEngine {
   void refresh_current(const Observation& obs);
   bool cache_matches(const Observation& obs) const;
   bool is_comet_id(int planet_id) const;
+  bool planet_present_at(const Planet& planet, int absolute_step) const;
   Vec2 planet_position_at(const Planet& planet, int absolute_step) const;
+  void fill_comet_stats(FeatureBatch& batch, int horizon) const;
   std::vector<Arrival> predict_arrivals(int horizon, FeatureStats& stats) const;
   RouteEval estimate_route_without_proxy(const Planet& src, const Planet& target, int ships,
                                          int max_route_delay) const;

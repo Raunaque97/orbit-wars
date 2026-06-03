@@ -4,6 +4,7 @@
 #include <array>
 #include <chrono>
 #include <cmath>
+#include <limits>
 #include <map>
 #include <set>
 
@@ -225,6 +226,23 @@ bool FeatureEngine::is_comet_id(int planet_id) const {
                    planet_id) != current_.comet_planet_ids.end();
 }
 
+bool FeatureEngine::planet_present_at(const Planet& planet, int absolute_step) const {
+  auto comet_it = comet_path_index_.find(planet.id);
+  if (comet_it == comet_path_index_.end()) {
+    return true;
+  }
+
+  const CometGroup& group = current_.comets[comet_it->second.first];
+  const std::vector<Vec2>& path = group.paths[comet_it->second.second];
+  if (path.empty()) {
+    return false;
+  }
+
+  const int offset = std::max(0, absolute_step - current_.step);
+  const int path_index = group.path_index + offset;
+  return path_index >= 0 && path_index < static_cast<int>(path.size());
+}
+
 Vec2 FeatureEngine::planet_position_at(const Planet& planet, int absolute_step) const {
   auto comet_it = comet_path_index_.find(planet.id);
   if (comet_it != comet_path_index_.end()) {
@@ -232,10 +250,13 @@ Vec2 FeatureEngine::planet_position_at(const Planet& planet, int absolute_step) 
     const std::vector<Vec2>& path = group.paths[comet_it->second.second];
     if (!path.empty()) {
       const int offset = std::max(0, absolute_step - current_.step);
-      const int path_index = std::clamp(group.path_index + offset, 0,
-                                        static_cast<int>(path.size()) - 1);
-      return path[path_index];
+      const int path_index = group.path_index + offset;
+      if (path_index >= 0 && path_index < static_cast<int>(path.size())) {
+        return path[path_index];
+      }
     }
+    return Vec2{std::numeric_limits<double>::quiet_NaN(),
+                std::numeric_limits<double>::quiet_NaN()};
   }
 
   auto initial_it = initial_index_.find(planet.id);
@@ -245,6 +266,35 @@ Vec2 FeatureEngine::planet_position_at(const Planet& planet, int absolute_step) 
   }
 
   return planet_pos(planet);
+}
+
+void FeatureEngine::fill_comet_stats(FeatureBatch& batch, int horizon) const {
+  batch.comet_spawn_steps.assign(
+      kCometSpawnSteps,
+      kCometSpawnSteps + sizeof(kCometSpawnSteps) / sizeof(kCometSpawnSteps[0]));
+
+  for (int spawn_step : batch.comet_spawn_steps) {
+    if (spawn_step >= current_.step) {
+      batch.stats.next_comet_spawn_step = spawn_step;
+      batch.stats.turns_until_next_comet_spawn = spawn_step - current_.step;
+      break;
+    }
+  }
+
+  std::set<int> expiring_ids;
+  for (const Planet& planet : current_.planets) {
+    if (!is_comet_id(planet.id) || !planet_present_at(planet, current_.step)) {
+      continue;
+    }
+    ++batch.stats.active_comets;
+    for (int dt = 0; dt < horizon; ++dt) {
+      if (!planet_present_at(planet, current_.step + dt)) {
+        expiring_ids.insert(planet.id);
+        break;
+      }
+    }
+  }
+  batch.stats.expiring_comets_within_horizon = static_cast<int>(expiring_ids.size());
 }
 
 std::vector<FeatureEngine::Arrival> FeatureEngine::predict_arrivals(
@@ -262,8 +312,14 @@ std::vector<FeatureEngine::Arrival> FeatureEngine::predict_arrivals(
                       prev.y + std::sin(fleet.angle) * speed};
 
       for (const Planet& planet : current_.planets) {
+        if (!planet_present_at(planet, tick - 1) && !planet_present_at(planet, tick)) {
+          continue;
+        }
         const Vec2 old_pos = planet_position_at(planet, tick - 1);
         const Vec2 new_pos = planet_position_at(planet, tick);
+        if (!std::isfinite(old_pos.x) || !std::isfinite(new_pos.x)) {
+          continue;
+        }
         if (swept_pair_hit(prev, next, old_pos, new_pos, planet.radius)) {
           arrivals.push_back(Arrival{planet.id, fleet.owner, fleet.ships, dt});
           ++stats.predicted_arrivals;
@@ -300,6 +356,9 @@ FeatureEngine::RouteEval FeatureEngine::estimate_route_without_proxy(
   }
 
   const Vec2 src_pos = planet_position_at(src, current_.step);
+  if (!std::isfinite(src_pos.x) || !planet_present_at(src, current_.step)) {
+    return RouteEval{};
+  }
   const double speed = fleet_speed(ships);
   const bool target_moves =
       (is_orbiting_planet(target) && !is_comet_id(target.id)) ||
@@ -307,9 +366,18 @@ FeatureEngine::RouteEval FeatureEngine::estimate_route_without_proxy(
 
   int estimate = -1;
   Vec2 aim_pos = planet_position_at(target, current_.step);
+  if (!std::isfinite(aim_pos.x) || !planet_present_at(target, current_.step)) {
+    return RouteEval{};
+  }
   if (target_moves) {
     for (int dt = 1; dt <= max_route_delay; ++dt) {
+      if (!planet_present_at(target, current_.step + dt)) {
+        break;
+      }
       const Vec2 target_pos = planet_position_at(target, current_.step + dt);
+      if (!std::isfinite(target_pos.x)) {
+        break;
+      }
       const double center_distance = dist(src_pos, target_pos);
       if (speed * static_cast<double>(dt) + target.radius + 0.1 >= center_distance) {
         estimate = dt;
@@ -356,7 +424,13 @@ void FeatureEngine::build_delay_matrix_batched(FeatureBatch& batch,
   for (std::size_t b = 0; b < bucket_count; ++b) {
     for (std::size_t i = 0; i < n; ++i) {
       const Planet& src = current_.planets[i];
+      if (!planet_present_at(src, current_.step)) {
+        continue;
+      }
       const Vec2 src_pos = planet_position_at(src, current_.step);
+      if (!std::isfinite(src_pos.x)) {
+        continue;
+      }
       for (std::size_t j = 0; j < n; ++j) {
         const std::size_t offset = (b * n + i) * n + j;
         if (i == j) {
@@ -416,8 +490,14 @@ void FeatureEngine::build_delay_matrix_batched(FeatureBatch& batch,
 
       bool finished = false;
       for (const Planet& planet : current_.planets) {
+        if (!planet_present_at(planet, tick - 1) && !planet_present_at(planet, tick)) {
+          continue;
+        }
         const Vec2 old_pos = planet_position_at(planet, tick - 1);
         const Vec2 new_pos = planet_position_at(planet, tick);
+        if (!std::isfinite(old_pos.x) || !std::isfinite(new_pos.x)) {
+          continue;
+        }
         if (!swept_pair_hit(fleet.prev, next, old_pos, new_pos, planet.radius)) {
           continue;
         }
@@ -466,6 +546,7 @@ FeatureBatch FeatureEngine::compute(const Observation& obs, int horizon, int max
   batch.stats.planets = static_cast<int>(current_.planets.size());
   batch.stats.fleets = static_cast<int>(current_.fleets.size());
   batch.stats.horizon = horizon;
+  fill_comet_stats(batch, horizon);
 
   const std::size_t n = current_.planets.size();
   batch.planet_ids.reserve(n);
@@ -478,6 +559,13 @@ FeatureBatch FeatureEngine::compute(const Observation& obs, int horizon, int max
   for (std::size_t i = 0; i < n; ++i) {
     Planet forecast = current_.planets[i];
     for (int dt = 0; dt < horizon; ++dt) {
+      if (!planet_present_at(forecast, current_.step + dt)) {
+        const std::size_t offset = (i * static_cast<std::size_t>(horizon) + dt) * 2;
+        batch.garrison_flat[offset] = 0;
+        batch.garrison_flat[offset + 1] = kMissingOwner;
+        continue;
+      }
+
       if (dt > 0) {
         if (forecast.owner != kNeutralOwner) {
           forecast.ships += forecast.production;
