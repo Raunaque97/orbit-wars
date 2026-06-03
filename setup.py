@@ -18,7 +18,17 @@ ext_modules = [
         include_dirs=[Pybind11Include(), "src/orbit_native"],
         language="c++",
         extra_compile_args=["-std=c++17", "-O3"],
-    )
+    ),
+    Extension(
+        "orbit_rl_native",
+        [
+            "rl/bindings.cpp",
+            "rl/rl_features.cpp",
+        ],
+        include_dirs=[Pybind11Include(), "rl"],
+        language="c++",
+        extra_compile_args=["-std=c++17", "-O3"],
+    ),
 ]
 
 
