@@ -12,3 +12,7 @@ replays/
 analysis_local/
 
 third_party/
+
+rl/checkpoints/
+rl/data/
+rl/date/delay_cache/

@@ -20,8 +20,9 @@ def _obs():
 
 
 def test_random_v2_forced_random_returns_reachable_move(monkeypatch):
-    monkeypatch.setenv("RANDOM_V2_PROB", "1.0")
-    monkeypatch.setenv("RANDOM_V2_SEED", "1")
+    monkeypatch.setattr(random_v2_agent, "RANDOM_POLICY_PROB", 1.0)
+    monkeypatch.setattr(random_v2_agent, "MAX_RANDOM_LAUNCH_PROB", 1.0)
+    monkeypatch.setattr(random_v2_agent, "RANDOM_SEED", 1)
     random_v2_agent._SEARCH_ENGINES.clear()
     random_v2_agent._ROUTE_ENGINES.clear()
     random_v2_agent._RNGS.clear()
@@ -30,7 +31,7 @@ def test_random_v2_forced_random_returns_reachable_move(monkeypatch):
     move = random_v2_agent.agent(obs)[0]
 
     assert move[0] == 0
-    assert 1 <= move[2] <= 50
+    assert 5 <= move[2] <= 50
     orbit_native = load_orbit_native()
     parsed = native_obs(obs)
     engine = orbit_native.Engine()
@@ -41,10 +42,28 @@ def test_random_v2_forced_random_returns_reachable_move(monkeypatch):
 
 
 def test_random_v2_forced_search_uses_v2_budget(monkeypatch):
-    monkeypatch.setenv("RANDOM_V2_PROB", "0.0")
-    monkeypatch.setenv("RANDOM_V2_SEARCH_BUDGET_MS", "100")
+    monkeypatch.setattr(random_v2_agent, "RANDOM_POLICY_PROB", 0.0)
+    monkeypatch.setattr(random_v2_agent, "SEARCH_BUDGET_MS", 100)
     random_v2_agent._SEARCH_ENGINES.clear()
     random_v2_agent._ROUTE_ENGINES.clear()
     random_v2_agent._RNGS.clear()
 
     assert random_v2_agent.agent(_obs()) == [[0, 0.0, 6]]
+
+
+def test_random_v2_launch_probability_exp_decay():
+    assert random_v2_agent._launch_probability(4) == 0.0
+    assert random_v2_agent._launch_probability(5) == 0.0
+    assert random_v2_agent._launch_probability(9) < 0.03
+    assert random_v2_agent._launch_probability(50) == random_v2_agent.MAX_RANDOM_LAUNCH_PROB
+    assert random_v2_agent._launch_probability(80) == random_v2_agent.MAX_RANDOM_LAUNCH_PROB
+
+
+def test_random_v2_random_policy_can_noop_without_falling_back_to_search(monkeypatch):
+    monkeypatch.setattr(random_v2_agent, "RANDOM_POLICY_PROB", 1.0)
+    monkeypatch.setattr(random_v2_agent, "MAX_RANDOM_LAUNCH_PROB", 0.0)
+    random_v2_agent._SEARCH_ENGINES.clear()
+    random_v2_agent._ROUTE_ENGINES.clear()
+    random_v2_agent._RNGS.clear()
+
+    assert random_v2_agent.agent(_obs()) == []

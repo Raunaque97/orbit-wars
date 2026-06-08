@@ -7,6 +7,15 @@ import time
 import orbit_rl_native
 
 MAX_ROUTE_DELAY = 141
+TIMING_KEYS = (
+    "cache_update_ms",
+    "comet_stats_ms",
+    "predict_arrivals_ms",
+    "garrison_forecast_ms",
+    "delay_matrix_ms",
+    "delay_estimate_ms",
+    "delay_proxy_ms",
+)
 
 
 def make_synthetic_obs(planets=40, fleets=20, seed=7, step=0):
@@ -97,12 +106,15 @@ def main():
 
     wall_times = []
     native_times = []
+    timing_values = {key: [] for key in TIMING_KEYS}
     last = None
     for obs in observations:
         started = time.perf_counter()
         last = engine.compute(obs, args.horizon, MAX_ROUTE_DELAY)
         wall_times.append((time.perf_counter() - started) * 1000.0)
         native_times.append(last["stats"]["elapsed_ms"])
+        for key in TIMING_KEYS:
+            timing_values[key].append(float(last["stats"].get(key, 0.0)))
 
     print(
         f"samples={len(observations)} planets={last['stats']['planets']} "
@@ -128,6 +140,13 @@ def main():
         print(
             f"steady_native_ms avg={statistics.mean(warm_native):.3f} "
             f"p50={statistics.median(warm_native):.3f} max={max(warm_native):.3f}"
+        )
+    print("timing_breakdown_ms:")
+    for key in TIMING_KEYS:
+        values = timing_values[key]
+        print(
+            f"  {key} avg={statistics.mean(values):.3f} "
+            f"p50={statistics.median(values):.3f} max={max(values):.3f}"
         )
 
 

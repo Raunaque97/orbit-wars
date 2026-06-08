@@ -4,6 +4,7 @@
 #include <pybind11/stl.h>
 
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -214,6 +215,16 @@ orbit::SimState state_from_observation(const orbit::Observation& obs) {
   return state;
 }
 
+orbit::SimState state_from_py(const py::object& obj) {
+  orbit::Observation obs = observation_from_py(obj);
+  orbit::SimState state = state_from_observation(obs);
+  py::object next_fleet_id = get_object_attr_or_item(obj, "next_fleet_id");
+  if (!next_fleet_id.is_none()) {
+    state.next_fleet_id = next_fleet_id.cast<int>();
+  }
+  return state;
+}
+
 py::list planets_to_py(const std::vector<orbit::Planet>& planets) {
   py::list out;
   for (const orbit::Planet& planet : planets) {
@@ -246,6 +257,33 @@ py::list fleets_to_py(const std::vector<orbit::Fleet>& fleets) {
   return out;
 }
 
+py::list comets_to_py(const std::vector<orbit::CometGroup>& comets) {
+  py::list out;
+  for (const orbit::CometGroup& group : comets) {
+    py::dict item;
+    py::list planet_ids;
+    for (int id : group.planet_ids) {
+      planet_ids.append(id);
+    }
+    py::list paths;
+    for (const std::vector<orbit::Vec2>& path : group.paths) {
+      py::list py_path;
+      for (const orbit::Vec2& point : path) {
+        py::list py_point;
+        py_point.append(point.x);
+        py_point.append(point.y);
+        py_path.append(py_point);
+      }
+      paths.append(py_path);
+    }
+    item["planet_ids"] = planet_ids;
+    item["paths"] = paths;
+    item["path_index"] = group.path_index;
+    out.append(item);
+  }
+  return out;
+}
+
 py::list forecast_table_to_py(const std::vector<std::vector<orbit::Planet>>& table) {
   py::list out;
   for (const std::vector<orbit::Planet>& row : table) {
@@ -261,6 +299,13 @@ py::dict state_to_dict(const orbit::SimState& state) {
   out["planets"] = planets_to_py(state.planets);
   out["initial_planets"] = planets_to_py(state.initial_planets);
   out["fleets"] = fleets_to_py(state.fleets);
+  py::list comet_ids;
+  for (int id : state.comet_planet_ids) {
+    comet_ids.append(id);
+  }
+  out["comet_planet_ids"] = comet_ids;
+  out["comets"] = comets_to_py(state.comets);
+  out["next_fleet_id"] = state.next_fleet_id;
   return out;
 }
 
@@ -289,6 +334,69 @@ py::dict search_result_to_dict(const orbit::SearchResult& result) {
 }
 
 std::unique_ptr<orbit::Engine> global_engine = std::make_unique<orbit::Engine>();
+
+class Simulator {
+ public:
+  Simulator() = default;
+
+  explicit Simulator(const py::object& obs) { reset(obs); }
+
+  void reset(const py::object& obs) {
+    state_ = state_from_py(obs);
+    engine_.initialize(observation_from_py(obs));
+  }
+
+  py::dict step(const py::object& actions) {
+    state_ = engine_.simulate_step(state_, actions_from_py(actions));
+    return state_to_dict(state_);
+  }
+
+  void advance(const py::object& actions) {
+    state_ = engine_.simulate_step(state_, actions_from_py(actions));
+  }
+
+  py::dict state() const { return state_to_dict(state_); }
+
+  py::dict observation(int player) const {
+    py::dict obs = state_to_dict(state_);
+    obs["player"] = player;
+    return obs;
+  }
+
+  int step_index() const { return state_.step; }
+
+  int alive_count() const {
+    std::set<int> alive;
+    for (const orbit::Planet& planet : state_.planets) {
+      if (planet.owner != orbit::kNeutralOwner) {
+        alive.insert(planet.owner);
+      }
+    }
+    for (const orbit::Fleet& fleet : state_.fleets) {
+      alive.insert(fleet.owner);
+    }
+    return static_cast<int>(alive.size());
+  }
+
+  std::vector<int> scores(int num_agents) const {
+    std::vector<int> out(static_cast<std::size_t>(std::max(0, num_agents)), 0);
+    for (const orbit::Planet& planet : state_.planets) {
+      if (planet.owner >= 0 && planet.owner < num_agents) {
+        out[static_cast<std::size_t>(planet.owner)] += planet.ships;
+      }
+    }
+    for (const orbit::Fleet& fleet : state_.fleets) {
+      if (fleet.owner >= 0 && fleet.owner < num_agents) {
+        out[static_cast<std::size_t>(fleet.owner)] += fleet.ships;
+      }
+    }
+    return out;
+  }
+
+ private:
+  orbit::Engine engine_;
+  orbit::SimState state_;
+};
 
 }  // namespace
 
@@ -379,10 +487,21 @@ PYBIND11_MODULE(orbit_native, m) {
            })
       .def("simulate_step",
            [](orbit::Engine& engine, const py::object& obs, const py::object& actions) {
-             orbit::Observation parsed = observation_from_py(obs);
-             orbit::SimState state = state_from_observation(parsed);
+             orbit::SimState state = state_from_py(obs);
              return state_to_dict(engine.simulate_step(state, actions_from_py(actions)));
            });
+
+  py::class_<Simulator>(m, "Simulator")
+      .def(py::init<>())
+      .def(py::init<const py::object&>())
+      .def("reset", &Simulator::reset)
+      .def("step", &Simulator::step)
+      .def("advance", &Simulator::advance)
+      .def("state", &Simulator::state)
+      .def("observation", &Simulator::observation)
+      .def("alive_count", &Simulator::alive_count)
+      .def("scores", &Simulator::scores)
+      .def_property_readonly("step_index", &Simulator::step_index);
 
   m.def("initialize", [](const py::object& obs) {
     global_engine->initialize(observation_from_py(obs));
@@ -431,8 +550,7 @@ PYBIND11_MODULE(orbit_native, m) {
         global_engine->forecast_planets(observation_from_py(obs), horizon));
   });
   m.def("simulate_step", [](const py::object& obs, const py::object& actions) {
-    orbit::Observation parsed = observation_from_py(obs);
-    orbit::SimState state = state_from_observation(parsed);
+    orbit::SimState state = state_from_py(obs);
     return state_to_dict(global_engine->simulate_step(state, actions_from_py(actions)));
   });
 

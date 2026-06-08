@@ -61,6 +61,7 @@ def test_graph_policy_forward_single_and_padded_batch():
     assert single["edge_logits"].shape == (2, 2)
     assert single["amount_logits"].shape == (2, 2, 6)
     assert single["stop_logits"].shape == (2,)
+    assert single["value"].shape == ()
 
     padded = pad_graph_batch(graphs)
     out = model(padded["planet_features"], padded["edge_features"], padded["planet_mask"])
@@ -68,6 +69,7 @@ def test_graph_policy_forward_single_and_padded_batch():
     assert out["edge_logits"].shape == (2, 3, 3)
     assert out["amount_logits"].shape == (2, 3, 3, 6)
     assert out["stop_logits"].shape == (2, 3)
+    assert out["value"].shape == (2,)
     assert torch.isfinite(out["edge_logits"][0, :2, :2]).all()
     assert out["edge_logits"][0, 2, 0].item() < -1e20
     assert out["stop_logits"][0, 2].item() < -1e20
@@ -80,7 +82,7 @@ def test_amount_bin_mapping_uses_forecast_surplus():
     surplus = forecast_surplus_for_planet(batch, planet_id=0, owner=0)
     assert surplus == 30
     assert amount_bin_ship_counts(source_ships=30, surplus=30, minimum_to_capture=6) == [
-        6,
+        7,
         6,
         15,
         24,

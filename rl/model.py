@@ -360,6 +360,11 @@ class OrbitWarsGraphPolicy(nn.Module):
             nn.GELU(),
             nn.Linear(hidden_dim // 2, 1),
         )
+        self.value_head = nn.Sequential(
+            nn.Linear(hidden_dim * 2, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, 1),
+        )
 
     def forward(
         self,
@@ -392,6 +397,13 @@ class OrbitWarsGraphPolicy(nn.Module):
         amount_logits = self.amount_policy(pair)
         stop_logits = self.stop_policy(h).squeeze(-1)
 
+        mask_float = planet_mask[:, :, None].to(h.dtype)
+        planet_count = mask_float.sum(dim=1).clamp_min(1.0)
+        mean_pool = (h * mask_float).sum(dim=1) / planet_count
+        max_pool = h.masked_fill(~planet_mask[:, :, None], float("-inf")).amax(dim=1)
+        max_pool = torch.where(torch.isfinite(max_pool), max_pool, torch.zeros_like(max_pool))
+        value = self.value_head(torch.cat([mean_pool, max_pool], dim=-1)).squeeze(-1)
+
         pair_mask = planet_mask[:, :, None] & planet_mask[:, None, :]
         edge_logits = edge_logits.masked_fill(~pair_mask, torch.finfo(edge_logits.dtype).min)
         amount_logits = amount_logits.masked_fill(
@@ -404,6 +416,7 @@ class OrbitWarsGraphPolicy(nn.Module):
             "edge_logits": edge_logits,
             "amount_logits": amount_logits,
             "stop_logits": stop_logits,
+            "value": value,
         }
         if squeeze:
             out = {key: value.squeeze(0) for key, value in out.items()}
@@ -458,7 +471,7 @@ def amount_bin_ship_counts(
     source_ships = max(0, int(source_ships))
     minimum_to_capture = max(0, int(minimum_to_capture))
     raw = [
-        minimum_to_capture,
+        minimum_to_capture + 1 if minimum_to_capture > 0 else 0,
         round(0.20 * surplus),
         round(0.50 * surplus),
         round(0.80 * surplus),

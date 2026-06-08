@@ -153,6 +153,13 @@ orbit_rl::Observation observation_from_py(const py::object& obs) {
 py::dict stats_to_dict(const orbit_rl::FeatureStats& stats) {
   py::dict out;
   out["elapsed_ms"] = stats.elapsed_ms;
+  out["cache_update_ms"] = stats.cache_update_ms;
+  out["comet_stats_ms"] = stats.comet_stats_ms;
+  out["predict_arrivals_ms"] = stats.predict_arrivals_ms;
+  out["garrison_forecast_ms"] = stats.garrison_forecast_ms;
+  out["delay_matrix_ms"] = stats.delay_matrix_ms;
+  out["delay_estimate_ms"] = stats.delay_estimate_ms;
+  out["delay_proxy_ms"] = stats.delay_proxy_ms;
   out["planets"] = stats.planets;
   out["fleets"] = stats.fleets;
   out["horizon"] = stats.horizon;
@@ -220,12 +227,14 @@ PYBIND11_MODULE(orbit_rl_native, m) {
       })
       .def("compute",
            [](orbit_rl::FeatureEngine& engine, const py::object& obs, int horizon,
-              int max_route_delay) {
+              int max_route_delay, bool include_delays) {
              return batch_to_dict(
-                 engine.compute(observation_from_py(obs), horizon, max_route_delay));
+                 engine.compute(observation_from_py(obs), horizon, max_route_delay,
+                                include_delays));
            },
            py::arg("obs"), py::arg("horizon") = 50,
-           py::arg("max_route_delay") = orbit_rl::kMaxRouteDelay)
+           py::arg("max_route_delay") = orbit_rl::kMaxRouteDelay,
+           py::arg("include_delays") = true)
       .def("query_route",
            [](orbit_rl::FeatureEngine& engine, const py::object& obs, int src_id,
               int target_id, int ships, int max_route_delay) {
@@ -240,12 +249,14 @@ PYBIND11_MODULE(orbit_rl_native, m) {
     global_engine->initialize(observation_from_py(obs));
   });
   m.def("compute",
-        [](const py::object& obs, int horizon, int max_route_delay) {
+        [](const py::object& obs, int horizon, int max_route_delay, bool include_delays) {
           return batch_to_dict(
-              global_engine->compute(observation_from_py(obs), horizon, max_route_delay));
+              global_engine->compute(observation_from_py(obs), horizon, max_route_delay,
+                                     include_delays));
         },
         py::arg("obs"), py::arg("horizon") = 50,
-        py::arg("max_route_delay") = orbit_rl::kMaxRouteDelay);
+        py::arg("max_route_delay") = orbit_rl::kMaxRouteDelay,
+        py::arg("include_delays") = true);
   m.def("query_route",
         [](const py::object& obs, int src_id, int target_id, int ships, int max_route_delay) {
           return route_to_dict(global_engine->query_route(

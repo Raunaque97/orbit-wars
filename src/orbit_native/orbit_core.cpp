@@ -2393,7 +2393,12 @@ SimState Engine::simulate_step(const SimState& state,
   std::vector<PlanetPath> planet_paths;
   planet_paths.reserve(next.planets.size());
   const int next_step = state.step + 1;
+  std::vector<int> expired_comet_ids;
   for (const Planet& planet : next.planets) {
+    if (std::find(next.comet_planet_ids.begin(), next.comet_planet_ids.end(), planet.id) !=
+        next.comet_planet_ids.end()) {
+      continue;
+    }
     Vec2 old_pos = planet_pos(planet);
     Vec2 new_pos = old_pos;
     const Planet* initial = find_planet(next.initial_planets, planet.id);
@@ -2402,6 +2407,28 @@ SimState Engine::simulate_step(const SimState& state,
           rotated_position(*initial, next.angular_velocity, observed_orbit_step(next_step));
     }
     planet_paths.push_back(PlanetPath{planet.id, old_pos, new_pos, planet.radius, true});
+  }
+
+  for (CometGroup& group : next.comets) {
+    group.path_index += 1;
+    for (std::size_t i = 0; i < group.planet_ids.size(); ++i) {
+      const int pid = group.planet_ids[i];
+      const Planet* planet = find_planet(next.planets, pid);
+      if (planet == nullptr) {
+        continue;
+      }
+      const Vec2 old_pos = planet_pos(*planet);
+      Vec2 new_pos = old_pos;
+      bool check_collision = true;
+      if (i >= group.paths.size() ||
+          group.path_index >= static_cast<int>(group.paths[i].size())) {
+        expired_comet_ids.push_back(pid);
+      } else {
+        new_pos = group.paths[i][static_cast<std::size_t>(group.path_index)];
+        check_collision = old_pos.x >= 0.0 && old_pos.y >= 0.0;
+      }
+      planet_paths.push_back(PlanetPath{pid, old_pos, new_pos, planet->radius, check_collision});
+    }
   }
 
   std::vector<Fleet> surviving_fleets;
@@ -2448,6 +2475,49 @@ SimState Engine::simulate_step(const SimState& state,
         break;
       }
     }
+  }
+
+  if (!expired_comet_ids.empty()) {
+    next.planets.erase(
+        std::remove_if(next.planets.begin(), next.planets.end(),
+                       [&](const Planet& planet) {
+                         return std::find(expired_comet_ids.begin(), expired_comet_ids.end(),
+                                          planet.id) != expired_comet_ids.end();
+                       }),
+        next.planets.end());
+    next.initial_planets.erase(
+        std::remove_if(next.initial_planets.begin(), next.initial_planets.end(),
+                       [&](const Planet& planet) {
+                         return std::find(expired_comet_ids.begin(), expired_comet_ids.end(),
+                                          planet.id) != expired_comet_ids.end();
+                       }),
+        next.initial_planets.end());
+    next.comet_planet_ids.erase(
+        std::remove_if(next.comet_planet_ids.begin(), next.comet_planet_ids.end(),
+                       [&](int pid) {
+                         return std::find(expired_comet_ids.begin(), expired_comet_ids.end(),
+                                          pid) != expired_comet_ids.end();
+                       }),
+        next.comet_planet_ids.end());
+    for (CometGroup& group : next.comets) {
+      std::vector<int> kept_ids;
+      std::vector<std::vector<Vec2>> kept_paths;
+      for (std::size_t i = 0; i < group.planet_ids.size(); ++i) {
+        if (std::find(expired_comet_ids.begin(), expired_comet_ids.end(),
+                      group.planet_ids[i]) == expired_comet_ids.end()) {
+          kept_ids.push_back(group.planet_ids[i]);
+          if (i < group.paths.size()) {
+            kept_paths.push_back(group.paths[i]);
+          }
+        }
+      }
+      group.planet_ids = std::move(kept_ids);
+      group.paths = std::move(kept_paths);
+    }
+    next.comets.erase(
+        std::remove_if(next.comets.begin(), next.comets.end(),
+                       [](const CometGroup& group) { return group.planet_ids.empty(); }),
+        next.comets.end());
   }
 
   for (auto& item : arrivals) {

@@ -494,6 +494,7 @@ ExactRoute FeatureEngine::query_route(const Observation& obs, int src_id, int ta
 
 void FeatureEngine::build_delay_matrix_batched(FeatureBatch& batch,
                                                int max_route_delay) const {
+  const auto started = std::chrono::steady_clock::now();
   struct VirtualFleet {
     std::size_t offset = 0;
     int target_id = -1;
@@ -512,6 +513,7 @@ void FeatureEngine::build_delay_matrix_batched(FeatureBatch& batch,
   std::vector<VirtualFleet> fleets;
   fleets.reserve(bucket_count * n * (n > 0 ? n - 1 : 0));
 
+  const auto estimate_started = std::chrono::steady_clock::now();
   for (std::size_t b = 0; b < bucket_count; ++b) {
     for (std::size_t i = 0; i < n; ++i) {
       const Planet& src = current_.planets[i];
@@ -553,12 +555,20 @@ void FeatureEngine::build_delay_matrix_batched(FeatureBatch& batch,
       }
     }
   }
+  const auto estimate_finished = std::chrono::steady_clock::now();
+  batch.stats.delay_estimate_ms =
+      std::chrono::duration<double, std::milli>(estimate_finished - estimate_started)
+          .count();
 
   if (fleets.empty()) {
+    const auto finished = std::chrono::steady_clock::now();
+    batch.stats.delay_matrix_ms =
+        std::chrono::duration<double, std::milli>(finished - started).count();
     return;
   }
 
   ++batch.stats.route_proxy_simulations;
+  const auto proxy_started = std::chrono::steady_clock::now();
   std::vector<std::size_t> active;
   active.reserve(fleets.size());
   for (std::size_t idx = 0; idx < fleets.size(); ++idx) {
@@ -619,25 +629,39 @@ void FeatureEngine::build_delay_matrix_batched(FeatureBatch& batch,
   }
 
   batch.stats.blocked_routes += static_cast<int>(active.size());
+  const auto proxy_finished = std::chrono::steady_clock::now();
+  batch.stats.delay_proxy_ms =
+      std::chrono::duration<double, std::milli>(proxy_finished - proxy_started).count();
+  batch.stats.delay_matrix_ms =
+      std::chrono::duration<double, std::milli>(proxy_finished - started).count();
 }
 
-FeatureBatch FeatureEngine::compute(const Observation& obs, int horizon, int max_route_delay) {
+FeatureBatch FeatureEngine::compute(const Observation& obs, int horizon, int max_route_delay,
+                                    bool include_delays) {
   const auto started = std::chrono::steady_clock::now();
+  const auto cache_started = std::chrono::steady_clock::now();
   if (!initialized_ || !cache_matches(obs)) {
     initialize(obs);
   } else {
     refresh_current(obs);
   }
+  const auto cache_finished = std::chrono::steady_clock::now();
 
   horizon = std::clamp(horizon, 1, kMaxSteps + 1);
   max_route_delay = std::clamp(max_route_delay, 1, kMaxSteps);
 
   FeatureBatch batch;
+  batch.stats.cache_update_ms =
+      std::chrono::duration<double, std::milli>(cache_finished - cache_started).count();
   batch.ship_buckets = {5, 10, 20, 40, 80, 160};
   batch.stats.planets = static_cast<int>(current_.planets.size());
   batch.stats.fleets = static_cast<int>(current_.fleets.size());
   batch.stats.horizon = horizon;
+  const auto comet_started = std::chrono::steady_clock::now();
   fill_comet_stats(batch, horizon);
+  const auto comet_finished = std::chrono::steady_clock::now();
+  batch.stats.comet_stats_ms =
+      std::chrono::duration<double, std::milli>(comet_finished - comet_started).count();
 
   const std::size_t n = current_.planets.size();
   batch.planet_ids.reserve(n);
@@ -645,7 +669,14 @@ FeatureBatch FeatureEngine::compute(const Observation& obs, int horizon, int max
     batch.planet_ids.push_back(planet.id);
   }
 
+  const auto arrivals_started = std::chrono::steady_clock::now();
   const std::vector<Arrival> arrivals = predict_arrivals(horizon, batch.stats);
+  const auto arrivals_finished = std::chrono::steady_clock::now();
+  batch.stats.predict_arrivals_ms =
+      std::chrono::duration<double, std::milli>(arrivals_finished - arrivals_started)
+          .count();
+
+  const auto garrison_started = std::chrono::steady_clock::now();
   batch.garrison_flat.assign(n * static_cast<std::size_t>(horizon) * 2, 0);
   for (std::size_t i = 0; i < n; ++i) {
     Planet forecast = current_.planets[i];
@@ -678,8 +709,18 @@ FeatureBatch FeatureEngine::compute(const Observation& obs, int horizon, int max
       batch.garrison_flat[offset + 1] = forecast.owner;
     }
   }
+  const auto garrison_finished = std::chrono::steady_clock::now();
+  batch.stats.garrison_forecast_ms =
+      std::chrono::duration<double, std::milli>(garrison_finished - garrison_started)
+          .count();
 
-  build_delay_matrix_batched(batch, max_route_delay);
+  if (include_delays) {
+    build_delay_matrix_batched(batch, max_route_delay);
+  } else {
+    const std::size_t bucket_count = batch.ship_buckets.size();
+    batch.delay_flat.assign(bucket_count * n * n, kBlockedDelay);
+    batch.angle_flat.assign(bucket_count * n * n, 0.0);
+  }
 
   const auto finished = std::chrono::steady_clock::now();
   batch.stats.elapsed_ms =

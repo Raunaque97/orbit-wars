@@ -63,6 +63,13 @@ struct Observation {
 
 struct FeatureStats {
   double elapsed_ms = 0.0;
+  double cache_update_ms = 0.0;
+  double comet_stats_ms = 0.0;
+  double predict_arrivals_ms = 0.0;
+  double garrison_forecast_ms = 0.0;
+  double delay_matrix_ms = 0.0;
+  double delay_estimate_ms = 0.0;
+  double delay_proxy_ms = 0.0;
   int planets = 0;
   int fleets = 0;
   int horizon = 0;
@@ -111,7 +118,8 @@ class FeatureEngine {
 
   void initialize(const Observation& obs);
   FeatureBatch compute(const Observation& obs, int horizon = 50,
-                       int max_route_delay = kMaxRouteDelay);
+                       int max_route_delay = kMaxRouteDelay,
+                       bool include_delays = true);
   ExactRoute query_route(const Observation& obs, int src_id, int target_id, int ships,
                          int max_route_delay = kMaxRouteDelay);
   bool initialized() const { return initialized_; }
