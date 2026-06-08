@@ -1,0 +1,8 @@
+kaggle-environments>=1.28.0
+numpy
+torch
+pybind11>=2.11
+setuptools>=68
+wheel
+pytest
+psutil
